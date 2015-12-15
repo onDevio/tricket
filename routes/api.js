@@ -42,7 +42,9 @@ module.exports = router;
 function createTicket(msg) {
   return {
     title: msg.headers.subject || '<Empty subject>',
-    body: msg.text,
+    notes: [{
+      body: msg.text
+    }] ,
     status: "Open",
     worklog: 0,
     dateCreated: new Date().toISOString(),
