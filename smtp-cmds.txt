@@ -1,0 +1,10 @@
+EHLO random-pc
+MAIL FROM: <client@ondevio.com>
+RCPT TO: <soporte@ondevio.com>
+DATA
+Subject: An email subject
+
+An email text
+
+.
+quit
