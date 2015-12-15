@@ -19,11 +19,12 @@ router.post('/emails', upload.array(), function(req, res, next) {
   } else {
     msg = req.body.mailinMsg;
   }
+  log("Parsed msg: " + JSON.stringify(msg, null, 2));
 
-  //console.log('POST /emails msg:' + JSON.stringify(msg, null, 2));
   var ticket = createTicket(msg);
+  log("Created ticket from email");
   insertTicket(ticket, function(result) {
-    //console.log('POST /emails req.text:' + req.text);
+    log("Inserted ticket to mongo");
     res.status(201).send(ticket);
   });
 });
@@ -45,7 +46,7 @@ function createTicket(msg) {
     status: "Open",
     worklog: 0,
     dateCreated: new Date().toISOString(),
-    customer: msg.from[0].address
+    customer: msg.envelopeFrom.address
   };
 }
 

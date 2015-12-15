@@ -5,5 +5,5 @@ RUN npm install -g mailin
 #ADD package.json /mailin/
 #RUN npm install
 #ADD . /mailin
-CMD mailin --webhook http://tricket:3000/emails
+CMD mailin --webhook $WEBHOOK
 #CMD ["node", "main.js"]

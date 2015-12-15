@@ -5,8 +5,10 @@ mailin:
   links:
    - tricket
   environment:
-  - WEBHOOK=http://tricket:3000/emails
+  - WEBHOOK=http://tricket:3000/api/emails
 tricket:
   build: .
   ports:
    - "80:3000"
+  environment:
+   - NODE_ENV=pro

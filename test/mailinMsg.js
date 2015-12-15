@@ -47,10 +47,10 @@ module.exports = {
       address: 'james@mail.com',
       name: 'James'
     }],
-    envelopeFrom: [{
+    envelopeFrom: {
       address: 'john.doe@somewhere.com',
       name: 'John Doe'
-    }],
+    },
     envelopeTo: [{
       address: 'jane.doe@somewhereelse.com',
       name: 'Jane Doe'
