@@ -4,14 +4,6 @@ var router = express.Router();
 var multer  = require('multer');
 var upload = multer();
 
-router.get('/login', function(req, res, next) {
-  res.render('dashboard/login.html');
-});
-
-router.get('/home', function(req, res, next) {
-  res.render('dashboard/tickets.html');
-});
-
 router.get('/tickets', function(req, res, next) {
   res.render('dashboard/tickets.html');
 });
