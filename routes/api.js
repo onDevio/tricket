@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var bodyParser = require('body-parser');
+
 var multer = require('multer');
 var upload = multer();
 
@@ -11,6 +13,23 @@ var config = require('../config/config')();
 var MongoClient = require('mongodb').MongoClient
   , assert = require('assert');
 
+
+router.post('/ticket/new', function(req, res) {
+  console.log(req.body);
+  var ticket = {
+    title: req.body.title || '<Empty subject>',
+    notes: [{
+      body: req.body.body
+    }],    
+    status: req.body.close !== undefined ? "Closed" : "Open", 
+    worklog: req.body.workload,
+    dateCreated: new Date().toISOString(),
+    customer: req.body.customer
+  };
+  insertTicket(ticket, function(result) {
+    res.redirect(302, '/app/tickets');
+  }); 
+});
 
 router.post('/emails', upload.array(), function(req, res, next) {
   var msg = null;
@@ -38,6 +57,7 @@ router.get('/emails', function(req, res, next) {
 });
 
 module.exports = router;
+
 
 function createTicket(msg) {
   return {
