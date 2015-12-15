@@ -1,0 +1,12 @@
+mailin:
+  build: ./mailin
+  ports:
+   - "25:25"
+  links:
+   - tricket
+  environment:
+  - WEBHOOK=http://tricket:3000/emails
+tricket:
+  build: .
+  ports:
+   - "80:3000"

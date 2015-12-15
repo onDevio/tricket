@@ -36,6 +36,7 @@ app.set('view engine', 'html');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 //FIXME no funcionando
 //app.use(require('connect-livereload')());
 app.use(cookieParser());
@@ -46,6 +47,8 @@ app.use('/template', express.static(path.join(__dirname, 'template')));
 app.use('/vendor', express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/app', ensureAuthenticated, require('./routes/private'));
+// TODO Autenticar el API con un Basic Auth o Token Bearer
+app.use('/api', require('./routes/api'));
 app.use('/', require('./routes/public'));
 
 
@@ -61,7 +64,7 @@ passport.use(new GoogleStrategy({
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      
+
       // To keep the example simple, the user's Google profile is returned to
       // represent the logged-in user.  In a typical application, you would want
       // to associate the Google account with a user record in your database,
@@ -76,7 +79,7 @@ passport.use(new GoogleStrategy({
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    //TODO: Client implementatio    
+    //TODO: Client implementatio
     return done(null, false);
     /*
     var user = {id: 1, username: 'admin', password: 'admin'};

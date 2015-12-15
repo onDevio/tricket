@@ -9,7 +9,7 @@ describe('cms-data-tickets', function() {
   var readFileOptions = {
     encoding: 'utf8',
     flag: 'r'
-  }
+  };
 
   it('should return a list of tickets', function(done) {
     // TODO Visit all plugins
