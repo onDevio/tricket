@@ -47,6 +47,8 @@ app.use('/template', express.static(path.join(__dirname, 'template')));
 app.use('/vendor', express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/app', ensureAuthenticated, require('./routes/private'));
+// TODO Autenticar el API con un Basic Auth o Token Bearer
+app.use('/api', require('./routes/api'));
 app.use('/', require('./routes/public'));
 
 

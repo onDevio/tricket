@@ -4,6 +4,7 @@ var request = require('superagent');
 var parseString = require('xml2js').parseString;
 var _ = require('lodash');
 var log = require('debug')('temply:cms-data-tickets');
+var config = require('../../config/config')();
 
 // @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/
 var MongoClient = require('mongodb').MongoClient,
@@ -52,11 +53,11 @@ module.exports = function(data, $element, callback) {
 // @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#find-all-documents
 function findAll(callback) {
   // Connection URL
-  var url = 'mongodb://localhost:27017/tricket';
+  var url = config.mongoUrl;
   // Use connect method to connect to the Server
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
-    console.log("Connected correctly to server");
+    log("Connected correctly to server");
 
     // Get the documents collection
     var collection = db.collection('tickets');
