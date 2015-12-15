@@ -16,7 +16,19 @@ var MongoClient = require('mongodb').MongoClient
 
 router.post('/ticket/new', function(req, res) {
   console.log(req.body);
-  res.render('dashboard/tickets.html');
+  var ticket = {
+    title: req.body.title || '<Empty subject>',
+    notes: [{
+      body: req.body.body
+    }],    
+    status: req.body.close !== undefined ? "Closed" : "Open", 
+    worklog: req.body.workload,
+    dateCreated: new Date().toISOString(),
+    customer: req.body.customer
+  };
+  insertTicket(ticket, function(result) {
+    res.redirect(302, '/app/tickets');
+  }); 
 });
 
 router.post('/emails', upload.array(), function(req, res, next) {
@@ -44,6 +56,7 @@ router.get('/emails', function(req, res, next) {
 });
 
 module.exports = router;
+
 
 function createTicket(msg) {
   return {
