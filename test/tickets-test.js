@@ -22,7 +22,8 @@ describe('Tickets REST', function() {
         expect(res.status).to.equal(201);
         var ticket = res.body;
         expect(ticket.title).to.equal('New Ticket');
-        expect(ticket.body).to.equal('Hello world!');
+        expect(ticket.notes).to.have.length(1);
+        expect(ticket.notes[0].body).to.equal('Hello world!');
         expect(ticket.customer).to.equal('john.doe@somewhere.com');
         expect(ticket.status).to.equal('Open');
         expect(ticket.worklog).to.equal(0);
