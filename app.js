@@ -25,6 +25,7 @@ app.set('view engine', 'html');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.text());
 app.use(require('connect-livereload')());
 app.use(cookieParser());
 app.use('/template', express.static(path.join(__dirname, 'template')));

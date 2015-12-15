@@ -3,11 +3,10 @@ mailin:
   ports:
    - "25:25"
   links:
-   - tricket 
+   - tricket
   environment:
-  - WEBHOOK=http://tricket.ondevio.com/emails
-  hostname: tricket.ondevio.com
+  - WEBHOOK=http://tricket:3000/emails
 tricket:
   build: .
   ports:
-   - "80:3000" 
+   - "80:3000"
