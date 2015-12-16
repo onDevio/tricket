@@ -10,40 +10,28 @@ exports.up = function(db, next) {
       "body": "Nota inicial",
       "type": "mail",
       "dateCreated": "2015-12-14T12:12:47.901Z",
+      "worklog": 0,
       "user" : "mail"  
     },{
       "body": "Autorespuesta",
       "type": "external",
       "dateCreated": "2015-12-14T12:12:47.901Z",
+      "worklog": 0,
       "user" : "mail"  
     },{
       "body": "Nota 1",
       "type": "external",
       "dateCreated": "2015-12-14T12:12:47.901Z",
+      "worklog": 3,
       "user" : "lmunoz"  
     }],
-    "title": "New Ticket 1",
-    "worklog": 3,
-    "dateCreated": "2015-12-14T12:12:47.901Z"
-  }, {
-    "customer": "Customer",
-    "ticket_id": "CUS-2",
-    "status": "Open",
-    "title": "New Ticket 2",
-    "worklog": 2,
-    "dateCreated": "2015-12-14T12:12:47.901Z"
-  },{
-    "customer": "Customer",
-    "ticket_id": "CUS-3",
-    "status": "Open",
-    "title": "New Ticket 3",
-    "worklog": 3,
+    "title": "New Ticket 1",    
     "dateCreated": "2015-12-14T12:12:47.901Z"
   }], function(err, result) {
     assert.equal(err, null);
-    assert.equal(3, result.result.n);
-    assert.equal(3, result.ops.length);
-    console.log("Inserted 3 documents into the document collection");
+    assert.equal(1, result.result.n);
+    assert.equal(1, result.ops.length);
+    console.log("Inserted 1 documents into the document collection");
     next();
   })
 

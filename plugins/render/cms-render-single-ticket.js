@@ -18,20 +18,24 @@ module.exports = function(data, $element, callback) {
   $element.find('.title').text(ticket.title);
 
   
-  var status = ticket.status === "open" ? '<span class="label label-success">Open</span>' : '<span class="label label-danger">Closed</span>'
+  var status = ticket.status === "Open" ? '<span class="label label-success">Open</span>' : '<span class="label label-danger">Closed</span>'
   $element.find('.status').append(status);
 
-  $element.find('.worklog').text(ticket.worklog.toString());
+  
   $element.find('.customer').text(ticket.customer);
   var date = new Date(ticket.dateCreated);
   $element.find('.date').text(date.toLocaleString());
   
   var notes = ticket.notes;
+  var work = 0;
   notes.forEach(function(note){
   	log(note);
     date = new Date(ticket.dateCreated);
-    $element.find('.notes').append('<div class="panel panel-default"><div class="panel-heading">Note type '+note.type+', '+note.user+' commented '+date.toLocaleString()+'</div><div class="panel-body"><div class="body-editable" data-type="textarea" data-pk="'+ticket.ticket_id+'" data-url="/post">'+note.body+'</a></div></div>');
+    work += note.worklog;
+    $element.find('.notes').append('<div class="panel panel-default"><div class="panel-heading">Note type '+note.type+', '+note.user+' commented '+date.toLocaleString()+' <span class="pull-right label label-info">Spent: '+note.worklog+' Hours</span></div><div class="panel-body">'+note.body+'</div></div>');
   });
+
+  $element.find('.worklog').text(work.toString());
   
   callback(data);
 
