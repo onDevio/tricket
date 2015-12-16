@@ -15,7 +15,7 @@ var MongoClient = require('mongodb').MongoClient
 
 
 router.post('/ticket/new', function(req, res) {
-  console.log(req.body);
+  //log(req.body);
   var ticket = {
     title: req.body.title || '<Empty subject>',
     notes: [{
@@ -30,6 +30,21 @@ router.post('/ticket/new', function(req, res) {
     log("Inserted ticket to mongo");
     res.redirect(302, '/app/tickets');
   }); 
+});
+
+router.post('/ticket/:id', function(req, res) {
+  log("req.body");
+  log(req.body);
+  log("req.params.id");
+  log(req.params.id);
+  var id = req.params.id;
+  findByTicketId(id, function(data) {
+    log("Ticket: " + JSON.stringify(data));
+
+    callback(data);
+   });
+  //res.redirect(302, '/app/ticket/'+id);
+ 
 });
 
 router.post('/emails', upload.array(), function(req, res, next) {
@@ -58,6 +73,29 @@ router.get('/emails', function(req, res, next) {
 });
 
 module.exports = router;
+
+
+
+function findByTicketId(id, callback) {
+  // Connection URL
+  var url = config.mongoUrl;
+  // Use connect method to connect to the Server
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    log("Connected correctly to server");
+
+    // Get the documents collection
+    var collection = db.collection('tickets');
+    // Find some documents
+    collection.findOne({ticket_id: id}).then(function(doc) {
+      db.close();
+      log(doc);
+      callback(doc);
+    });
+
+  });
+
+}
 
 
 function createTicket(msg) {

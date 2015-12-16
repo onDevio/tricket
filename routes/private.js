@@ -14,7 +14,7 @@ router.get('/ticket/new', function(req, res) {
 });
 
 router.get('/ticket/:id', function(req, res) {
-  res.render('dashboard/view_ticket.html');
+  res.render('dashboard/view_ticket.html', {id : req.params.id});
 });
 
 module.exports = router;

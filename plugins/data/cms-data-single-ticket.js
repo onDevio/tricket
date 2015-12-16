@@ -1,8 +1,5 @@
 'use strict';
 
-var request = require('superagent');
-var parseString = require('xml2js').parseString;
-var _ = require('lodash');
 var log = require('debug')('temply:cms-data-tickets');
 var config = require('../../config/config')();
 
@@ -15,14 +12,14 @@ var MongoClient = require('mongodb').MongoClient,
  * @see http://mongoosejs.com/docs/index.html
  */
 module.exports = function(data, $element, callback) {
- findByTicketId(function(data) {
+var id = data[0].id;
+ findByTicketId(id, function(data) {
   log("Ticket: " + JSON.stringify(data));
    callback(data);
  });
 }
 
-// @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#find-all-documents
-function findByTicketId(callback) {
+function findByTicketId(id, callback) {
   // Connection URL
   var url = config.mongoUrl;
   // Use connect method to connect to the Server
@@ -33,7 +30,7 @@ function findByTicketId(callback) {
     // Get the documents collection
     var collection = db.collection('tickets');
     // Find some documents
-    collection.findOne({ticket_id:'CUS-1'}).then(function(doc) {
+    collection.findOne({ticket_id: id}).then(function(doc) {
       db.close();
       callback(doc);
     });
