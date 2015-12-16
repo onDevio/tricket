@@ -9,7 +9,7 @@ describe('Cheerio', function() {
   var readFileOptions = {
     encoding: 'utf8',
     flag: 'r'
-  }
+  };
 
   var filePath = path.join(__dirname, 'template-04.html');
   var html = fs.readFileSync(filePath, readFileOptions);

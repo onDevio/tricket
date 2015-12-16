@@ -109,5 +109,24 @@ describe('The plugin engine', function() {
 
   });
 
-});
+  describe('given an execution model built from template-08.html', function() {
+    var filePath = path.join(__dirname, 'template-08.html');
+    var html = fs.readFileSync(filePath, readFileOptions);
+    var pluginsRepository = [path.join(__dirname, 'plugins/data'), path.join(__dirname, 'plugins/render')];
+    var engine = engineFactory(pluginsRepository);
 
+    it('should render data passed along in the options argument', function(done) {
+      var model = engine.build(html);
+      var options = {
+        param: "This is a param"
+      };
+      engine.render(model, options, function(html) {
+        var expected = fs.readFileSync(path.join(__dirname, 'template-08-result.html'), readFileOptions);
+        expect(html).to.equal(expected);
+        done();
+      });
+    });
+
+  });
+
+});
