@@ -17,7 +17,7 @@ module.exports = function (pluginsRepository) {
       return matches[matches.length-1];
     }
   }
-  
+
   function transformElementToModel(element) {
     var modelItem = {};
     var $element = this.$(element);
@@ -72,20 +72,20 @@ module.exports = function (pluginsRepository) {
     var model = {
       $html: $,
       plugins: plugins
-    }   
+    };
     return model;
   }
 
-  // Build an execution model for the HTML passed as an argument
-  function render(model, callback) {
-    
-    
+  // Render a model, starting with some options as data
+  function render(model, options, callback) {
+
+
     if (!model) {
       callback();
       return;
     }
 
-    
+
     if (!model.plugins) {
       if (model.$html) {
         callback(model.$html.html());
@@ -94,18 +94,24 @@ module.exports = function (pluginsRepository) {
       }
       return;
     }
-    
+
+    // Varying arguments handling
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = null;
+    }
+
     var k = model.plugins.length;
-    
-    
+
+
     // see http://book.mixu.net/node/ch7.html
     function series(data, index) {
-      
+
       if (index < k) {
         var plugin = model.plugins[index].plugin.instance;
-        
+
         var $element = model.plugins[index].plugin.$element;
-        
+
         plugin(data, $element, function(data) {
           var next = index + 1;
           series(data, next);
@@ -115,11 +121,16 @@ module.exports = function (pluginsRepository) {
         callback(render);
       }
     }
-    series([], 0);
+
+    var data = [];
+    if (!!options) {
+      data.push(options);
+    }
+    series(data, 0);
   }
 
   return {
     build: build,
     render: render
-  }
-}
+  };
+};

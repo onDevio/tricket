@@ -9,7 +9,7 @@ module.exports = function(pluginsRepository) {
   var readFileOptions = {
     encoding: 'utf8',
     flag: 'r'
-  }
+  };
 
   var temply = templyFactory(pluginsRepository);
 
@@ -17,14 +17,14 @@ module.exports = function(pluginsRepository) {
     log('Loading template from file path: ' + filePath);
     var html = fs.readFileSync(filePath, readFileOptions);
     var model = temply.build(html);
-    
+
     //
-    temply.render(model, function(html) {
-      
+    temply.render(model, options, function(html) {
+
       callback(null, html);
     });
   }
 
   // see http://expressjs.com/guide/using-template-engines.html
   return __express;
-}
+};
