@@ -27,6 +27,7 @@ router.post('/ticket/new', function(req, res) {
     customer: req.body.customer
   };
   insertTicket(ticket, function(result) {
+    log("Inserted ticket to mongo");
     res.redirect(302, '/app/tickets');
   }); 
 });

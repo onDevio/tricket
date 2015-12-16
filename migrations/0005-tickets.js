@@ -6,8 +6,24 @@ exports.up = function(db, next) {
     "customer": "Customer",
     "ticket_id": "CUS-1",
     "status": "Open",
+    "notes": [{
+      "body": "Nota inicial",
+      "type": "mail",
+      "dateCreated": "2015-12-14T12:12:47.901Z",
+      "user" : "mail"  
+    },{
+      "body": "Autorespuesta",
+      "type": "external",
+      "dateCreated": "2015-12-14T12:12:47.901Z",
+      "user" : "mail"  
+    },{
+      "body": "Nota 1",
+      "type": "external",
+      "dateCreated": "2015-12-14T12:12:47.901Z",
+      "user" : "lmunoz"  
+    }],
     "title": "New Ticket 1",
-    "worklog": 1,
+    "worklog": 3,
     "dateCreated": "2015-12-14T12:12:47.901Z"
   }, {
     "customer": "Customer",
