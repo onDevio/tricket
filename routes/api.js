@@ -19,15 +19,22 @@ var url = config.mongoUrl;
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);
+  var id = req.body.customer.substring(0,3).toUpperCase()+'-'+Math.floor(Math.random()*100);
+  var date = new Date();
+  var note = {
+    'body': req.body.body,
+    'type': 'external', 
+    'dateCreated': date.toISOString(),
+    'worklog': req.body.worklog || 0, 
+    'user' : req.user.displayName 
+  };
   var ticket = {
+    customer: req.body.customer,
+    ticket_id: id,
+    status: req.body.close !== undefined ? 'Closed' : 'Open',
     title: req.body.title || '<Empty subject>',
-    notes: [{
-      body: req.body.body
-    }],    
-    status: req.body.close !== undefined ? 'Closed' : 'Open', 
-    worklog: req.body.workload,
     dateCreated: new Date().toISOString(),
-    customer: req.body.customer
+    notes: [note]
   };
   insertTicket(ticket, function(result) {
     log('Inserted ticket to mongo');

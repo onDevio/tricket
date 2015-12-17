@@ -6,6 +6,8 @@ exports.up = function(db, next) {
     "customer": "Customer",
     "ticket_id": "CUS-1",
     "status": "Open",
+    "title": "New Ticket 1",    
+    "dateCreated": "2015-12-14T12:12:47.901Z",
     "notes": [{
       "body": "Nota inicial",
       "type": "mail",
@@ -24,9 +26,7 @@ exports.up = function(db, next) {
       "dateCreated": "2015-12-14T12:12:47.901Z",
       "worklog": 3,
       "user" : "lmunoz"  
-    }],
-    "title": "New Ticket 1",    
-    "dateCreated": "2015-12-14T12:12:47.901Z"
+    }]    
   }], function(err, result) {
     assert.equal(err, null);
     assert.equal(1, result.result.n);
