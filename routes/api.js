@@ -43,7 +43,7 @@ router.post('/ticket/:id/note', function(req, res) {
     'type': req.body.type, 
     'dateCreated': date.toISOString(),
     'worklog': req.body.worklog || 0, 
-    'user' : req.session.passport.user.displayName 
+    'user' : req.user.displayName 
   };
   
   //TODO: if external, send mail to customer
