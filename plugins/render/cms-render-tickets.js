@@ -19,7 +19,7 @@ module.exports = function(data, $element, callback) {
     var work = 0;
     notes.forEach(function(note){
       //log(note);
-      work += note.worklog;
+      work += parseInt(note.worklog);
     });  	
   	$element.append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+date.toLocaleString()+'</td><td>'+ticket.status+'</td><td>'+work+'</td><td>'+ticket.customer+'</td><td>'+ticket.ticket_id+'</td><td>'+ticket.title+'</td></tr>');
   });
