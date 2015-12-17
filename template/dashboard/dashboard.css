@@ -110,3 +110,10 @@ a.anchor {
     top: -70px;
     visibility: hidden;
 }
+
+.user img{
+  height: 50px;
+}
+.user span{
+  color: #FFF;
+}

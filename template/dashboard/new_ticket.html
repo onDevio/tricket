@@ -37,11 +37,12 @@
     <script src="/vendor/underscore/underscore-min.js"></script>
   </head>
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
       <div class="container-fluid">
         <div class="navbar-header">          
-          <a class="navbar-brand" href="/">Tricket</a>
+          <a class="navbar-brand" href="/">Tricket</a>          
         </div>
+        <span class="user pull-right"></span>
       </div>
     </nav>
     <div class="container-fluid">
@@ -49,7 +50,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="/app/tickets">Tickets</a></li>
-            <li><a href="/app/clients">Clients</a></li>
+            <!--li><a href="/app/clients">Clients</a></li-->
             <li><a href="/logout">Logout</a></li>
           </ul>
         </div>
@@ -65,20 +66,18 @@
               <input type="email" class="form-control" id="customer" name="customer" placeholder="Customer email">
             </div>     
             <div class="form-group col-lg-4">
-              <label class="sr-only" for="workload">Work Load</label>
-              <input type="number" class="form-control" id="workload" name="workload" placeholder="Work load in Hours">
+              <label class="sr-only" for="worklog">Work Log</label>
+              <input type="number" class="form-control" id="worklog" name="worklog" placeholder="Work log in Hours">
             </div>        
             <div class="form-group col-lg-12">
               <label class="sr-only" for="body">Ticket details</label>
               <textarea name="body" id="body" placeholder="Ticket description" class="form-control" rows="10"></textarea>
             </div>  
             <div class="form-group col-lg-12">
-              <button type="submit" class="pull-right btn btn-success" name="open">
-                Submit new ticket
-              </button>
-              <button type="submit" class="btn btn-primary  pull-right" name="close">
-                Submit ticket and Close
-              </button> 
+              <span class="pull-right">
+                <button type="submit" class="btn btn-primary" name="close">Submit ticket and Close</button>
+                <button type="submit" class="btn btn-success" name="open">Submit new ticket</button> 
+              </span>              
             </div>            
           </form>
           </div>          
