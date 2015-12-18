@@ -117,3 +117,6 @@ a.anchor {
 .user span{
   color: #FFF;
 }
+.clickable-row{
+  cursor: pointer;
+}

@@ -10,7 +10,5 @@ module.exports = function(data, $element, callback) {
 
   var user = data[0].user;
   $element.find('.user').append('<span>'+user.displayName+'  </span><img class="img-thumbnail" src="'+user.photos[0].value+'">');
-
   callback(data);
-
 }
