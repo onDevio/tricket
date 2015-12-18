@@ -12,7 +12,6 @@ describe('Tickets REST', function() {
   var msg = require('./mailinMsg');
 
   it('should create a ticket from an email', function(done) {
-    // TODO Visit all plugins
     request(app)
       .post('/api/emails')
       .send(msg)
@@ -29,6 +28,19 @@ describe('Tickets REST', function() {
         expect(ticket.worklog).to.equal(0);
         done();
       });
+  });
+
+  it('should create a ticket with new id', function(done) {
+    var ticket = {
+      customer: 'person@customer.com',
+      title: 'Ticket Title',
+      notes: [{
+        'body': 'Ticket body',
+        //'type': 'external',
+        'worklog': 5,
+        //'user' : req.user.displayName
+      }]
+    };
   });
 
 });
