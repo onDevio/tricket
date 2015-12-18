@@ -61,6 +61,7 @@
     "gulp-shell": "^0.4.3",
     "http-perf": "0.0.5",
     "mongodb-migrate": "^1.2.3",
+    "sinon": "^1.17.2",
     "supertest": "^1.1.0",
     "yargs": "^3.24.0"
   }

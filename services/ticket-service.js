@@ -1,39 +1,49 @@
-var config = require('../config/config')();
+'use strict';
+
 var log = require('debug')('tricket:services');
+var assert = require('assert');
 
-// @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/
-var MongoClient = require('mongodb').MongoClient,
-  assert = require('assert');
 
-// Connection URL
-var url = config.mongoUrl;
+module.exports = function(aConnectionFactory, aUrl) {
 
-module.exports = {
+  // @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/
+  var connectionFactory = aConnectionFactory || require('mongodb').MongoClient;
+  // Connection URL
+  var url = aUrl || require('../config/config')().mongoUrl;
 
-  findByTicketId: findByTicketId,
-  createTicket: createTicket,
-  insertTicket: insertTicket,
-  addNoteToTicket: addNoteToTicket
+  return {
+    connectionFactory: connectionFactory,
+    execute: function(func) {
+      connectionFactory.connect(url, function(err, db) {
+        assert.equal(null, err);
+        func(db);
+        db.close();
+      });
+    },
+    findByTicketId: function(id, callback) {
+      this.execute(function(db) {
+        findByTicketId(id, db, callback);
+      });
+    },
+    createTicket: createTicket,
+    insertTicket: function(ticket, callback) {
+      this.execute(function(db) {
+        insertTicket(ticket, db, callback);
+      });
+    },
+    addNoteToTicket: function addNoteToTicket(id, note, callback) {
+      this.execute(function(db) {
+        addNoteToTicket(id, note, db, callback);
+      });
+    }
+  };
 };
 
-function findByTicketId(id, callback) {
-  // Use connect method to connect to the Server
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    log('Connected correctly to server');
-
-    // Get the documents collection
-    var ticketsCollection = db.collection('tickets');
-    // Find some documents
-    ticketsCollection.findOne({
-      ticket_id: id
-    }).then(function(doc) {
-      db.close();
-      log(doc);
-      callback(doc);
-    });
-
-  });
+function findByTicketId(id, db, callback) {
+  // Find some documents
+  db.collection('tickets').findOne({
+    ticket_id: id
+  }, callback);
 }
 
 function createTicket(msg) {
@@ -50,14 +60,12 @@ function createTicket(msg) {
 }
 
 function assignTicketId(ticket, db, callback) {
-
   var counter = getCounterName(ticket);
   getNextSequence(counter, db, function(nextSeq) {
     var newId = counter + "-" + nextSeq;
     ticket.ticket_id = newId;
     callback();
   });
-
 }
 
 function getCounterName(ticket) {
@@ -71,100 +79,83 @@ function getCounterName(ticket) {
 }
 
 function getNextSequence(name, db, callback) {
-  var query = {_id: name};
+  var query = {
+    _id: name
+  };
   var sort = null;
-  var doc = { $inc: { seq: 1 } };
-  var options = { new: true, upsert: true };
+  var doc = {
+    $inc: {
+      seq: 1
+    }
+  };
+  var options = {
+    new: true,
+    upsert: true
+  };
 
   // @see http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#findAndModify
   db.collection('counters').findAndModify(query, sort, doc, options, function(err, result) {
-      assert.equal(null, err);
-      callback(result.value.seq);
+    assert.equal(null, err);
+    callback(result.value.seq);
   });
 }
 
-function insertTicket(ticket, callback) {
-  // Use connect method to connect to the Server
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    assignTicketId(ticket, db, function() {
-      // Get the documents collection
-      var ticketsCollection = db.collection('tickets');
-
-      // Find some documents
-      ticketsCollection.insert(ticket, function(err, result) {
-        assert.equal(err, null);
-        addCustomer(ticket.customer, db, function() {
-          callback(ticket);
-          db.close();
-        });
+function insertTicket(ticket, db, callback) {
+  assignTicketId(ticket, db, function() {
+    db.collection('tickets').insert(ticket, function(err, result) {
+      assert.equal(err, null);
+      addCustomer(ticket.customer, db, function() {
+        callback(ticket);
       });
-
     });
-
 
   });
 }
 
 function addCustomer(customer, db, callback) {
-  var query = {email: customer};
+  var query = {
+    email: customer
+  };
   var sort = null;
-  var doc = { $setOnInsert: {email: customer} };
-  var options = { new: true, upsert: true };
+  var doc = {
+    $setOnInsert: {
+      email: customer
+    }
+  };
+  var options = {
+    new: true,
+    upsert: true
+  };
 
   // @see http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#findAndModify
   db.collection('customers').findAndModify(query, sort, doc, options, function(err, result) {
-      assert.equal(null, err);
-      callback(result.value.seq);
+    assert.equal(null, err);
+    callback(result.value.seq);
   });
 }
 
-function updateTicketStatus(id, status, callback) {
-  // Use connect method to connect to the Server
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    log('Connected correctly to server');
-
-    // Get the documents collection
-    var ticketsCollection = db.collection('tickets');
-
-    // Find some documents
-    ticketsCollection.update({
-      ticket_id: id
-    }, {
-      $set: {
-        status: status
-      }
-    }, function(err, result) {
-      assert.equal(err, null);
-      console.log('Ticket updated' + status);
-      callback(result);
-    });
-
+function updateTicketStatus(id, status, db, callback) {
+  db.collection('tickets').update({
+    ticket_id: id
+  }, {
+    $set: {
+      status: status
+    }
+  }, function(err, result) {
+    assert.equal(err, null);
+    callback(result);
   });
 }
 
-function addNoteToTicket(id, note, callback) {
-  // Use connect method to connect to the Server
-  MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    log('Connected correctly to server');
-
-    // Get the documents collection
-    var ticketsCollection = db.collection('tickets');
-
-    // Find some documents
-    ticketsCollection.update({
-      ticket_id: id
-    }, {
-      $push: {
-        notes: note
-      }
-    }, function(result) {
-      db.close();
-      log(result);
-      callback(result);
-    });
-
+function addNoteToTicket(id, note, db, callback) {
+  db.collection('tickets').update({
+    ticket_id: id
+  }, {
+    $push: {
+      notes: note
+    }
+  }, function(err, result) {
+    assert.equal(err, null);
+    callback(result);
   });
 }

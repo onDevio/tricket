@@ -1,21 +1,52 @@
-var expect = require('chai').expect,
-  app = require('../app');
-var MongoClient = require('mongodb').MongoClient,
-  assert = require('assert');
-var config = require('../config/config')();
-// Connection URL
-var url = config.mongoUrl;
+var expect = require('chai').expect;
 
 describe('Ticket Service', function() {
 
-  var readFileOptions = {
-    encoding: 'utf8',
-    flag: 'r'
-  };
-
   var msg = require('./mailinMsg');
 
-  var ticketService = require('../services/ticket-service');
+  var mocko = {
+    db: {
+      collectionObject: {
+        documents: [],
+        findOne: function(query, callback) {
+          callback({
+            ticket_id: 'CUS-1'
+          });
+        },
+        findAndModify: function(query, sort, doc, options, callback) {
+          if (doc.$setOnInsert) {
+            this.documents.push(doc.$setOnInsert);
+          }
+          var err = null;
+          var result = {
+            value: {
+              seq: 1
+            }
+          };
+          callback(err, result);
+        },
+        insert: function(doc, callback) {
+          this.documents.push(doc);
+          var err = null;
+          var result = null;
+          callback(err, result);
+        }
+      },
+      collection: function(name) {
+        return this.collectionObject;
+      },
+      close: function() {
+        // NOOP
+      }
+    },
+    connect: function(url, callback) {
+      callback(null, this.db);
+    }
+  };
+
+  var ticketService = require('../services/ticket-service')(mocko);
+
+
 
   it('should create a new ticket with id generated from customer email', function(done) {
     var ticket = {
@@ -63,21 +94,17 @@ describe('Ticket Service', function() {
       }]
     };
     ticketService.insertTicket(ticket, function(result) {
-
-      MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        db.collection('customers').find({
-          email: 'person@customer.com'
-        }).toArray(function(err, docs) {
-          assert.equal(null, err);
-          expect(docs).to.have.length(1);
-          done();
-        });
-      });
-
+      //console.log(JSON.stringify(mocko.db.collectionObject.documents, null, 2));
+      expect(mocko.db.collectionObject.documents).to.include({email: 'person@customer.com'});
+      done();
     });
   });
 
-
+  it('should find one ticket', function(done) {
+    ticketService.findByTicketId('CUS-1', function(ticket) {
+      expect(ticket.ticket_id).to.equal('CUS-1');
+      done();
+    });
+  });
 
 });
