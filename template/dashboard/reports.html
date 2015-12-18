@@ -74,10 +74,16 @@
             </div>
             <button type="submit" class="btn btn-success">Generate</button>
           </form>
-          <div class="table-responsive">
+          <hr>
+          <div class="table-responsive cms-data-report-result cms-render-report-result">
             <table class="closed-tickets ticket-search table table-striped">
-              <caption>Report for client <span class=".client"></span></caption>
               <thead>
+                <tr>
+                  <td>Report for client <span class="client"></span> </td>
+                  <td></td>
+                  <td></td>
+                  <td align="right" class="total lable label-info"></td>
+                </tr>
                 <tr>
                   <th>Ticket ID</th>
                   <th>Title</th>
@@ -85,8 +91,16 @@
                   <th>Work Log</th>
                 </tr>
               </thead>
-              <tbody>                
+              <tbody>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td>Report for client <span class="client"></span> </td>
+                  <td></td>
+                  <td></td>
+                  <td align="right" class="total lable label-info"></td>
+                </tr>
+              </tfoot>
             </table>            
           </div> 
         </div>
