@@ -94,12 +94,28 @@ function insertTicket(ticket, callback) {
       // Find some documents
       ticketsCollection.insert(ticket, function(err, result) {
         assert.equal(err, null);
-        callback(ticket);
+        addCustomer(ticket.customer, db, function() {
+          callback(ticket);
+          db.close();
+        });
       });
 
     });
 
 
+  });
+}
+
+function addCustomer(customer, db, callback) {
+  var query = {email: customer};
+  var sort = null;
+  var doc = { $setOnInsert: {email: customer} };
+  var options = { new: true, upsert: true };
+
+  // @see http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#findAndModify
+  db.collection('customers').findAndModify(query, sort, doc, options, function(err, result) {
+      assert.equal(null, err);
+      callback(result.value.seq);
   });
 }
 

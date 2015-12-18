@@ -1,5 +1,10 @@
 var expect = require('chai').expect,
-    app = require('../app');
+  app = require('../app');
+var MongoClient = require('mongodb').MongoClient,
+  assert = require('assert');
+var config = require('../config/config')();
+// Connection URL
+var url = config.mongoUrl;
 
 describe('Ticket Service', function() {
 
@@ -43,6 +48,33 @@ describe('Ticket Service', function() {
     ticketService.insertTicket(ticket, function(result) {
       expect(ticket.ticket_id).to.match(/UNK-\d+/);
       done();
+    });
+  });
+
+  it('should add a new customer upon new ticket', function(done) {
+    var ticket = {
+      customer: 'person@customer.com',
+      title: 'Ticket Title',
+      notes: [{
+        'body': 'Ticket body',
+        //'type': 'external',
+        'worklog': 5,
+        //'user' : req.user.displayName
+      }]
+    };
+    ticketService.insertTicket(ticket, function(result) {
+
+      MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection('customers').find({
+          email: 'person@customer.com'
+        }).toArray(function(err, docs) {
+          assert.equal(null, err);
+          expect(docs).to.have.length(1);
+          done();
+        });
+      });
+
     });
   });
 
