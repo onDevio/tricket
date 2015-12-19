@@ -4,36 +4,42 @@ describe('Ticket Service', function() {
 
   var msg = require('./mailinMsg');
 
-  var mocko = {
+  var mockongo = {
     db: {
-      collectionObject: {
-        documents: [],
-        findOne: function(query, callback) {
-          callback({
-            ticket_id: 'CUS-1'
-          });
-        },
-        findAndModify: function(query, sort, doc, options, callback) {
-          if (doc.$setOnInsert) {
-            this.documents.push(doc.$setOnInsert);
-          }
-          var err = null;
-          var result = {
-            value: {
-              seq: 1
+      collectionFactory: function() {
+        return {
+          documents: [],
+          findOne: function(query, callback) {
+            callback({
+              ticket_id: 'CUS-1'
+            });
+          },
+          findAndModify: function(query, sort, doc, options, callback) {
+            if (doc.$setOnInsert) {
+              this.documents.push(doc.$setOnInsert);
             }
-          };
-          callback(err, result);
-        },
-        insert: function(doc, callback) {
-          this.documents.push(doc);
-          var err = null;
-          var result = null;
-          callback(err, result);
-        }
+            var err = null;
+            var result = {
+              value: {
+                seq: 1
+              }
+            };
+            callback(err, result);
+          },
+          insert: function(doc, callback) {
+            this.documents.push(doc);
+            var err = null;
+            var result = null;
+            callback(err, result);
+          }
+        };
       },
+      collections: {},
       collection: function(name) {
-        return this.collectionObject;
+        if (!this.collections[name]) {
+          this.collections[name] = this.collectionFactory();
+        }
+        return this.collections[name];
       },
       close: function() {
         // NOOP
@@ -44,7 +50,7 @@ describe('Ticket Service', function() {
     }
   };
 
-  var ticketService = require('../services/ticket-service')(mocko);
+  var ticketService = require('../services/ticket-service')(mockongo);
 
 
 
@@ -94,8 +100,10 @@ describe('Ticket Service', function() {
       }]
     };
     ticketService.insertTicket(ticket, function(result) {
-      //console.log(JSON.stringify(mocko.db.collectionObject.documents, null, 2));
-      expect(mocko.db.collectionObject.documents).to.include({email: 'person@customer.com'});
+      //console.log(JSON.stringify(mockongo.db.collection('customers').documents, null, 2));
+      expect(mockongo.db.collection('customers').documents).to.include({
+        email: 'person@customer.com'
+      });
       done();
     });
   });
