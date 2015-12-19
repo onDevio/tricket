@@ -13,27 +13,29 @@ module.exports = function(aConnectionFactory, aUrl) {
 
   return {
     connectionFactory: connectionFactory,
-    execute: function(func) {
+    execute: function(callback, func) {
       connectionFactory.connect(url, function(err, db) {
         assert.equal(null, err);
-        func(db);
-        db.close();
+        func(db, function(result) {
+          db.close();
+          callback(result);
+        });
       });
     },
     findByTicketId: function(id, callback) {
-      this.execute(function(db) {
-        findByTicketId(id, db, callback);
+      this.execute(callback, function(db, done) {
+        findByTicketId(id, db, done);
       });
     },
     createTicket: createTicket,
     insertTicket: function(ticket, callback) {
-      this.execute(function(db) {
-        insertTicket(ticket, db, callback);
+      this.execute(callback, function(db, done) {
+        insertTicket(ticket, db, done);
       });
     },
-    addNoteToTicket: function addNoteToTicket(id, note, callback) {
-      this.execute(function(db) {
-        addNoteToTicket(id, note, db, callback);
+    addNoteToTicket: function(id, note, callback) {
+      this.execute(callback, function(db, done) {
+        addNoteToTicket(id, note, db, done);
       });
     }
   };
