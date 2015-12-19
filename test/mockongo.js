@@ -5,6 +5,15 @@ module.exports = function() {
       collectionFactory: function() {
         return {
           documents: [],
+          find_result: [],
+          find: function(query) {
+            var that = this;
+            return {
+              toArray: function (callback) {
+                callback(null, that.find_result);
+              }
+            };
+          },
           findOne_result: {},
           findOne: function(query, callback) {
             callback(this.findOne_result);

@@ -16,9 +16,9 @@ module.exports = function(aConnectionFactory, aUrl) {
     execute: function(callback, func) {
       connectionFactory.connect(url, function(err, db) {
         assert.equal(null, err);
-        func(db, function(result) {
+        func(db, function() {
           db.close();
-          callback(result);
+          callback.apply(null, arguments);
         });
       });
     },
