@@ -1,0 +1,6 @@
+{
+  "mongoAppDb": {
+    "host": "mongo",
+    "db": "tricket"
+  }
+}
