@@ -20,7 +20,7 @@ gulp.task('default', function () {
     interval: 500
   }
   gulp.watch(['template/**/*.html'], watchOptions, server.notify);
-  gulp.watch(['app.js', 'routes/**/*.js', 'modules/**/*.js'], watchOptions, [server.run]);
+  gulp.watch(['app.js', 'routes/**/*.js', 'modules/**/*.js', 'plugins/**/*.js', 'services/**/*.js'], watchOptions, [server.run]);
 });
 
 gulp.task('perf', function () {
