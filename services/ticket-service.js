@@ -130,7 +130,7 @@ function addCustomer(customer, db, callback) {
   // @see http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#findAndModify
   db.collection('customers').findAndModify(query, sort, doc, options, function(err, result) {
     assert.equal(null, err);
-    callback(result.value.seq);
+    callback();
   });
 }
 

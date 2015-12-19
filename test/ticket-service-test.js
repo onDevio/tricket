@@ -4,54 +4,14 @@ describe('Ticket Service', function() {
 
   var msg = require('./mailinMsg');
 
-  var mockongo = {
-    db: {
-      collectionFactory: function() {
-        return {
-          documents: [],
-          findOne: function(query, callback) {
-            callback({
-              ticket_id: 'CUS-1'
-            });
-          },
-          findAndModify: function(query, sort, doc, options, callback) {
-            if (doc.$setOnInsert) {
-              this.documents.push(doc.$setOnInsert);
-            }
-            var err = null;
-            var result = {
-              value: {
-                seq: 1
-              }
-            };
-            callback(err, result);
-          },
-          insert: function(doc, callback) {
-            this.documents.push(doc);
-            var err = null;
-            var result = null;
-            callback(err, result);
-          }
-        };
-      },
-      collections: {},
-      collection: function(name) {
-        if (!this.collections[name]) {
-          this.collections[name] = this.collectionFactory();
-        }
-        return this.collections[name];
-      },
-      close: function() {
-        // NOOP
-      }
-    },
-    connect: function(url, callback) {
-      callback(null, this.db);
-    }
-  };
-
+  var mockongo = require('./mockongo')();
   var ticketService = require('../services/ticket-service')(mockongo);
 
+  mockongo.db.collection('counters').findAndModify_result = {
+    value: {
+      seq: 1
+    }
+  };
 
 
   it('should create a new ticket with id generated from customer email', function(done) {
@@ -66,7 +26,7 @@ describe('Ticket Service', function() {
       }]
     };
     ticketService.insertTicket(ticket, function(result) {
-      expect(ticket.ticket_id).to.match(/CUS-\d+/);
+      expect(ticket.ticket_id).to.equal('CUS-1');
       done();
     });
   });
@@ -83,7 +43,7 @@ describe('Ticket Service', function() {
       }]
     };
     ticketService.insertTicket(ticket, function(result) {
-      expect(ticket.ticket_id).to.match(/UNK-\d+/);
+      expect(ticket.ticket_id).to.equal('UNK-1');
       done();
     });
   });
@@ -109,6 +69,9 @@ describe('Ticket Service', function() {
   });
 
   it('should find one ticket', function(done) {
+    mockongo.db.collection('tickets').findOne_result = {
+      ticket_id: 'CUS-1'
+    };
     ticketService.findByTicketId('CUS-1', function(ticket) {
       expect(ticket.ticket_id).to.equal('CUS-1');
       done();
