@@ -8,7 +8,7 @@ var upload = multer();
 
 var log = require('debug')('tricket:api');
 
-var ticketService = require('../services/ticket-service.js');
+var ticketService = require('../services/ticket-service.js')();
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);

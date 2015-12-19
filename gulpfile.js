@@ -3,24 +3,24 @@ var shell = require('gulp-shell');
 var argv = require('yargs').argv;
 
 var server = require('gulp-express');
- 
+
 gulp.task('default', function () {
   options = {
       env: process.env
   };
-  options.env.NODE_ENV = 'development';
+  options.env.NODE_ENV = 'dev';
   options.env.DEBUG = '*';
 
-  // Start the server at the beginning of the task 
+  // Start the server at the beginning of the task
   var livereload = true;
   server.run(['bin/www'], options, livereload);
 
-  // Restart the server when file changes 
+  // Restart the server when file changes
   var watchOptions = {
     interval: 500
   }
-  gulp.watch(['template/**/*.html'], watchOptions, server.notify); 
-  gulp.watch(['app.js', 'routes/**/*.js', 'modules/**/*.js'], watchOptions, [server.run]);
+  gulp.watch(['template/**/*.html'], watchOptions, server.notify);
+  gulp.watch(['app.js', 'routes/**/*.js', 'modules/**/*.js', 'plugins/**/*.js', 'services/**/*.js'], watchOptions, [server.run]);
 });
 
 gulp.task('perf', function () {

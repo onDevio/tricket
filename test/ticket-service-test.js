@@ -1,16 +1,18 @@
-var expect = require('chai').expect,
-    app = require('../app');
+var expect = require('chai').expect;
 
 describe('Ticket Service', function() {
 
-  var readFileOptions = {
-    encoding: 'utf8',
-    flag: 'r'
-  };
-
   var msg = require('./mailinMsg');
 
-  var ticketService = require('../services/ticket-service');
+  var mockongo = require('./mockongo')();
+  var ticketService = require('../services/ticket-service')(mockongo);
+
+  mockongo.db.collection('counters').findAndModify_result = {
+    value: {
+      seq: 1
+    }
+  };
+
 
   it('should create a new ticket with id generated from customer email', function(done) {
     var ticket = {
@@ -24,7 +26,7 @@ describe('Ticket Service', function() {
       }]
     };
     ticketService.insertTicket(ticket, function(result) {
-      expect(ticket.ticket_id).to.match(/CUS-\d+/);
+      expect(ticket.ticket_id).to.equal('CUS-1');
       done();
     });
   });
@@ -41,11 +43,39 @@ describe('Ticket Service', function() {
       }]
     };
     ticketService.insertTicket(ticket, function(result) {
-      expect(ticket.ticket_id).to.match(/UNK-\d+/);
+      expect(ticket.ticket_id).to.equal('UNK-1');
       done();
     });
   });
 
+  it('should add a new customer upon new ticket', function(done) {
+    var ticket = {
+      customer: 'person@customer.com',
+      title: 'Ticket Title',
+      notes: [{
+        'body': 'Ticket body',
+        //'type': 'external',
+        'worklog': 5,
+        //'user' : req.user.displayName
+      }]
+    };
+    ticketService.insertTicket(ticket, function(result) {
+      //console.log(JSON.stringify(mockongo.db.collection('customers').documents, null, 2));
+      expect(mockongo.db.collection('customers').documents).to.include({
+        email: 'person@customer.com'
+      });
+      done();
+    });
+  });
 
+  it('should find one ticket', function(done) {
+    mockongo.db.collection('tickets').findOne_result = {
+      ticket_id: 'CUS-1'
+    };
+    ticketService.findByTicketId('CUS-1', function(ticket) {
+      expect(ticket.ticket_id).to.equal('CUS-1');
+      done();
+    });
+  });
 
 });
