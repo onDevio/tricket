@@ -15,6 +15,7 @@ var MongoClient = require('mongodb').MongoClient,
  * @see http://mongoosejs.com/docs/index.html
  */
 module.exports = function(data, $element, callback) {
+  /*
  findAll(function(tickets) {
    var data = {
      "contents": tickets,
@@ -48,5 +49,7 @@ function findAll(callback) {
     });
 
   });
+  */
+  callback();
 
 }

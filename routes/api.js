@@ -12,7 +12,6 @@ var ticketService = require('../services/ticket-service.js');
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);
-  //var id = req.body.customer.substring(0,3).toUpperCase()+'-'+Math.floor(Math.random()*100);
   var date = new Date();
   var note = {
     'body': req.body.body,
@@ -23,7 +22,6 @@ router.post('/ticket/new', function(req, res) {
   };
   var ticket = {
     customer: req.body.customer,
-    //ticket_id: id,
     status: req.body.close !== undefined ? 'Closed' : 'Open',
     title: req.body.title || '<Empty subject>',
     dateCreated: new Date().toISOString(),

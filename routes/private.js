@@ -6,7 +6,8 @@ router.get('/tickets', function(req, res) {
 });
 
 router.get('/reports', function(req, res) {
-  res.render('dashboard/reports.html', {user: req.user});
+  console.log(req.query);
+  res.render('dashboard/reports.html', {user: req.user, customer: req.query.customer, start: req.query.range, end: req.query.end });
 });
 
 /*

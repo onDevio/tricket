@@ -18,12 +18,13 @@ module.exports = function(data, $element, callback) {
     notes.forEach(function(note){
       //log(note);
       work += parseInt(note.worklog);
-      totalWork += work;
     });  	
     
   	$element.find('tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+ticket.status+' </td><td align="right">'+work+' </td></tr>');
+    totalWork += work;
+    //log(totalWork);
   });
-  //log(totalWork);
+  
   //TODO: Clientes
   $element.find('.client').text(totalWork.toString());
   $element.find('.total').text("Total work log: "+ totalWork.toString());

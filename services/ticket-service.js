@@ -9,11 +9,11 @@ var MongoClient = require('mongodb').MongoClient,
 var url = config.mongoUrl;
 
 module.exports = {
-
   findByTicketId: findByTicketId,
   createTicket: createTicket,
   insertTicket: insertTicket,
-  addNoteToTicket: addNoteToTicket
+  addNoteToTicket: addNoteToTicket,
+  updateTicketStatus: updateTicketStatus
 };
 
 function findByTicketId(id, callback) {
