@@ -39,8 +39,8 @@
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
       <div class="container-fluid">
-        <div class="navbar-header">          
-          <a class="navbar-brand" href="/">Tricket</a>          
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Tricket</a>
         </div>
         <span class="user pull-right"></span>
       </div>
@@ -53,21 +53,20 @@
             <li><a href="/app/reports">Reports</a></li>
             <!--li><a href="/app/clients">Clients</a></li-->
             <li><a href="/logout">Logout</a></li>
-          </ul>          
+          </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
           <div class="row">
             <h2 class="sub-header">Ticket List</h2>
-                        
-          </div>          
+          </div>
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#open" aria-controls="open" role="tab" data-toggle="tab">Open</a></li>
             <li role="presentation"><a href="#closed" aria-controls="closed" role="tab" data-toggle="tab">Closed</a></li>
               <form class="form-inline">
-              <input type="text" class="form-control" id="search" placeholder="Type to search"> 
+              <input type="text" class="form-control" id="search" placeholder="Type to search">
               <a href="/app/ticket/new" class="btn btn-default pull-right">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Ticket
-              </a>                 
+              </a>
             </form>
           </ul>
           <div class="tab-content cms-data-tickets cms-render-tickets">
@@ -84,10 +83,10 @@
                       <th>Customer</th>
                     </tr>
                   </thead>
-                  <tbody>                
+                  <tbody>
                   </tbody>
-                </table>            
-              </div> 
+                </table>
+              </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="closed">
               <div class="table-responsive">
@@ -102,15 +101,23 @@
                       <th>Customer</th>
                     </tr>
                   </thead>
-                  <tbody>                
+                  <tbody>
                   </tbody>
-                </table>            
-              </div> 
+                </table>
+              </div>
             </div>
+<<<<<<< HEAD
           </div>
         </div>                   
       </div>
     </div>   
+=======
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+>>>>>>> master
     <script type="text/javascript">
       $(document).ready(function($) {
           $(".clickable-row").click(function() {
@@ -118,7 +125,7 @@
               window.document.location = $(this).data("href");
           });
           var $rows = $('.cms-data-tickets tr');
-          $('#search').keyup(function() {      
+          $('#search').keyup(function() {
               var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
                   reg = RegExp(val, 'i'),
                   text;
@@ -129,7 +136,7 @@
               }).hide();
           });
       });
-    </script>  
+    </script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
