@@ -2,8 +2,6 @@ var expect = require('chai').expect;
 
 describe('Ticket Service', function() {
 
-  var msg = require('./mailinMsg');
-
   var mockongo = require('./mockongo')();
   var ticketService = require('../services/ticket-service')(mockongo);
 
@@ -16,7 +14,9 @@ describe('Ticket Service', function() {
 
   it('should create a new ticket with id generated from customer email', function(done) {
     var ticket = {
-      customer: 'person@customer.com',
+      customer: {
+        email: 'person@customer.com'
+      },
       title: 'Ticket Title',
       notes: [{
         'body': 'Ticket body',
@@ -50,7 +50,9 @@ describe('Ticket Service', function() {
 
   it('should add a new customer upon new ticket', function(done) {
     var ticket = {
-      customer: 'person@customer.com',
+      customer: {
+        email: 'person@customer.com'
+      },
       title: 'Ticket Title',
       notes: [{
         'body': 'Ticket body',
@@ -76,6 +78,16 @@ describe('Ticket Service', function() {
       expect(ticket.ticket_id).to.equal('CUS-1');
       done();
     });
+  });
+
+  it('should create a ticket from an email forwarded from GMail', function(done) {
+    var fwdEmail = require('./gmailForward');
+    var ticket = ticketService.createTicket(fwdEmail);
+    expect(ticket.title).to.equal('Prueba');
+    expect(ticket.notes[0].body).to.equal('Esto es una prueba.\n');
+    expect(ticket.customer.email).to.equal('mefernandez@ondevio.com');
+    expect(ticket.customer.name).to.equal('Mariano Eloy Fernández Osca');
+    done();
   });
 
 });

@@ -57,7 +57,10 @@ function createTicket(msg) {
     status: 'Open',
     worklog: 0,
     dateCreated: new Date().toISOString(),
-    customer: msg.envelopeFrom.address
+    customer: {
+      email: msg.from[0].address,
+      name: msg.from[0].name
+    }
   };
 }
 
@@ -72,10 +75,10 @@ function assignTicketId(ticket, db, callback) {
 
 function getCounterName(ticket) {
   var name = 'UNK';
-  if (!!ticket.customer) {
+  if (ticket.customer && ticket.customer.email) {
     var re = /(?:@)([a-zA-Z]{3})/gi;
     // TODO Find out why it does not ignore non-capturing group (hence substring(1))
-    name = ticket.customer.match(re).pop().substring(1).toUpperCase();
+    name = ticket.customer.email.match(re).pop().substring(1).toUpperCase();
   }
   return name;
 }
@@ -115,14 +118,12 @@ function insertTicket(ticket, db, callback) {
 }
 
 function addCustomer(customer, db, callback) {
-  var query = {
-    email: customer
-  };
+  var query = customer ? {
+    email: customer.email
+  } : {};
   var sort = null;
   var doc = {
-    $setOnInsert: {
-      email: customer
-    }
+    $setOnInsert: customer
   };
   var options = {
     new: true,

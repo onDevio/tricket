@@ -22,7 +22,7 @@ module.exports = function(data, $element, callback) {
       //log(note);
       work += parseInt(note.worklog);
     });
-  	$element.find('#'+ticket.status.toLowerCase()+' tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+work+' </td><td>'+ticket.customer+' </td></tr>');
+  	$element.find('#'+ticket.status.toLowerCase()+' tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td></tr>');
   });
 
   callback(data);

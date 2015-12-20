@@ -22,7 +22,10 @@ router.post('/ticket/new', function(req, res) {
     'user' : req.user.displayName
   };
   var ticket = {
-    customer: req.body.customer,
+    customer: {
+      email: req.body.customer,
+      name: ''
+    },
     //ticket_id: id,
     status: req.body.close !== undefined ? 'Closed' : 'Open',
     title: req.body.title || '<Empty subject>',
