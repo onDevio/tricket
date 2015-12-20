@@ -63,7 +63,6 @@ router.post('/ticket/:id/note', function(req, res) {
     }
   }
   res.redirect(302, '/app/ticket/'+id);
-
 });
 
 router.post('/emails', upload.array(), function(req, res, next) {

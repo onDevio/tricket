@@ -6,15 +6,12 @@ router.get('/tickets', function(req, res) {
 });
 
 router.get('/reports', function(req, res) {
-  console.log(req.query);
-  res.render('dashboard/reports.html', {user: req.user, customer: req.query.customer, start: req.query.range, end: req.query.end });
+  res.render('dashboard/reports.html', {user: req.user, customer: req.query.customer, start: req.query.start, end: req.query.end });
 });
 
-/*
-router.get('/clients', function(req, res) {
-  res.render('dashboard/clients.html', {user: req.user});
-}
-*/
+router.get('/customers', function(req, res) {
+  res.render('dashboard/customers.html', {user: req.user});
+});
 
 router.get('/ticket/new', function(req, res) {
   res.render('dashboard/new_ticket.html', {user: req.user});

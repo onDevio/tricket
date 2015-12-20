@@ -9,6 +9,12 @@ module.exports = function(data, $element, callback) {
   }
   
   var tickets = data.contents;
+
+  if (!tickets) {
+    callback();
+    return;
+  }
+
   //log(JSON.stringify(tickets));
   var totalWork = 0;
   tickets.forEach(function(ticket){
@@ -21,6 +27,7 @@ module.exports = function(data, $element, callback) {
     });  	
     
   	$element.find('tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+ticket.status+' </td><td align="right">'+work+' </td></tr>');
+    $element.removeClass('hidden');
     totalWork += work;
     //log(totalWork);
   });

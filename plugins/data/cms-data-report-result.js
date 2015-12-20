@@ -12,8 +12,24 @@ var MongoClient = require('mongodb').MongoClient,
  * @see http://mongoosejs.com/docs/index.html
  */
 module.exports = function(data, $element, callback) {
- var customer = data; 
- findByCustomerRange(function(tickets) {
+  if(data[0].customer === undefined){
+    callback(data);
+    return;
+  }
+  var query = {
+    customer : data[0].customer,
+  };
+  if(data[0].start !== undefined){
+    query.start = new Date(data[0].start).toISOString();
+  }
+
+  //Dudas
+  if(data[0].end !== undefined){
+    if(data[0].start !== undefined){
+      query.end = new Date().toISOString();
+    }
+  }
+  findByCustomerRange(query, function(tickets) {
    var data = {
      "contents": tickets,
      "page": {
@@ -21,15 +37,13 @@ module.exports = function(data, $element, callback) {
        "size": tickets.length,
        "total": tickets.length
      }
-   };
-   callback(data);
- });
-
-
+    };
+    callback(data);
+  });
 }
 
 // @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#find-all-documents
-function findByCustomerRange(callback) {
+function findByCustomerRange(query, callback) {
   // Connection URL
   var url = config.mongoUrl;
   // Use connect method to connect to the Server
@@ -39,9 +53,18 @@ function findByCustomerRange(callback) {
 
     // Get the documents collection
     var collection = db.collection('tickets');
+    var search = {
+                 "dateCreated" : query.start
+               };
+
+    //"customer.email": query.customer,
+
+
+
     // Find some documents
-    collection.find({}).toArray(function(err, docs) {
+    collection.find(search).toArray(function(err, docs) {
       db.close();
+      log(docs);
       callback(docs);
     });
 

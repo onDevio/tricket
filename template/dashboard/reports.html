@@ -52,7 +52,7 @@
           <ul class="nav nav-sidebar">
             <li><a href="/app/tickets">Tickets</a></li>
             <li class="active"><a href="/app/reports">Reports</a></li>
-            <!--li><a href="/app/clients">Clients</a></li-->
+            <li><a href="/app/customers">Customers</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>          
         </div>
@@ -63,8 +63,8 @@
           <form class="form-inline">
             <div class="form-group">
               <label for="customer">Customer: </label>
-              <select class="form-control" name="customer">
-                <option value="MOL-1">MOL-1</option>
+              <select class="form-control cms-data-customers-list cms-render-customers-list" name="customer">
+                <option value="">Choose a customer</option>
               </select>
             </div>
             <div class="form-group">
@@ -77,7 +77,7 @@
             <button type="submit" class="btn btn-success">Generate</button>
           </form>
           <hr>
-          <div class="table-responsive cms-data-report-result cms-render-report-result">
+          <div class="table-responsive cms-data-report-result cms-render-report-result hidden">
             <table class="closed-tickets ticket-search table table-striped">
               <thead>
                 <tr>

@@ -1,6 +1,6 @@
 'use strict';
 
-var log = require('debug')('temply:cms-data-clients');
+var log = require('debug')('temply:cms-data-customers');
 var clientService = require('../../services/client-service')();
 
 module.exports = function(data, $element, callback) {

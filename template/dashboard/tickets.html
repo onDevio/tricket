@@ -51,7 +51,7 @@
           <ul class="nav nav-sidebar">
             <li class="active"><a href="/app/tickets">Tickets</a></li>
             <li><a href="/app/reports">Reports</a></li>
-            <!--li><a href="/app/clients">Clients</a></li-->
+            <li><a href="/app/customers">Customers</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
         </div>
@@ -106,18 +106,10 @@
                 </table>
               </div>
             </div>
-<<<<<<< HEAD
           </div>
         </div>                   
       </div>
-    </div>   
-=======
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
->>>>>>> master
+    </div> 
     <script type="text/javascript">
       $(document).ready(function($) {
           $(".clickable-row").click(function() {
@@ -129,7 +121,7 @@
               var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
                   reg = RegExp(val, 'i'),
                   text;
-              console.log('Tripas');
+              //console.log('Tripas');
               $rows.show().filter(function() {
                   text = $(this).text().replace(/\s+/g, ' ');
                   return !reg.test(text);
