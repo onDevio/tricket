@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 
-describe('Ticket Service', function() {
+describe('Client Service', function() {
 
   var mockongo = require('./mockongo')();
   var clientService = require('../services/client-service')(mockongo);
