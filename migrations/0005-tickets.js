@@ -3,7 +3,7 @@ var mongodb = require('mongodb');
 
 exports.up = function(db, next) {
   db.collection('tickets').insertMany([{
-    "customer": "Customer",
+    "customer": {"name": "Customer", "email": "person@customer.com"},
     "ticket_id": "CUS-1",
     "status": "Open",
     "title": "New Ticket 1",
@@ -31,7 +31,6 @@ exports.up = function(db, next) {
     assert.equal(err, null);
     next();
   });
-
 };
 
 exports.down = function(db, next) {

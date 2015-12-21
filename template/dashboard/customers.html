@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Clients</title>
+    <title>Customers</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/template/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,11 +37,12 @@
     <script src="/vendor/underscore/underscore-min.js"></script>
   </head>
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">Tickets</a>
+          <a class="navbar-brand" href="/">Customers</a>
         </div>
+        <span class="user pull-right"></span>
       </div>
     </nav>
     <div class="container-fluid">
@@ -49,16 +50,17 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="/app/tickets">Tickets</a></li>
-            <li class="active"><a href="/app/clients">Clients <span class="sr-only">(current)</span></a></li>
+            <li><a href="/app/reports">Reports</a></li>
+            <li class="active"><a href="/app/customers">Customers</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <a class="anchor" name="logs"></a>
-          <h2 class="sub-header">Clients</h2>
-          <form onSubmit="return false;" class="form-inline">
-            <input type="text" class="form-control" placeholder="Search..." onChange="filter(this.value)">
-            <a class="form-control btn btn-default" onClick="clearLogs(event);">Clear Logs</a>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
+          <div class="row">
+            <h2 class="sub-header">Customer List</h2>
+          </div>
+          <form class="form-inline">
+            <input type="text" class="form-control" id="search" placeholder="Type to search">
           </form>
           <div class="table-responsive">
             <table id="logs-table" class="table table-striped">
@@ -68,18 +70,36 @@
                   <th>Email</th>
                 </tr>
               </thead>
-              <tbody class="cms-data-clients cms-render-clients">
-                <tr class="clickable-row" data-href="/app/client/1">
+              <tbody class="cms-data-customers cms-render-customers">
+                <tr class="clickable-row" data-href="/app/customers/:id">
                   <td>No name provided</td>
                   <td>No email provided</td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
-        </div>
-    </div>
-
+        </div>                   
+      </div>
+    </div> 
+    <script type="text/javascript">
+      $(document).ready(function($) {
+          $(".clickable-row").click(function() {
+              console.log('Click');
+              window.document.location = $(this).data("href");
+          });
+          var $rows = $('.cms-data-customers tr');
+          $('#search').keyup(function() {
+              var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                  reg = RegExp(val, 'i'),
+                  text;
+              //console.log('Tripas');
+              $rows.show().filter(function() {
+                  text = $(this).text().replace(/\s+/g, ' ');
+                  return !reg.test(text);
+              }).hide();
+          });
+      });
+    </script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -89,8 +109,7 @@
     <script src="/template/assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <!-- Este script lo sirve el propio socket.io, no es ninguna lib JS estática -->
-    <script src="/socket.io/socket.io.js"></script>
+    
     <!--script>
       var url = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
       var socket = io.connect(url);

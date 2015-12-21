@@ -1,6 +1,6 @@
 'use strict';
 
-var log = require('debug')('temply:cms-render-clients');
+var log = require('debug')('temply:cms-render-customers');
 var moment = require('moment');
 
 module.exports = function(data, $element, callback) {
@@ -9,13 +9,13 @@ module.exports = function(data, $element, callback) {
     return;
   }
 
-  var clients = data.contents;
+  var customers = data.contents;
   var $rowTpl = $element.find('tr').remove();
 
-  clients.forEach(function(client){
+  customers.forEach(function(customer){
     var $row = $rowTpl.clone();
-    $row.find('td').eq(0).text(client.name);
-    $row.find('td').eq(1).text(client.email);
+    $row.find('td').eq(0).text(customer.name);
+    $row.find('td').eq(1).text(customer.email);
     $element.append($row);
   });
 

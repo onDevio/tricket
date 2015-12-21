@@ -24,7 +24,7 @@ module.exports = function(data, $element, callback) {
   var buttons = ticket.status !== "Open" ? 'open' : 'closed'
   $element.find('.buttons .'+buttons).remove();
     
-  $element.find('.customer').text(ticket.customer);
+  $element.find('.customer').text(ticket.customer.name +' '+ ticket.customer.email);
   
   var notes = ticket.notes;
   var work = 0;

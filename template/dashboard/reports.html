@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Tickets</title>
+    <title>Reports</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/template/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,6 +29,7 @@
 
     <!-- Load c3.css -->
     <link href="/vendor/c3/c3.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
 
     <!-- Load d3.js and c3.js -->
     <script src="/vendor/d3/d3.min.js" charset="utf-8"></script>
@@ -39,8 +40,8 @@
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
       <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">Tricket</a>
+        <div class="navbar-header">          
+          <a class="navbar-brand" href="/">Tricket</a>          
         </div>
         <span class="user pull-right"></span>
       </div>
@@ -49,84 +50,71 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="/app/tickets">Tickets</a></li>
-            <li><a href="/app/reports">Reports</a></li>
+            <li><a href="/app/tickets">Tickets</a></li>
+            <li class="active"><a href="/app/reports">Reports</a></li>
             <li><a href="/app/customers">Customers</a></li>
             <li><a href="/logout">Logout</a></li>
-          </ul>
+          </ul>          
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
           <div class="row">
-            <h2 class="sub-header">Ticket List</h2>
-          </div>
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#open" aria-controls="open" role="tab" data-toggle="tab">Open</a></li>
-            <li role="presentation"><a href="#closed" aria-controls="closed" role="tab" data-toggle="tab">Closed</a></li>
-              <form class="form-inline">
-              <input type="text" class="form-control" id="search" placeholder="Type to search">
-              <a href="/app/ticket/new" class="btn btn-default pull-right">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Ticket
-              </a>
-            </form>
-          </ul>
-          <div class="tab-content cms-data-tickets cms-render-tickets">
-            <div role="tabpanel" class="tab-pane active" id="open">
-              <div class="table-responsive">
-                <table class="open-tickets ticket-search table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Ticket ID</th>
-                      <th>Title</th>
-                      <th>Opened</th>
-                      <th>Status</th>
-                      <th>Work Log</th>
-                      <th>Customer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
+            <h2 class="sub-header">Generate Report</h2>                        
+          </div> 
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="customer">Customer: </label>
+              <select class="form-control cms-data-customers-list cms-render-customers-list" name="customer">
+                <option value="">Choose a customer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-daterange">
+                <input type="text" class="form-control" name="start" value="">
+                <span class="input-group-addon">to</span>
+                <input type="text" class="form-control" name="end" value="">
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="closed">
-              <div class="table-responsive">
-                <table class="closed-tickets ticket-search table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Ticket ID</th>
-                      <th>Title</th>
-                      <th>Opened</th>
-                      <th>Status</th>
-                      <th>Work Log</th>
-                      <th>Customer</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>                   
-      </div>
+            <button type="submit" class="btn btn-success">Generate</button>
+          </form>
+          <hr>
+          <div class="table-responsive cms-data-report-result cms-render-report-result hidden">
+            <table class="closed-tickets ticket-search table table-striped">
+              <thead>
+                <tr>
+                  <td>Report for customer: <span class="customer"></span> </td>
+                  <td></td>
+                  <td></td>
+                  <td align="right" class="total lable label-info"></td>
+                </tr>
+                <tr>
+                  <th>Ticket ID</th>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Work Log</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Report for customer; <span class="customer"></span> </td>
+                  <td></td>
+                  <td></td>
+                  <td align="right" class="total lable label-info"></td>
+                </tr>
+              </tfoot>
+            </table>            
+          </div> 
+        </div>
+      </div>                   
     </div> 
     <script type="text/javascript">
-      $(document).ready(function($) {
-          $(".clickable-row").click(function() {
-              console.log('Click');
-              window.document.location = $(this).data("href");
-          });
-          var $rows = $('.cms-data-tickets tr');
-          $('#search').keyup(function() {
-              var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-                  reg = RegExp(val, 'i'),
-                  text;
-              //console.log('Tripas');
-              $rows.show().filter(function() {
-                  text = $(this).text().replace(/\s+/g, ' ');
-                  return !reg.test(text);
-              }).hide();
-          });
+      $( document ).ready(function() {
+        $('.input-daterange input').each(function() {
+            $(this).datepicker({
+                todayHighlight: true
+            });
+        });
       });
     </script>
     <!-- Bootstrap core JavaScript
@@ -134,6 +122,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="/template/assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

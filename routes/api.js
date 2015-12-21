@@ -12,7 +12,6 @@ var ticketService = require('../services/ticket-service.js')();
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);
-  //var id = req.body.customer.substring(0,3).toUpperCase()+'-'+Math.floor(Math.random()*100);
   var date = new Date();
   var note = {
     'body': req.body.body,
@@ -26,7 +25,6 @@ router.post('/ticket/new', function(req, res) {
       email: req.body.customer,
       name: ''
     },
-    //ticket_id: id,
     status: req.body.close !== undefined ? 'Closed' : 'Open',
     title: req.body.title || '<Empty subject>',
     dateCreated: new Date().toISOString(),
@@ -65,7 +63,6 @@ router.post('/ticket/:id/note', function(req, res) {
     }
   }
   res.redirect(302, '/app/ticket/'+id);
-
 });
 
 router.post('/emails', upload.array(), function(req, res, next) {
