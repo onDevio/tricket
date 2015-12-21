@@ -33,6 +33,11 @@ module.exports = function(aConnectionFactory, aUrl) {
         insertTicket(ticket, db, done);
       });
     },
+    updateTicketStatus: function(id, note, callback) {
+      this.execute(callback, function(db, done) {
+        updateTicketStatus(id, note, db, done);
+      });
+    },
     addNoteToTicket: function(id, note, callback) {
       this.execute(callback, function(db, done) {
         addNoteToTicket(id, note, db, done);

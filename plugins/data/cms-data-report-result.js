@@ -12,35 +12,37 @@ var MongoClient = require('mongodb').MongoClient,
  * @see http://mongoosejs.com/docs/index.html
  */
 module.exports = function(data, $element, callback) {
-  if(data[0].customer === undefined){
+  if(!data[0].customer){
     callback(data);
     return;
   }
   var query = {
     customer : data[0].customer,
   };
-  if(data[0].start !== undefined){
+
+  query.start = new Date('2015').toISOString();
+  if(data[0].start){
     query.start = new Date(data[0].start).toISOString();
   }
-
+  
+  query.end = new Date().toISOString();
   //Dudas
-  if(data[0].end !== undefined){
-    if(data[0].start !== undefined){
-      query.end = new Date().toISOString();
-    }
+  if(data[0].end){
+    query.end = new Date(data[0].end).toISOString();
   }
+  
   findByCustomerRange(query, function(tickets) {
    var data = {
-     "contents": tickets,
-     "page": {
-       "current": 1,
-       "size": tickets.length,
-       "total": tickets.length
+     'contents': tickets,
+     'page': {
+       'current': 1,
+       'size': tickets.length,
+       'total': tickets.length
      }
     };
     callback(data);
   });
-}
+};
 
 // @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#find-all-documents
 function findByCustomerRange(query, callback) {
@@ -49,17 +51,17 @@ function findByCustomerRange(query, callback) {
   // Use connect method to connect to the Server
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
-    log("Connected correctly to server");
+    log('Connected correctly to server');
 
     // Get the documents collection
     var collection = db.collection('tickets');
     var search = {
-                 "dateCreated" : query.start
+                 'customer.email': query.customer,
+                 'dateCreated' : {
+                                 $gt: query.start,
+                                 $lt:  query.end
+                                }
                };
-
-    //"customer.email": query.customer,
-
-
 
     // Find some documents
     collection.find(search).toArray(function(err, docs) {

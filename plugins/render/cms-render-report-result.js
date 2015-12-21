@@ -10,7 +10,7 @@ module.exports = function(data, $element, callback) {
   
   var tickets = data.contents;
 
-  if (!tickets) {
+  if (!tickets || tickets.length < 1) {
     callback();
     return;
   }
@@ -33,7 +33,7 @@ module.exports = function(data, $element, callback) {
   });
   
   //TODO: Clientes
-  $element.find('.client').text(totalWork.toString());
+  $element.find('.customer').text(tickets[0].customer.name+' '+tickets[0].customer.email);
   $element.find('.total').text("Total work log: "+ totalWork.toString());
 
   callback(data);

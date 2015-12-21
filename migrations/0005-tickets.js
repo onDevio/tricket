@@ -3,7 +3,7 @@ var mongodb = require('mongodb');
 
 exports.up = function(db, next) {
   db.collection('tickets').insertMany([{
-    "customer": {"name": "Customer", "email": "testte@st.com"},
+    "customer": {"name": "Customer", "email": "person@customer.com"},
     "ticket_id": "CUS-1",
     "status": "Open",
     "title": "New Ticket 1",
