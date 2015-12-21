@@ -27,3 +27,9 @@ tricket:
    - NODE_ENV=pro
 mongo:
   image: mongo
+backup:
+  build: ./backup
+  volumes:
+    - ~/.aws:/root/.aws
+  links:
+    - mongo
