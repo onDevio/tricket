@@ -7,4 +7,5 @@ RUN pip install awscli
 RUN mkdir -p /backup
 WORKDIR /backup
 ADD backup.sh /backup/
+ADD restore.sh /backup/
 CMD ["/backup/backup.sh"]
