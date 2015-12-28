@@ -87,6 +87,8 @@ describe('Ticket Service', function() {
     expect(ticket.notes[0].body).to.equal('Esto es una prueba.\n');
     expect(ticket.customer.email).to.equal('mefernandez@ondevio.com');
     expect(ticket.customer.name).to.equal('Mariano Eloy Fernández Osca');
+    expect(ticket.notes[0].user).to.equal('mail');
+    expect(ticket.notes[0].worklog).to.equal(0);
     done();
   });
 
