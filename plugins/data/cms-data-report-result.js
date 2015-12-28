@@ -60,7 +60,8 @@ function findByCustomerRange(query, callback) {
                  'dateCreated' : {
                                  $gt: query.start,
                                  $lt:  query.end
-                                }
+                                },
+                 'status': {$ne:"Trashed"}
                };
 
     // Find some documents

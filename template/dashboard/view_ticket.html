@@ -58,7 +58,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main cms-data-single-ticket cms-render-single-ticket">
           <h2 class="sub-header"><span class="status"></span> #<span class="id"></span> // <span class="title"></span></h2>          
           <div class="notes col-lg-12">
-            <h3>From:<span class="customer"></span> <span class="pull-right label label-info">Worklog:<span class="worklog"></span> Hours</span></h3>                  
+            <h3>From:<span class="customer"></span> <span class="pull-right label label-info">Worklog:<span class="worklog"></span> Hours</span></h3>
           </div>          
           <form method="post">
             <div class="form-group col-lg-4">
@@ -81,14 +81,17 @@
             </div>  
             <div class="form-group col-lg-12">
               <span class="pull-right buttons">
-                <span class="open">
+                <span class="open" style="display: none;">
                   <button type="submit" class="btn btn-primary" name="close">Add note and Close</button>
                   <button type="submit" class="btn btn-success" name="note">Add note</button>
                 </span>
-                <span class="closed">
+                <span class="closed" style="display: none;">
                   <button type="submit" class="btn btn-primary" name="open">Reopen and add note</button>
                   <button type="submit" class="btn btn-success" name="note">Add note</button>
-                </span>              
+                </span>        
+                <span class="trashed" style="display: none;">
+                   <button type="submit" class="btn btn-primary" name="untrash">Untrash</button>
+                </span>        
               </span>              
             </div>            
           </form>

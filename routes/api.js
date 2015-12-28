@@ -82,6 +82,26 @@ router.post('/emails', upload.array(), function(req, res, next) {
   });
 });
 
+router.get('/ticket/:id/trash', function(req, res) {
+  var id = req.params.id;
+  var status = 'Trashed';
+  ticketService.updateTicketStatus(id, status , function(result) {
+    log('Ticket status updated: ' +status);
+  });
+  res.redirect(302, '/app/tickets');
+  return;
+});
+
+router.get('/ticket/:id/untrash', function(req, res) {
+  var id = req.params.id;
+  var status = 'Open';
+  ticketService.updateTicketStatus(id, status , function(result) {
+    log('Ticket status updated: ' +status);
+  });
+  res.redirect(302, '/app/tickets');
+  return;
+});
+
 router.head('/emails', function(req, res, next) {
   res.status(200).end();
 });
