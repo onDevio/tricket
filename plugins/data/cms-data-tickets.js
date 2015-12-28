@@ -15,14 +15,16 @@ var MongoClient = require('mongodb').MongoClient,
  * @see http://mongoosejs.com/docs/index.html
  */
 module.exports = function(data, $element, callback) {
+var user = data[0].user;
  findAll(function(tickets) {
    var data = {
-     "contents": tickets,
-     "page": {
-       "current": 1,
-       "size": tickets.length,
-       "total": tickets.length
-     }
+   "user": user,   
+   "contents": tickets,
+   "page": {
+     "current": 1,
+     "size": tickets.length,
+     "total": tickets.length
+   }
    };
    callback(data);
  });
