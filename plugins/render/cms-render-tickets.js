@@ -22,7 +22,8 @@ module.exports = function(data, $element, callback) {
       //log(note);
       work += parseInt(note.worklog);
     });
-  	$element.find('#'+ticket.status.toLowerCase()+' tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td></tr>');
+    var trash = ticket.status === 'Trashed' ? '<a href="/api/ticket/'+ticket.ticket_id+'/untrash" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Untrash</a></td>' : '<a href="/api/ticket/'+ticket.ticket_id+'/trash" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a></td>';
+  	$element.find('#'+ticket.status.toLowerCase()+' tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
   });
 
   callback(data);

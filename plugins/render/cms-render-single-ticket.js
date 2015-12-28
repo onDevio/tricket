@@ -18,11 +18,25 @@ module.exports = function(data, $element, callback) {
   $element.find('form').attr('action',path);
   $element.find('.title').text(ticket.title);
 
+  var status = '';
+  var buttons = '';
+  switch(ticket.status) {
+    case 'Closed':
+        status = '<span class="label label-danger">Closed</span>';
+        buttons = 'closed';
+        break;
+    case 'Trashed':
+        status = '<span class="label label-danger">Trashed</span>';
+        buttons = 'trashed';
+        break;
+    default:
+        status = '<span class="label label-success">Open</span>';
+        buttons = 'open';
+  }
+
+  $element.find('.status').html(status);
   
-  var status = ticket.status === "Open" ? '<span class="label label-success">Open</span>' : '<span class="label label-danger">Closed</span>'
-  $element.find('.status').append(status);
-  var buttons = ticket.status !== "Open" ? 'open' : 'closed'
-  $element.find('.buttons .'+buttons).remove();
+  $element.find('.buttons .'+buttons).attr('style', 'display:inline;');
     
   $element.find('.customer').text(ticket.customer.name +' '+ ticket.customer.email);
   
