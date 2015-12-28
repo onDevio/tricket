@@ -54,18 +54,22 @@ function findByTicketId(id, db, callback) {
 }
 
 function createTicket(msg) {
+  var date = new Date().toISOString();
   return {
     title: msg.headers.subject || '<Empty subject>',
-    notes: [{
-      body: msg.text
-    }],
-    status: 'Open',
-    worklog: 0,
-    dateCreated: new Date().toISOString(),
+    status: 'Open',    
+    dateCreated: date,
     customer: {
       email: msg.from[0].address,
       name: msg.from[0].name
-    }
+    },
+    notes: [{
+      body: msg.text,
+      type: 'mail',
+      dateCreated: date,
+      worklog: 0,
+      user: 'mail'
+    }]    
   };
 }
 
