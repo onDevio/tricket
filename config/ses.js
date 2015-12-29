@@ -1,4 +1,5 @@
 module.exports = {
 	key: 'PUT YOUR SES KEY',
-	secret: 'PUT YOUR SES SUPAH SECRET'
+	secret: 'PUT YOUR SES SUPAH SECRET',
+	notificationUsers: 'PUT THE LIST OF EMAIL TO BE NOTIFIED WHEN A NEW TICKET IS CREATED'
 };

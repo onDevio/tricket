@@ -9,6 +9,7 @@ var upload = multer();
 var log = require('debug')('tricket:api');
 
 var ticketService = require('../services/ticket-service.js')();
+var mailService = require('../services/mail-service.js')();
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);
@@ -33,6 +34,9 @@ router.post('/ticket/new', function(req, res) {
   };
   ticketService.insertTicket(ticket, function(result) {
     log('Inserted ticket to mongo');
+    mailService.newTicketNotification(ticket, function(result) {
+      log('Sending ticket');
+    });
     res.redirect(302, '/app/tickets');
   });
 });

@@ -8,10 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var templyEngineFactory = require('temply-express');
 var config = require('./config/config.js')();
-var sesConfig = require('./config/ses.js')();
-var authConfig = require('./config/auth.js')();
-var ses = require('node-ses')
-  , client = ses.createClient({ key: sesConfig.key, secret: sesConfig.secret });
+var authConfig = require('./config/auth.js');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy, util = require('util')
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
