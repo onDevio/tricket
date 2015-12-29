@@ -9,13 +9,7 @@ var ses = require('node-ses')
 
 module.exports = function(aConnectionFactory, aUrl) {
 
-  // @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/
-  var connectionFactory = aConnectionFactory || require('mongodb').MongoClient;
-  // Connection URL
-  var url = aUrl || require('../config/config')().mongoUrl;
-
   return {
-    connectionFactory: connectionFactory,
     newTicketNotification: function(ticket, callback) {
       this.execute(callback, function(done) {
         newTicketNotification(ticket, done);
