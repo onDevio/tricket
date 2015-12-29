@@ -24,7 +24,11 @@ module.exports = function(data, $element, callback) {
       work += parseInt(note.worklog);
     });
     var trash = ticket.status === 'Trashed' ? '<a href="/api/ticket/'+ticket.ticket_id+'/untrash" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Untrash</a></td>' : '<a href="/api/ticket/'+ticket.ticket_id+'/trash" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a></td>';
-    //Sigo por aquí mañana
+
+    if(ticket.asignee === currentUser.displayName){
+      $element.find('#mine tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
+    }
+
   	$element.find('#'+ticket.status.toLowerCase()+' tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
   });
 
