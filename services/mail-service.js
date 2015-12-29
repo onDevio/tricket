@@ -19,6 +19,7 @@ module.exports = function(aConnectionFactory, aUrl) {
 };
 
 function newTicketNotification(ticket, callback) {
+  log('Sending mail about ticket: '+ ticket.title);
   client.sendEmail({
     to: sesConfig.notificationUsers,
     from: 'info@ondevio.com',

@@ -34,9 +34,6 @@ router.post('/ticket/new', function(req, res) {
   };
   ticketService.insertTicket(ticket, function(result) {
     log('Inserted ticket to mongo');
-    mailService.newTicketNotification(ticket, function(result) {
-      log('Sending ticket');
-    });
     res.redirect(302, '/app/tickets');
   });
 });
@@ -103,6 +100,9 @@ router.post('/emails', upload.array(), function(req, res, next) {
   log('Created ticket from email');
   ticketService.insertTicket(ticket, function(result) {
     log('Inserted ticket to mongo');
+    mailService.newTicketNotification(ticket, function(result) {
+      log('Sending ticket');
+    });
     res.status(201).send(ticket);
   });
 });
