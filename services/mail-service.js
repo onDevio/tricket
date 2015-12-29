@@ -4,7 +4,7 @@ var log = require('debug')('tricket:services');
 var assert = require('assert');
 var sesConfig = require('../config/ses.js');
 var ses = require('node-ses')
-  , client = ses.createClient({ key: sesConfig.key, secret: sesConfig.secret });
+  , client = ses.createClient({ key: sesConfig.key, secret: sesConfig.secret, amazon: sesConfig.amazon});
 
 
 module.exports = function(aConnectionFactory, aUrl) {
