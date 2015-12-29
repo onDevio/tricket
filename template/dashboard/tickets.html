@@ -61,6 +61,7 @@
           </div>
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#open" aria-controls="open" role="tab" data-toggle="tab">Open</a></li>
+            <li role="presentation"><a href="#mine" aria-controls="mine" role="tab" data-toggle="tab">My Tickets</a></li>
             <li role="presentation"><a href="#closed" aria-controls="closed" role="tab" data-toggle="tab">Closed</a></li>
             <li role="presentation"><a href="#trashed" aria-controls="trahsed" role="tab" data-toggle="tab">Trashed</a></li>
               <form class="form-inline">
@@ -74,6 +75,26 @@
             <div role="tabpanel" class="tab-pane active" id="open">
               <div class="table-responsive">
                 <table class="open-tickets ticket-search table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Ticket ID</th>
+                      <th>Title</th>
+                      <th>Opened</th>
+                      <th>Status</th>
+                      <th>Asignee</th>
+                      <th>Work Log</th>
+                      <th>Customer</th>
+                      <th>Trash</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="mine">
+              <div class="table-responsive">
+                <table class="my-tickets ticket-search table table-striped">
                   <thead>
                     <tr>
                       <th>Ticket ID</th>
@@ -99,6 +120,7 @@
                       <th>Title</th>
                       <th>Opened</th>
                       <th>Status</th>
+                      <th>Asignee</th>
                       <th>Work Log</th>
                       <th>Customer</th>
                       <th>Trash</th>
@@ -118,6 +140,7 @@
                       <th>Title</th>
                       <th>Opened</th>
                       <th>Status</th>
+                      <th>Asignee</th>
                       <th>Work Log</th>
                       <th>Customer</th>
                       <th>Untrash</th>

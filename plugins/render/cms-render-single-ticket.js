@@ -17,6 +17,10 @@ module.exports = function(data, $element, callback) {
   var path = '/api/ticket/'+ticket.ticket_id+'/note';
   $element.find('form').attr('action',path);
   $element.find('.title').text(ticket.title);
+  $element.find('.asignee').text(ticket.asignee);
+
+  ticket.asignee !== ticket.user.displayName ?  $element.find('#asign').attr('href', '/api/ticket/'+ticket.ticket_id+'/asign/'+ticket.user.displayName).attr('style', 'display:inline;') : $element.find('#reject').attr('href', '/api/ticket/'+ticket.ticket_id+'/reject/').attr('style', 'display:inline;');
+  
 
   var status = '';
   var buttons = '';

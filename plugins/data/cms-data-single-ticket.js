@@ -13,7 +13,9 @@ var MongoClient = require('mongodb').MongoClient,
  */
 module.exports = function(data, $element, callback) {
 var id = data[0].id;
+var user = data[0].user;
  findByTicketId(id, function(data) {
+  data.user = user;
   log("Ticket: " + JSON.stringify(data));
    callback(data);
  });

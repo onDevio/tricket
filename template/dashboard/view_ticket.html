@@ -56,14 +56,26 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main cms-data-single-ticket cms-render-single-ticket">
-          <h2 class="sub-header"><span class="status"></span> #<span class="id"></span> // <span class="title"></span></h2>          
+          <h2 class="sub-header col-lg-8"><span class="status"></span> #<span class="id"></span> // <span class="title"></span></h2>  
+          <div class="col-lg-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">Asigned to: <span class="asignee"></span></div>
+              <div class="panel-body options">
+                <span>Available Actions:  
+                  <a style="display:none;" id="asign" href="/api/ticket/CUS-1/asign/lmunoz" class="btn btn-default pull-right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Asign Ticket
+                  </a>
+                  <a style="display:none;" id="reject" href="/api/ticket/CUS-1/reject" class="btn btn-default pull-right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Ticket
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>         
           <div class="notes col-lg-12">
             <h3>From:<span class="customer"></span> <span class="pull-right label label-info">Worklog:<span class="worklog"></span> Hours</span></h3>
           </div>          
           <form method="post">
-            <div class="form-group col-lg-4">
-              <label for="type">Add Note</label>              
-            </div>
             <div class="form-group col-lg-4">
               <label class="sr-only" for="type">Note Type</label>
               <select class="form-control" name="type">
@@ -79,7 +91,7 @@
               <label class="sr-only" for="body">Note details</label>
               <textarea name="body" id="body" placeholder="Ticket description" class="form-control" rows="10"></textarea>
             </div>  
-            <div class="form-group col-lg-12">
+            <div class="form-group col-lg-12">              
               <span class="pull-right buttons">
                 <span class="open" style="display: none;">
                   <button type="submit" class="btn btn-primary" name="close">Add note and Close</button>

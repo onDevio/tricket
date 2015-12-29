@@ -38,6 +38,16 @@ module.exports = function(aConnectionFactory, aUrl) {
         updateTicketStatus(id, note, db, done);
       });
     },
+    asignTicket: function(id, user, callback) {
+      this.execute(callback, function(db, done) {
+        asignTicket(id, user, db, done);
+      });
+    },
+    rejectTicket: function(id, callback) {
+      this.execute(callback, function(db, done) {
+        rejectTicket(id, db, done);
+      });
+    },
     addNoteToTicket: function(id, note, callback) {
       this.execute(callback, function(db, done) {
         addNoteToTicket(id, note, db, done);
@@ -57,7 +67,8 @@ function createTicket(msg) {
   var date = new Date().toISOString();
   return {
     title: msg.headers.subject || '<Empty subject>',
-    status: 'Open',    
+    status: 'Open',
+    asignee: 'Not asigned',    
     dateCreated: date,
     customer: {
       email: msg.from[0].address,
@@ -143,6 +154,33 @@ function addCustomer(customer, db, callback) {
   db.collection('customers').findAndModify(query, sort, doc, options, function(err, result) {
     assert.equal(null, err);
     callback();
+  });
+}
+
+function asignTicket(id, user, db, callback) {
+  db.collection('tickets').update({
+    ticket_id: id
+  }, {
+    $set: {
+      asignee: user
+    }
+  }, function(err, result) {
+    assert.equal(err, null);
+    callback(result);
+  });
+}
+
+function rejectTicket(id, db, callback) {
+  //TODO: Check if ticket is owned
+  db.collection('tickets').update({
+    ticket_id: id
+  }, {
+    $set: {
+      asignee: 'Not asigned'
+    }
+  }, function(err, result) {
+    assert.equal(err, null);
+    callback(result);
   });
 }
 

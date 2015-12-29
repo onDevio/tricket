@@ -25,6 +25,7 @@ router.post('/ticket/new', function(req, res) {
       email: req.body.customer,
       name: ''
     },
+    asignee: 'Not asigned',
     status: req.body.close !== undefined ? 'Closed' : 'Open',
     title: req.body.title || '<Empty subject>',
     dateCreated: new Date().toISOString(),
@@ -35,6 +36,26 @@ router.post('/ticket/new', function(req, res) {
     res.redirect(302, '/app/tickets');
   });
 });
+
+router.get('/ticket/:id/asign/:user', function(req, res) {
+  var id = req.params.id;
+  var user = req.params.user;
+
+  ticketService.asignTicket(id, user, function(result) {
+    log('Ticket claimed');
+  });
+  res.redirect(302, '/app/ticket/'+id);
+});
+
+router.get('/ticket/:id/reject', function(req, res) {
+  var id = req.params.id;
+  //TODO: if external, send mail to customer
+  ticketService.rejectTicket(id, function(result) {
+    log('Ticket rejected');
+  });
+  res.redirect(302, '/app/ticket/'+id);
+});
+
 
 router.post('/ticket/:id/note', function(req, res) {
   var id = req.params.id;
