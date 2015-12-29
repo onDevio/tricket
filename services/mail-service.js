@@ -24,7 +24,7 @@ function newTicketNotification(ticket, callback) {
     altText: 'There is a new Ticket from: '+ticket.customer+' with title: '+ticket.title
   }, function (err, data, res) {
     assert.equal(err, null);
-    callback(result);
+    callback(res);
   });
 }
 
