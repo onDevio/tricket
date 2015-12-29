@@ -10,11 +10,7 @@ var ses = require('node-ses')
 module.exports = function(aConnectionFactory, aUrl) {
 
   return {
-    newTicketNotification: function(ticket, callback) {
-      this.execute(callback, function(done) {
-        newTicketNotification(ticket, done);
-      });
-    }
+    newTicketNotification: newTicketNotification
   };
 };
 
