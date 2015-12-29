@@ -25,6 +25,7 @@ router.post('/ticket/new', function(req, res) {
       email: req.body.customer,
       name: ''
     },
+    asignee: 'Not asigned',
     status: req.body.close !== undefined ? 'Closed' : 'Open',
     title: req.body.title || '<Empty subject>',
     dateCreated: new Date().toISOString(),

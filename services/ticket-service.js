@@ -67,7 +67,8 @@ function createTicket(msg) {
   var date = new Date().toISOString();
   return {
     title: msg.headers.subject || '<Empty subject>',
-    status: 'Open',    
+    status: 'Open',
+    asignee: 'Not asigned',    
     dateCreated: date,
     customer: {
       email: msg.from[0].address,
