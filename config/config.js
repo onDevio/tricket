@@ -6,6 +6,6 @@
 module.exports = function loadConfig() {
   var env = process.env.NODE_ENV || 'dev';
   var configFile = './config-' + env;
-  console.log('Loading config file: ' + configFile);
+  //console.log('Loading config file: ' + configFile);
   return require(configFile);
 }

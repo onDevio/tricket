@@ -8,15 +8,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var templyEngineFactory = require('temply-express');
 var config = require('./config/config.js')();
+var authConfig = require('./config/auth.js');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy, util = require('util')
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // API Access link for creating client ID and secret:
 // https://code.google.com/apis/console/
-var GOOGLE_CLIENT_ID = '949398258429-ncn30qm3eu3gd7v4p1163sno76v9l0n2.apps.googleusercontent.com';
-var GOOGLE_CLIENT_SECRET = 'W5jXPiEcb4P1xhC8Y5V-UcdJ';
-
 
 var app = express();
 
@@ -57,8 +55,8 @@ app.use('/', require('./routes/public'));
 //   credentials (in this case, an accessToken, refreshToken, and Google
 //   profile), and invoke a callback with a user object.
 passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
+    clientID: authConfig.id,
+    clientSecret: authConfig.secret,
     callbackURL: config.domain+'/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
@@ -79,7 +77,7 @@ passport.use(new GoogleStrategy({
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    //TODO: Client implementatio
+    //TODO: Client implementation
     return done(null, false);
     /*
     var user = {id: 1, username: 'admin', password: 'admin'};
