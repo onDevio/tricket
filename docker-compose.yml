@@ -25,6 +25,9 @@ tricket:
 #   - "80:3000"
   environment:
    - NODE_ENV=pro
+  volumes:
+    - ~/ses.js:/web/config/ses.js:ro
+    - ~/auth.js:/web/config/auth.js:ro
 mongo:
   image: mongo
 backup:
