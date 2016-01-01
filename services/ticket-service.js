@@ -101,9 +101,11 @@ function assignTicketId(ticket, db, callback) {
 function getCounterName(ticket) {
   var name = 'UNK';
   if (ticket.customer && ticket.customer.email) {
-    var re = /(?:@)([a-zA-Z]{3})/gi;
-    // TODO Find out why it does not ignore non-capturing group (hence substring(1))
-    name = ticket.customer.email.match(re).pop().substring(1).toUpperCase();
+    var re = /(?:@)(\w+)/gi;
+    var match = ticket.customer.email.match(re);
+    if (match && match.length > 0) {
+      name = match[0].substring(1).toUpperCase();
+    }
   }
   return name;
 }
