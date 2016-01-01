@@ -21,4 +21,9 @@ router.get('/ticket/:id', function(req, res) {
   res.render('dashboard/view_ticket.html', {id : req.params.id, user: req.user});
 });
 
+router.get('/counters', function(req, res) {
+  res.render('dashboard/counters.html', {user: req.user});
+});
+
+
 module.exports = router;

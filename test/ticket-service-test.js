@@ -26,7 +26,7 @@ describe('Ticket Service', function() {
       }]
     };
     ticketService.insertTicket(ticket, function(result) {
-      expect(ticket.ticket_id).to.equal('CUS-1');
+      expect(ticket.ticket_id).to.equal('CUSTOMER-1');
       done();
     });
   });
