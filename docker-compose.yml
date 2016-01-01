@@ -21,6 +21,7 @@ tricket:
   build: .
   links:
     - mongo
+    - backup
   environment:
    - NODE_ENV=pro
   volumes:
