@@ -52,6 +52,11 @@ module.exports = function(aConnectionFactory, aUrl) {
       this.execute(callback, function(db, done) {
         addNoteToTicket(id, note, db, done);
       });
+    },
+    renameAllTickets: function(id, note, callback) {
+      this.execute(callback, function(db, done) {
+        renameAllTickets(id, note, db, done);
+      });
     }
   };
 };
@@ -68,7 +73,7 @@ function createTicket(msg) {
   return {
     title: msg.headers.subject || '<Empty subject>',
     status: 'Open',
-    asignee: 'Not asigned',    
+    asignee: 'Not asigned',
     dateCreated: date,
     customer: {
       email: msg.from[0].address,
@@ -80,7 +85,7 @@ function createTicket(msg) {
       dateCreated: date,
       worklog: 0,
       user: 'mail'
-    }]    
+    }]
   };
 }
 
@@ -203,6 +208,24 @@ function addNoteToTicket(id, note, db, callback) {
   }, {
     $push: {
       notes: note
+    }
+  }, function(err, result) {
+    assert.equal(err, null);
+    callback(result);
+  });
+}
+
+function renameAllTickets(oldId, newId, db, callback) {
+  db.collection('tickets').find({ticket_id: {$regex: '^' + oldId + '-.*'} }).each(function(err, ticket) {
+    if (err || !ticket) {
+      return;
+    }
+    var match = ticket.ticket_id.match(/(\w+)-(\d+)/);
+    if (match && match.length > 2) {
+      var counterName = newId;
+      var counterSeq = match[2];
+      var ticket_id = counterName + '-' + counterSeq;
+      db.collection('tickets').update({_id: ticket._id}, {$set: {ticket_id: ticket_id}});
     }
   }, function(err, result) {
     assert.equal(err, null);

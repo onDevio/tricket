@@ -31,6 +31,20 @@ module.exports = function() {
             var err = null;
             var result = null;
             callback(err, result);
+          },
+          update: function(query, doc, callback) {
+            this.documents.push(doc);
+            var err = null;
+            var result = null;
+            callback(err, result);
+          },
+          findOneAndDelete_result: {},
+          findOneAndDelete: function(query, callback) {
+            var err = null;
+            var result = {
+              value: this.findOneAndDelete_result
+            };
+            callback(err, result);
           }
         };
       },

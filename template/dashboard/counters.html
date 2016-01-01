@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Tickets</title>
+    <title>Ticket IDs</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/template/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">Tricket</a>
+          <a class="navbar-brand" href="/">Ticket IDs</a>
         </div>
         <span class="user pull-right"></span>
       </div>
@@ -49,109 +49,46 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="/app/tickets">Tickets</a></li>
+            <li><a href="/app/tickets">Tickets</a></li>
             <li><a href="/app/reports">Reports</a></li>
             <li><a href="/app/customers">Customers</a></li>
-            <li><a href="/app/counters">IDs</a></li>
+            <li class="active"><a href="/app/counters">IDs</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
           <div class="row">
-            <h2 class="sub-header">Ticket List</h2>
+            <h2 class="sub-header">Customer List</h2>
           </div>
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#open" aria-controls="open" role="tab" data-toggle="tab">Open</a></li>
-            <li role="presentation"><a href="#mine" aria-controls="mine" role="tab" data-toggle="tab">My Tickets</a></li>
-            <li role="presentation"><a href="#closed" aria-controls="closed" role="tab" data-toggle="tab">Closed</a></li>
-            <li role="presentation"><a href="#trashed" aria-controls="trahsed" role="tab" data-toggle="tab">Trashed</a></li>
-              <form class="form-inline">
-              <input type="text" class="form-control" id="search" placeholder="Type to search">
-              <a href="/app/ticket/new" class="btn btn-default pull-right">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Ticket
-              </a>
-            </form>
-          </ul>
-          <div class="tab-content cms-data-tickets cms-render-tickets">
-            <div role="tabpanel" class="tab-pane active" id="open">
-              <div class="table-responsive">
-                <table class="open-tickets ticket-search table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Ticket ID</th>
-                      <th>Title</th>
-                      <th>Opened</th>
-                      <th>Status</th>
-                      <th>Asignee</th>
-                      <th>Work Log</th>
-                      <th>Customer</th>
-                      <th>Trash</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="mine">
-              <div class="table-responsive">
-                <table class="my-tickets ticket-search table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Ticket ID</th>
-                      <th>Title</th>
-                      <th>Opened</th>
-                      <th>Status</th>
-                      <th>Work Log</th>
-                      <th>Customer</th>
-                      <th>Trash</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="closed">
-              <div class="table-responsive">
-                <table class="closed-tickets ticket-search table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Ticket ID</th>
-                      <th>Title</th>
-                      <th>Opened</th>
-                      <th>Status</th>
-                      <th>Asignee</th>
-                      <th>Work Log</th>
-                      <th>Customer</th>
-                      <th>Trash</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="trashed">
-              <div class="table-responsive">
-                <table class="closed-tickets ticket-search table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Ticket ID</th>
-                      <th>Title</th>
-                      <th>Opened</th>
-                      <th>Status</th>
-                      <th>Asignee</th>
-                      <th>Work Log</th>
-                      <th>Customer</th>
-                      <th>Untrash</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <form class="form-inline">
+            <input type="text" class="form-control" id="search" placeholder="Type to search">
+          </form>
+          <div class="table-responsive">
+            <table id="logs-table" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Next Id</th>
+                  <th>Change</th>
+                </tr>
+              </thead>
+              <tbody class="cms-data-counters cms-render-counters">
+                <tr>
+                  <td>No name provided</td>
+                  <td>No email provided</td>
+                  <td>
+                    <form class="form-inline" method="POST" action="/api/counter/:id/rename">
+                      <div class="input-group">
+                        <input type="text" class="form-control" name="newId" placeholder="New ID">
+                        <span class="input-group-btn">
+                          <input type="submit" class="btn btn-danger" value="Rename">
+                        </span>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -162,7 +99,7 @@
               console.log('Click');
               window.document.location = $(this).data("href");
           });
-          var $rows = $('.cms-data-tickets tr');
+          var $rows = $('.cms-data-customers tr');
           $('#search').keyup(function() {
               var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
                   reg = RegExp(val, 'i'),

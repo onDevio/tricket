@@ -10,6 +10,7 @@ var log = require('debug')('tricket:api');
 
 var ticketService = require('../services/ticket-service.js')();
 var mailService = require('../services/mail-service.js')();
+var counterService = require('../services/counter-service.js')();
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);
@@ -133,6 +134,17 @@ router.head('/emails', function(req, res, next) {
 
 router.get('/emails', function(req, res, next) {
   res.status(200).end();
+});
+
+router.post('/counter/:id/rename', function(req, res) {
+  var oldId = req.params.id;
+  var newId = req.body.newId;
+  counterService.rename(oldId, newId, function(result) {
+    log('Counter ' + oldId + ' renamed to ' + newId);
+      ticketService.renameAllTickets(oldId, newId, function(result) {
+    });
+  });
+  res.redirect(302, '/app/counters');
 });
 
 module.exports = router;
