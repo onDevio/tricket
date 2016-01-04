@@ -39,8 +39,8 @@
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
       <div class="container-fluid">
-        <div class="navbar-header">          
-          <a class="navbar-brand" href="/">Tricket</a>          
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Tricket</a>
         </div>
         <span class="user pull-right"></span>
       </div>
@@ -56,12 +56,12 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main cms-data-single-ticket cms-render-single-ticket">
-          <h2 class="sub-header col-lg-8"><span class="status"></span> #<span class="id"></span> // <span class="title"></span></h2>  
+          <h2 class="sub-header col-lg-8"><span class="status"></span> #<span class="id"></span> // <span class="title"></span></h2>
           <div class="col-lg-4">
             <div class="panel panel-default">
               <div class="panel-heading">Asigned to: <span class="asignee"></span></div>
               <div class="panel-body options">
-                <span>Available Actions:  
+                <span>Available Actions:
                   <a style="display:none;" id="asign" href="/api/ticket/CUS-1/asign/lmunoz" class="btn btn-default pull-right">
                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Asign Ticket
                   </a>
@@ -71,10 +71,19 @@
                 </span>
               </div>
             </div>
-          </div>         
+          </div>
           <div class="notes col-lg-12">
-            <h3>From:<span class="customer"></span> <span class="pull-right label label-info">Worklog:<span class="worklog"></span> Hours</span></h3>
-          </div>          
+            <h3>From:<span class="customer"></span> <span class="pull-right label label-info">Worklog: <span class="worklog"></span> Hours</span></h3>
+            <div class="panel panel-default note">
+              <div class="panel-heading">
+                <span class="label label-warning note-external">External</span>
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Author</span> commented <span class="note-date">a minute ago</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">2</span> Hours</span>
+              </div>
+              <div class="panel-body note-body">Hi there! This is a note.</div>
+            </div>
+          </div>
           <form method="post">
             <div class="form-group col-lg-4">
               <label class="sr-only" for="type">Note Type</label>
@@ -82,16 +91,16 @@
                 <option value="internal" selected>Internal note</option>
                 <option value="external">External note</option>
               </select>
-            </div>     
+            </div>
             <div class="form-group col-lg-4">
               <label class="sr-only" for="workload">Work Log</label>
               <input type="number" class="form-control" id="workload" name="worklog" placeholder="Work load in Hours">
-            </div>        
+            </div>
             <div class="form-group col-lg-12">
               <label class="sr-only" for="body">Note details</label>
               <textarea name="body" id="body" placeholder="Ticket description" class="form-control" rows="10"></textarea>
-            </div>  
-            <div class="form-group col-lg-12">              
+            </div>
+            <div class="form-group col-lg-12">
               <span class="pull-right buttons">
                 <span class="open" style="display: none;">
                   <button type="submit" class="btn btn-primary" name="close">Add note and Close</button>
@@ -100,17 +109,17 @@
                 <span class="closed" style="display: none;">
                   <button type="submit" class="btn btn-primary" name="open">Reopen and add note</button>
                   <button type="submit" class="btn btn-success" name="note">Add note</button>
-                </span>        
+                </span>
                 <span class="trashed" style="display: none;">
                    <button type="submit" class="btn btn-primary" name="untrash">Untrash</button>
-                </span>        
-              </span>              
-            </div>            
+                </span>
+              </span>
+            </div>
           </form>
-          </div>          
+          </div>
         </div>
       </div>
-    </div>      
+    </div>
 
 
     <!-- Bootstrap core JavaScript
@@ -120,7 +129,7 @@
     <script src="/template/assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
-    
+
     <!--script>
       var url = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
       var socket = io.connect(url);

@@ -2,13 +2,14 @@
 
 var log = require('debug')('temply:cms-render-single-ticket');
 var moment = require('moment');
+var markdown = require( "markdown" ).markdown;
 
 module.exports = function(data, $element, callback) {
   if (!data) {
     callback();
     return;
   }
-  
+
   var ticket = data;
   log(JSON.stringify(ticket));
 
@@ -20,7 +21,7 @@ module.exports = function(data, $element, callback) {
   $element.find('.asignee').text(ticket.asignee);
 
   ticket.asignee !== ticket.user.displayName ?  $element.find('#asign').attr('href', '/api/ticket/'+ticket.ticket_id+'/asign/'+ticket.user.displayName).attr('style', 'display:inline;') : $element.find('#reject').attr('href', '/api/ticket/'+ticket.ticket_id+'/reject/').attr('style', 'display:inline;');
-  
+
 
   var status = '';
   var buttons = '';
@@ -39,24 +40,38 @@ module.exports = function(data, $element, callback) {
   }
 
   $element.find('.status').html(status);
-  
+
   $element.find('.buttons .'+buttons).attr('style', 'display:inline;');
-    
+
   $element.find('.customer').text(ticket.customer.name +' '+ ticket.customer.email);
-  
+
   var notes = ticket.notes;
   var work = 0;
+  var noteTemplate = $element.find('.notes .note').remove();
   notes.forEach(function(note){
   	//log(note);
+    var noteItem = noteTemplate.clone();
     var date = new Date(note.dateCreated);
     work += parseInt(note.worklog);
-    var type = note.type !== "internal" ? '<span class="label label-warning">External</span>' : '<span class="label label-default">Internal</span>'
+
+    if (note.type !== "internal") {
+      noteItem.find('.note-internal').remove();
+    }
+    if (note.type !== "external") {
+      noteItem.find('.note-external').remove();
+    }
+    noteItem.find('.note-author').text(note.user);
+    noteItem.find('.note-date').text(moment(date).fromNow());
+    noteItem.find('.note-worklog').text(note.worklog.toString());
     //log(note.type);
-    $element.find('.notes').append('<div class="panel panel-default"><div class="panel-heading">'+type+' '+note.user+' commented '+moment(date).fromNow()+' <span class="pull-right label label-info">Spent: '+note.worklog+' Hours</span></div><div class="panel-body">'+note.body+'</div></div>');
+    var md = markdown.toHTML(note.body);
+    noteItem.find('.note-body').html(md);
+    $element.find('.notes').append(noteItem);
+
   });
 
   $element.find('.worklog').text(work.toString());
-  
+
   callback(data);
 
 }
