@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Reports</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/template/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/template/dashboard/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/template/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Load c3.css -->
+    <link href="/vendor/c3/c3.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="/vendor/d3/d3.min.js" charset="utf-8"></script>
+    <script src="/vendor/c3/c3.min.js"></script>
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/underscore/underscore-min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Tricket</a>
+        </div>
+        <span class="user pull-right"></span>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/app/tickets">Tickets</a></li>
+            <li class="active"><a href="/app/reports">Reports</a></li>
+            <li><a href="/app/customers">Customers</a></li>
+            <li><a href="/app/counters">IDs</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
+          <div class="row">
+            <h2 class="sub-header">Generate Report</h2>
+          </div>
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="customer">Customer: </label>
+              <select class="form-control cms-data-customers-list cms-render-customers-list" name="customer">
+                <option value="">Choose a customer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-daterange">
+                <input type="text" class="form-control" name="start" value="">
+                <span class="input-group-addon">to</span>
+                <input type="text" class="form-control" name="end" value="">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success">Generate</button>
+          </form>
+          <hr>
+          <div class="table-responsive cms-data-report-result cms-render-report-result hidden">
+            <table class="closed-tickets ticket-search table table-striped">
+              <thead>
+                <tr>
+                  <td>Report for customer: <span class="customer"></span> </td>
+                  <td></td>
+                  <td></td>
+                  <td align="right" class="total lable label-info"></td>
+                </tr>
+                <tr>
+                  <th>Ticket ID</th>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Work Log</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Report for customer; <span class="customer"></span> </td>
+                  <td></td>
+                  <td></td>
+                  <td align="right" class="total lable label-info"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $( document ).ready(function() {
+        $('.input-daterange input').each(function() {
+            $(this).datepicker({
+                todayHighlight: true
+            });
+        });
+      });
+    </script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/template/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!--script>
+      var url = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+      var socket = io.connect(url);
+      var rowTemplate = $('#logs-table > tbody > tr').first();
+      $('#logs-table > tbody > tr').remove();
+      socket.on('log', function (data) {
+        var date = data.length >= 29 ? data.substring(0, 29) : '';
+        var clazz = data.length > 29 ? data.substring(30, data.indexOf(' ', 30)) : '';
+        var msg = data.length > 29 ? data.substring(data.indexOf(' ', 30), data.length) : data;
+        var rowClone = rowTemplate.clone();
+        rowClone.find('td:nth-child(1)').text(date);
+        rowClone.find('td:nth-child(2)').text(clazz);
+        rowClone.find('td:nth-child(3)').text(msg);
+        $('#logs-table > tbody').append(rowClone);
+        //console.log(data);
+      });
+
+      function filter(keywords) {
+        if (!keywords) {
+          $('#logs-table > tbody > tr').css('display', 'table-row');
+          return;
+        }
+        $('#logs-table > tbody > tr:contains("' + keywords + '")').css('display', 'table-row');
+        $('#logs-table > tbody > tr:not(:contains("' + keywords + '"))').css('display', 'none');
+      }
+      function clearLogs(event) {
+        $('#logs-table > tbody > tr').remove();
+      }
+    </script>-->
+
+  </body>
+</html>

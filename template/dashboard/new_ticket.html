@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>New Ticket</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/template/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/template/dashboard/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/template/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Load c3.css -->
+    <link href="/vendor/c3/c3.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="/vendor/d3/d3.min.js" charset="utf-8"></script>
+    <script src="/vendor/c3/c3.min.js"></script>
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/underscore/underscore-min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Tricket</a>
+        </div>
+        <span class="user pull-right"></span>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/app/tickets">Tickets</a></li>
+            <li><a href="/app/reports">Reports</a></li>
+            <li><a href="/app/customers">Customers</a></li>
+            <li><a href="/app/counters">IDs</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
+          <h2 class="sub-header">New ticket</h2>
+          <form method="post" action="/api/ticket/new">
+            <div class="form-group col-lg-12">
+              <label class="sr-only" for="title">Title</label>
+              <input type="text" class="form-control" name="title" id="title" placeholder="Title">
+            </div>
+            <div class="form-group col-lg-8">
+              <label class="sr-only" for="customer">Customer</label>
+              <input type="email" class="form-control" id="customer" name="customer" placeholder="Customer email">
+            </div>
+            <div class="form-group col-lg-4">
+              <label class="sr-only" for="worklog">Work Log</label>
+              <input type="number" class="form-control" id="worklog" name="worklog" placeholder="Work log in Hours">
+            </div>
+            <div class="form-group col-lg-12">
+              <label class="sr-only" for="body">Ticket details</label>
+              <textarea name="body" id="body" placeholder="Ticket description" class="form-control" rows="10"></textarea>
+            </div>
+            <div class="form-group col-lg-12">
+              <span class="pull-right">
+                <button type="submit" class="btn btn-primary" name="close">Submit ticket and Close</button>
+                <button type="submit" class="btn btn-success" name="open">Submit new ticket</button>
+              </span>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/template/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!--script>
+      var url = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
+      var socket = io.connect(url);
+      var rowTemplate = $('#logs-table > tbody > tr').first();
+      $('#logs-table > tbody > tr').remove();
+      socket.on('log', function (data) {
+        var date = data.length >= 29 ? data.substring(0, 29) : '';
+        var clazz = data.length > 29 ? data.substring(30, data.indexOf(' ', 30)) : '';
+        var msg = data.length > 29 ? data.substring(data.indexOf(' ', 30), data.length) : data;
+        var rowClone = rowTemplate.clone();
+        rowClone.find('td:nth-child(1)').text(date);
+        rowClone.find('td:nth-child(2)').text(clazz);
+        rowClone.find('td:nth-child(3)').text(msg);
+        $('#logs-table > tbody').append(rowClone);
+        //console.log(data);
+      });
+
+      function filter(keywords) {
+        if (!keywords) {
+          $('#logs-table > tbody > tr').css('display', 'table-row');
+          return;
+        }
+        $('#logs-table > tbody > tr:contains("' + keywords + '")').css('display', 'table-row');
+        $('#logs-table > tbody > tr:not(:contains("' + keywords + '"))').css('display', 'none');
+      }
+      function clearLogs(event) {
+        $('#logs-table > tbody > tr').remove();
+      }
+    </script>-->
+
+  </body>
+</html>

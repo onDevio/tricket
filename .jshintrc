@@ -1,0 +1,8 @@
+{
+  "globals" : {
+    "require": false,
+    "module": false,
+    "describe": false,
+    "it": false
+  }
+}
