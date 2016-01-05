@@ -57,6 +57,11 @@ module.exports = function(aConnectionFactory, aUrl) {
       this.execute(callback, function(db, done) {
         renameAllTickets(id, note, db, done);
       });
+    },
+    updateTicket: function(id, changeSet, callback) {
+      this.execute(callback, function(db, done) {
+        updateTicket(id, changeSet, db, done);
+      });
     }
   };
 };
@@ -229,6 +234,17 @@ function renameAllTickets(oldId, newId, db, callback) {
       var ticket_id = counterName + '-' + counterSeq;
       db.collection('tickets').update({_id: ticket._id}, {$set: {ticket_id: ticket_id}});
     }
+  }, function(err, result) {
+    assert.equal(err, null);
+    callback(result);
+  });
+}
+
+function updateTicket(id, changeSet, db, callback) {
+  db.collection('tickets').update({
+    ticket_id: id
+  }, {
+    $set: changeSet
   }, function(err, result) {
     assert.equal(err, null);
     callback(result);
