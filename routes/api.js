@@ -128,6 +128,21 @@ router.get('/ticket/:id/untrash', function(req, res) {
   return;
 });
 
+router.post('/ticket/:id/save', function(req, res) {
+  var id = req.params.id;
+  //console.log('req.body: ' + JSON.stringify(req.body, null, 2));
+  var prop = req.body.name;
+  var value = req.body.value;
+
+  var ticket = {
+  };
+
+  ticket[prop] = value;
+  ticketService.updateTicket(id, ticket, function(result) {
+    res.status(200).end();
+  });
+});
+
 router.head('/emails', function(req, res, next) {
   res.status(200).end();
 });

@@ -14,6 +14,8 @@ module.exports = function(data, $element, callback) {
   log(JSON.stringify(ticket));
 
   $element.find('.id').text(ticket.ticket_id);
+  $element.find('.x-editable').attr('data-url', '/api/ticket/' + ticket.ticket_id + '/save');
+  $element.find('.x-editable').attr('data-pk', ticket.ticket_id);
 
   var path = '/api/ticket/'+ticket.ticket_id+'/note';
   $element.find('form').attr('action',path);
@@ -43,7 +45,8 @@ module.exports = function(data, $element, callback) {
 
   $element.find('.buttons .'+buttons).attr('style', 'display:inline;');
 
-  $element.find('.customer').text(ticket.customer.name +' '+ ticket.customer.email);
+  $element.find('.customer-name').text(ticket.customer.name);
+  $element.find('.customer-email').text(ticket.customer.email);
 
   var notes = ticket.notes;
   var work = 0;

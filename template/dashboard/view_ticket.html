@@ -35,6 +35,15 @@
     <script src="/vendor/c3/c3.min.js"></script>
     <script src="/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/vendor/underscore/underscore-min.js"></script>
+
+    <link href="/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script>
+    $(document).ready(function() {
+      $.fn.editable.defaults.mode = 'inline';
+      $('.x-editable').editable();
+    });
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
@@ -73,7 +82,9 @@
             </div>
           </div>
           <div class="notes col-lg-12">
-            <h3>From:<span class="customer"></span> <span class="pull-right label label-info">Worklog: <span class="worklog"></span> Hours</span></h3>
+            <h3>From: <span class="customer-email x-editable" id="customer.email" data-type="text" data-pk=":id" data-url="/api/ticket/:id/save" data-title="Enter client"></span>
+              <span class="pull-right label label-info">Worklog: <span class="worklog"></span> Hours</span>
+            </h3>
             <div class="panel panel-default note">
               <div class="panel-heading">
                 <span class="label label-warning note-external">External</span>

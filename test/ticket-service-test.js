@@ -92,4 +92,23 @@ describe('Ticket Service', function() {
     done();
   });
 
+  it('should update the customer', function(done) {
+    var ticket = {
+      customer: {
+        name: 'New Customer',
+        email: 'new@customer.com'
+      }
+    };
+    ticketService.updateTicket('UNK-1', ticket, function(result) {
+      expect(mockongo.db.collection('tickets').documents).to.include({
+        "$set": {
+          customer: {
+            name: 'New Customer',
+            email: 'new@customer.com'
+          }
+        }
+      });
+      done();
+    });
+  });
 });
