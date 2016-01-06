@@ -28,6 +28,7 @@ module.exports = function(aConnectionFactory, aUrl) {
       });
     },
     createTicket: createTicket,
+    findTicketIdInSubject: findTicketIdInSubject,
     insertTicket: function(ticket, callback) {
       this.execute(callback, function(db, done) {
         insertTicket(ticket, db, done);
@@ -92,6 +93,18 @@ function createTicket(msg) {
       user: 'mail'
     }]
   };
+}
+
+function findTicketIdInSubject(msg) {
+  var subject = msg.headers.subject;
+  if (!subject) {
+    return;
+  }
+  var re = /\[(\w+-\d+)\]/;
+  var match = subject.match(re);
+  if (match && match.length>1) {
+    return match[1];
+  }
 }
 
 function assignTicketId(ticket, db, callback) {
