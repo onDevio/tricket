@@ -70,7 +70,9 @@ router.post('/ticket/:id/note', function(req, res) {
     'user' : req.user.displayName
   };
 
-  //TODO: if external, send mail to customer
+  mailService.externalNote(id, note, function(result) {
+    log('External note sent to client');
+  });
   ticketService.addNoteToTicket(id, note, function(result) {
     log('Inserted note to ticket');
   });

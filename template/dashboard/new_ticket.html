@@ -97,36 +97,5 @@
     <script src="/template/assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
-
-    <!--script>
-      var url = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
-      var socket = io.connect(url);
-      var rowTemplate = $('#logs-table > tbody > tr').first();
-      $('#logs-table > tbody > tr').remove();
-      socket.on('log', function (data) {
-        var date = data.length >= 29 ? data.substring(0, 29) : '';
-        var clazz = data.length > 29 ? data.substring(30, data.indexOf(' ', 30)) : '';
-        var msg = data.length > 29 ? data.substring(data.indexOf(' ', 30), data.length) : data;
-        var rowClone = rowTemplate.clone();
-        rowClone.find('td:nth-child(1)').text(date);
-        rowClone.find('td:nth-child(2)').text(clazz);
-        rowClone.find('td:nth-child(3)').text(msg);
-        $('#logs-table > tbody').append(rowClone);
-        //console.log(data);
-      });
-
-      function filter(keywords) {
-        if (!keywords) {
-          $('#logs-table > tbody > tr').css('display', 'table-row');
-          return;
-        }
-        $('#logs-table > tbody > tr:contains("' + keywords + '")').css('display', 'table-row');
-        $('#logs-table > tbody > tr:not(:contains("' + keywords + '"))').css('display', 'none');
-      }
-      function clearLogs(event) {
-        $('#logs-table > tbody > tr').remove();
-      }
-    </script>-->
-
   </body>
 </html>

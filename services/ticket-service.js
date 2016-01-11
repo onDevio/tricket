@@ -70,7 +70,9 @@ function findByTicketId(id, db, callback) {
   // Find some documents
   db.collection('tickets').findOne({
     ticket_id: id
-  }, callback);
+  }, function(err, result){
+    callback(result);
+  });
 }
 
 function createTicket(msg) {
