@@ -36,7 +36,7 @@ function externalNote(id, note, callback) {
     var md = markdown.toHTML(note.body);
     console.log(md);
     client.sendEmail({
-      to: ticket.client,
+      to: ticket.customer.email,
       from: 'info@ondevio.com',
       subject: '['+ticket.ticket_id+'] - '+ticket.title,
       message: md,
