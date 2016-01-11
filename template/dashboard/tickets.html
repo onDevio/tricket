@@ -156,7 +156,17 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/template/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="/template/dashboard/jquery.tablesorter.min.js"></script> 
+     <script type="text/javascript">
       $(document).ready(function($) {
           $(".clickable-row").click(function() {
               console.log('Click');
@@ -173,47 +183,9 @@
                   return !reg.test(text);
               }).hide();
           });
+          $(".ticket-search").tablesorter();
       });
     </script>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="/template/assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
-
-    <!--script>
-      var url = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
-      var socket = io.connect(url);
-      var rowTemplate = $('#logs-table > tbody > tr').first();
-      $('#logs-table > tbody > tr').remove();
-      socket.on('log', function (data) {
-        var date = data.length >= 29 ? data.substring(0, 29) : '';
-        var clazz = data.length > 29 ? data.substring(30, data.indexOf(' ', 30)) : '';
-        var msg = data.length > 29 ? data.substring(data.indexOf(' ', 30), data.length) : data;
-        var rowClone = rowTemplate.clone();
-        rowClone.find('td:nth-child(1)').text(date);
-        rowClone.find('td:nth-child(2)').text(clazz);
-        rowClone.find('td:nth-child(3)').text(msg);
-        $('#logs-table > tbody').append(rowClone);
-        //console.log(data);
-      });
-
-      function filter(keywords) {
-        if (!keywords) {
-          $('#logs-table > tbody > tr').css('display', 'table-row');
-          return;
-        }
-        $('#logs-table > tbody > tr:contains("' + keywords + '")').css('display', 'table-row');
-        $('#logs-table > tbody > tr:not(:contains("' + keywords + '"))').css('display', 'none');
-      }
-      function clearLogs(event) {
-        $('#logs-table > tbody > tr').remove();
-      }
-    </script>-->
 
   </body>
 </html>

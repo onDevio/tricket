@@ -44,7 +44,7 @@ function findAll(callback) {
     // Get the documents collection
     var collection = db.collection('tickets');
     // Find some documents
-    collection.find({}).toArray(function(err, docs) {
+    collection.find({}).sort({dateCreated: -1}).toArray(function(err, docs) {
       db.close();
       callback(docs);
     });
