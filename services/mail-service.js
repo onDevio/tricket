@@ -22,8 +22,8 @@ function newTicketNotification(ticket, callback) {
     to: sesConfig.notificationUsers,
     from: 'info@ondevio.com',
     subject: 'New Ticket recieved',
-    message: 'There is a new Ticket from: '+ticket.customer+' with title: '+ticket.title,
-    altText: 'There is a new Ticket from: '+ticket.customer+' with title: '+ticket.title
+    message: 'There is a new Ticket from: '+ticket.customer.email+' with title: '+ticket.title,
+    altText: 'There is a new Ticket from: '+ticket.customer.email+' with title: '+ticket.title
   }, function (err, data, res) {
     assert.equal(err, null);
     callback(res);
