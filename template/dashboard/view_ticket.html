@@ -112,8 +112,22 @@
               </div>
               <div class="note-editable" id="note-0">
                 <div class="panel-body note-body marked">Hi there! This is a note.</div>
-                <div class="panel-body note-body x-editable hidden some_class" data-type="textarea" data-pk=":note" data-url="/api/ticket/:id/:note/save" data-title="Modify Note">Hi there! This is a note.</div>
-              </div>              
+                <div class="panel-body note-body x-editable hidden some_class" data-type="textarea" data-pk=":note" data-inputclass="test" data-url="/api/ticket/:id/:note/save" data-title="Modify Note">Hi there! This is a note.</div>
+              </div>     
+              <style type="text/css">
+                .editableform .form-control {
+                  width: 100%;
+                }
+                .editable-container.editable-inline{
+                  width: 100%;
+                }
+                .editable-input{
+                  width: 100%;
+                }
+                .control-group.form-group{
+                  width: 88%;
+                }
+              </style>         
             </div>
           </div>
           <form method="post">
