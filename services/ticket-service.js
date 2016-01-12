@@ -62,6 +62,11 @@ module.exports = function(aConnectionFactory, aUrl) {
       this.execute(callback, function(db, done) {
         updateTicket(id, changeSet, db, done);
       });
+    },
+    updateNoteFromTicket: function(id, changeSet, callback) {
+      this.execute(callback, function(db, done) {
+        updateNoteFromTicket(id, changeSet, db, done);
+      });
     }
   };
 };
@@ -247,6 +252,20 @@ function updateTicket(id, changeSet, db, callback) {
     ticket_id: id
   }, {
     $set: changeSet
+  }, function(err, result) {
+    assert.equal(err, null);
+    callback(result);
+  });
+}
+
+function updateNoteFromTicket(id, changeSet, db, callback) {
+  var index = 'notes.'+changeSet.index + '.body';
+  var set = {};
+  set[index] = changeSet.body;
+  db.collection('tickets').update({
+    ticket_id: id
+  }, {
+    $set: set 
   }, function(err, result) {
     assert.equal(err, null);
     callback(result);

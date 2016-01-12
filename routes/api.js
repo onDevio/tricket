@@ -135,7 +135,7 @@ router.get('/ticket/:id/untrash', function(req, res) {
 
 router.post('/ticket/:id/save', function(req, res) {
   var id = req.params.id;
-  //console.log('req.body: ' + JSON.stringify(req.body, null, 2));
+  console.log('req.body: ' + JSON.stringify(req.body, null, 2));
   var prop = req.body.name;
   var value = req.body.value;
 
@@ -144,6 +144,22 @@ router.post('/ticket/:id/save', function(req, res) {
 
   ticket[prop] = value;
   ticketService.updateTicket(id, ticket, function(result) {
+    res.status(200).end();
+  });
+});
+
+router.post('/ticket/:id/:index/save', function(req, res) {
+  var id = req.params.id;
+  var index = req.params.index;
+  console.log('req.body: ' + JSON.stringify(req.body, null, 2));
+  var value = req.body.value;
+
+  var newNote = {
+    body: value,
+    index: index 
+  };
+
+  ticketService.updateNoteFromTicket(id, newNote, function(result) {
     res.status(200).end();
   });
 });
