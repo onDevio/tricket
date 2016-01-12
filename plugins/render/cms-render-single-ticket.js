@@ -2,7 +2,6 @@
 
 var log = require('debug')('temply:cms-render-single-ticket');
 var moment = require('moment');
-var markdown = require( "markdown" ).markdown;
 
 module.exports = function(data, $element, callback) {
   if (!data) {
@@ -14,8 +13,8 @@ module.exports = function(data, $element, callback) {
   log(JSON.stringify(ticket));
 
   $element.find('.id').text(ticket.ticket_id);
-  $element.find('.x-editable').attr('data-url', '/api/ticket/' + ticket.ticket_id + '/save');
-  $element.find('.x-editable').attr('data-pk', ticket.ticket_id);
+  $element.find('.customer-email').attr('data-url', '/api/ticket/' + ticket.ticket_id + '/save');
+  $element.find('.customer-email').attr('data-pk', ticket.ticket_id);
 
   var path = '/api/ticket/'+ticket.ticket_id+'/note';
   $element.find('form').attr('action',path);
@@ -51,7 +50,7 @@ module.exports = function(data, $element, callback) {
   var notes = ticket.notes;
   var work = 0;
   var noteTemplate = $element.find('.notes .note').remove();
-  notes.forEach(function(note){
+  notes.forEach(function(note, index){
   	//log(note);
     var noteItem = noteTemplate.clone();
     var date = new Date(note.dateCreated);
@@ -66,11 +65,15 @@ module.exports = function(data, $element, callback) {
     noteItem.find('.note-author').text(note.user);
     noteItem.find('.note-date').text(moment(date).fromNow());
     noteItem.find('.note-worklog').text(note.worklog.toString());
-    //log(note.type);
-    var md = markdown.toHTML(note.body);
-    noteItem.find('.note-body').html(md);
-    $element.find('.notes').append(noteItem);
 
+    noteItem.find('.edit').attr('onclick', "edit("+index+")");
+    noteItem.find('.note-editable').attr('id', 'note-'+index);
+
+    noteItem.find('.note-body').attr('data-url', '/api/ticket/' + ticket.ticket_id + '/'+index+'/save');    
+    noteItem.find('.note-body').attr('data-pk', ticket.ticket_id);
+    //log(note.type);
+    noteItem.find('.note-body').text(note.body);
+    $element.find('.notes').append(noteItem);
   });
 
   $element.find('.worklog').text(work.toString());
