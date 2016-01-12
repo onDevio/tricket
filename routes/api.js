@@ -1,7 +1,6 @@
+'use strict';
 var express = require('express');
 var router = express.Router();
-
-var bodyParser = require('body-parser');
 
 var multer = require('multer');
 var upload = multer();
@@ -70,9 +69,13 @@ router.post('/ticket/:id/note', function(req, res) {
     'user' : req.user.displayName
   };
 
-  mailService.externalNote(id, note, function(result) {
-    log('External note sent to client');
-  });
+  //console.log('Tipo:' +req.body.type);
+  if(req.body.type === 'external'){
+    mailService.externalNote(id, note, function(result) {
+      log('External note sent to client');
+    });
+  }
+  
   ticketService.addNoteToTicket(id, note, function(result) {
     log('Inserted note to ticket');
   });
