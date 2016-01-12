@@ -49,15 +49,16 @@
     $(document).ready(function() {
       $.fn.editable.defaults.mode = 'inline';    
       $('.x-editable').on('hidden', function(e, reason) {
-      if(reason === 'save' || reason === 'cancel') {
+      //if(reason === 'save' || reason === 'cancel') {
               location.reload();
-          } 
+      //  } 
       });
     });
     </script>
     <style type="text/css">
-    textarea{
-      min-width: 100% !important;
+    .editable-input
+    .editableform{
+      width: 100% !important;
     }
     </style>
   </head>
@@ -111,7 +112,7 @@
               </div>
               <div class="note-editable" id="note-0">
                 <div class="panel-body note-body marked">Hi there! This is a note.</div>
-                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk=":note" data-url="/api/ticket/:id/:note/save" data-title="Modify Note">Hi there! This is a note.</div>
+                <div class="panel-body note-body x-editable hidden some_class" data-type="textarea" data-pk=":note" data-url="/api/ticket/:id/:note/save" data-title="Modify Note">Hi there! This is a note.</div>
               </div>              
             </div>
           </div>
@@ -164,6 +165,7 @@
     <script type="text/javascript">
       
       (function(){
+        $('.customer-email').editable();
         $('.marked').each(
           function(){
             this.innerHTML = markdown.toHTML(this.innerHTML)
