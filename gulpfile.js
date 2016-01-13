@@ -18,7 +18,7 @@ gulp.task('default', function () {
   // Restart the server when file changes
   var watchOptions = {
     interval: 500
-  }
+  };
   gulp.watch(['template/**/*.html'], watchOptions, server.notify);
   gulp.watch(['app.js', 'routes/**/*.js', 'modules/**/*.js', 'plugins/**/*.js', 'services/**/*.js'], watchOptions, [server.run]);
 });

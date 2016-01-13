@@ -81,7 +81,7 @@ describe('Ticket Service', function() {
   });
 
   it('should create a ticket from an email forwarded from GMail', function(done) {
-    var fwdEmail = require('./gmailForward');
+    var fwdEmail = require('./fixture/gmailForward');
     var ticket = ticketService.createTicket(fwdEmail);
     expect(ticket.title).to.equal('Prueba');
     expect(ticket.notes[0].body).to.equal('Esto es una prueba.\n');
@@ -89,6 +89,42 @@ describe('Ticket Service', function() {
     expect(ticket.customer.name).to.equal('Mariano Eloy Fernández Osca');
     expect(ticket.notes[0].user).to.equal('mail');
     expect(ticket.notes[0].worklog).to.equal(0);
+    done();
+  });
+
+  it('should match UNK-1 for subject "[UNK-1] A mail subject"', function(done) {
+    var email = {
+      headers: {
+        subject: '[UNK-1] A mail subject'
+      }
+    };
+
+    var ticket_id = ticketService.findTicketIdInSubject(email);
+    expect(ticket_id).to.equal('UNK-1');
+    done();
+  });
+
+  it('should return undefined for subject without a ticket_id reference', function(done) {
+    var email = {
+      headers: {
+        subject: 'A mail subject'
+      }
+    };
+
+    var ticket_id = ticketService.findTicketIdInSubject(email);
+    expect(ticket_id).to.be.undefined;
+    done();
+  });
+
+  it('should match UNK-1 for subject "RE: [UNK-1] A mail subject"', function(done) {
+    var email = {
+      headers: {
+        subject: 'RE: [UNK-1] A mail subject'
+      }
+    };
+
+    var ticket_id = ticketService.findTicketIdInSubject(email);
+    expect(ticket_id).to.equal('UNK-1');
     done();
   });
 
@@ -111,4 +147,18 @@ describe('Ticket Service', function() {
       done();
     });
   });
+
+  it('should create a note from email', function(done) {
+    var email = require('./fixture/gmailForward');
+
+    var note = ticketService.createNote(email);
+    expect(note.body).to.equal('Esto es una prueba.\n');
+    expect(note.type).to.equal('mail');
+    expect(note.dateCreated).to.equal('2015-12-20T07:55:14.000Z');
+    expect(note.worklog).to.equal(0);
+    expect(note.user).to.equal('mail');
+    done();
+  });
+
+
 });

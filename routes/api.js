@@ -101,16 +101,23 @@ router.post('/emails', upload.array(), function(req, res, next) {
     msg = req.body.mailinMsg;
   }
   log('Parsed msg: ' + JSON.stringify(msg, null, 2));
-
-  var ticket = ticketService.createTicket(msg);
-  log('Created ticket from email');
-  ticketService.insertTicket(ticket, function(result) {
-    log('Inserted ticket to mongo');
-    mailService.newTicketNotification(ticket, function(result) {
-      log('Sending ticket');
+  var ticketIdFromMailSubject = ticketService.findTicketIdInSubject(msg);
+  if (ticketIdFromMailSubject) {
+    var note = ticketService.createNote(msg);
+    ticketService.addNoteToTicket(ticketIdFromMailSubject, note, function(result) {
+      res.status(201).send(ticket);
     });
-    res.status(201).send(ticket);
-  });
+  } else {
+    var ticket = ticketService.createTicket(msg);
+    log('Created ticket from email');
+    ticketService.insertTicket(ticket, function(result) {
+      log('Inserted ticket to mongo');
+      mailService.newTicketNotification(ticket, function(result) {
+        log('Sending ticket');
+      });
+      res.status(201).send(ticket);
+    });
+  }
 });
 
 router.get('/ticket/:id/trash', function(req, res) {
