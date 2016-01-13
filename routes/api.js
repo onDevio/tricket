@@ -3,13 +3,29 @@ var express = require('express');
 var router = express.Router();
 
 var multer = require('multer');
-var upload = multer();
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname + '-' + Date.now())
+  }
+})
+
+var upload = multer({ storage: storage })
 
 var log = require('debug')('tricket:api');
 
 var ticketService = require('../services/ticket-service.js')();
 var mailService = require('../services/mail-service.js')();
 var counterService = require('../services/counter-service.js')();
+
+router.post( '/file-upload', upload.any(), function( req, res, next ) {
+  // Metadata about the uploaded file can now be found in req.file
+  log('req.files: ' + JSON.stringify(req.files, null, 2));
+  return res.status( 200 ).send( req.files );
+});
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);
@@ -160,7 +176,7 @@ router.post('/ticket/:id/:index/save', function(req, res) {
   var index = req.params.index;
   var type = req.body.name;
 
-  console.log('req.body: ' + JSON.stringify(req.body, null, 2));
+  log('req.body: ' + JSON.stringify(req.body, null, 2));
   var value = req.body.value;
 
   var newNote = {

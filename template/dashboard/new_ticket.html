@@ -14,6 +14,8 @@
     <!-- Bootstrap core CSS -->
     <link href="/template/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <link href="/vendor/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="/template/dashboard/dashboard.css" rel="stylesheet">
 
@@ -58,6 +60,7 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
           <h2 class="sub-header">New ticket</h2>
+          <h2 class="hash">LoL</h2>
           <form method="post" action="/api/ticket/new">
             <div class="form-group col-lg-12">
               <label class="sr-only" for="title">Title</label>
@@ -81,13 +84,21 @@
                 <div id="preview" class="panel-body"></div>                
               </div>
             </div>
+            <input class="fileArray" type="hidden" name="files[]"/>
             <div class="form-group col-lg-12">
               <span class="pull-right">
                 <button type="submit" class="btn btn-primary" name="close">Submit ticket and Close</button>
                 <button type="submit" class="btn btn-success" name="open">Submit new ticket</button>
               </span>
-            </div>
-          </form>
+            </div>            
+          </form>  
+          <div class="form-group col-lg-12">
+             <div action="/api/file-upload" class="dropzone" id="files">
+                <div class="fallback">
+                  <input name="file" type="file" multiple />
+                </div>
+              </div>
+            </div>        
           </div>
         </div>
       </div>
@@ -103,8 +114,10 @@
     <script src="/template/assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/vendor/dropzone/dist/min/dropzone.min.js"></script>
     <script type="text/javascript" src="/template/dashboard/markdown.js"></script> 
     <script>
+      //Ticket preview
       function Editor(input, preview) {
         this.update = function () {
           preview.innerHTML = markdown.toHTML(input.value);
@@ -112,8 +125,36 @@
         input.editor = this;
         this.update();
       }
-      var $ = function (id) { return document.getElementById(id); };
-      new Editor($("body"), $("preview"));
+      var lel = function (id) { return document.getElementById(id); };
+      new Editor(lel("body"), lel("preview"));
+
+      //Generación de UUID
+      function generateUUID(){
+        var d = new Date().getTime();
+        if(window.performance && typeof window.performance.now === "function"){
+            d += performance.now();; //use high-precision timer if available
+        }
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (d + Math.random()*16)%16 | 0;
+            d = Math.floor(d/16);
+            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+      }
+      
+      var hash = generateUUID();
+      $('.hash').text(hash);
+
+
+      //Configuración de dropzone
+      Dropzone.options.files = {
+        paramName: hash, // The name that will be used to transfer the file
+        maxFilesize: 10, // MB,
+        success: function( file, response ){
+            console.log(response);
+        }
+      };
+            
     </script>
   </body>
 </html>
