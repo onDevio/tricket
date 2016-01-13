@@ -16,7 +16,8 @@ module.exports = function() {
           },
           findOne_result: {},
           findOne: function(query, callback) {
-            callback(this.findOne_result);
+            var err = null;
+            callback(err, this.findOne_result);
           },
           findAndModify_result: {},
           findAndModify: function(query, sort, doc, options, callback) {
