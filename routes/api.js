@@ -151,7 +151,7 @@ router.post('/ticket/:id/save', function(req, res) {
 router.post('/ticket/:id/:index/save', function(req, res) {
   var id = req.params.id;
   var index = req.params.index;
-  var type = req.params.name;
+  var type = req.body.name;
 
   console.log('req.body: ' + JSON.stringify(req.body, null, 2));
   var value = req.body.value;

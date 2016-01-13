@@ -26,8 +26,9 @@ function newTicketNotification(ticket, callback) {
     altText: 'There is a new Ticket from: '+ticket.customer.email+' with title: '+ticket.title
   }, function (err, data, res) {
     if(err){
-      console.log('Error enviando correo');
+      log('Error enviando correo');
       callback();
+      return;
     }
     assert.equal(err, null);
     callback(res);
@@ -36,7 +37,7 @@ function newTicketNotification(ticket, callback) {
 
 function externalNote(id, note, callback) {  
   ticketService.findByTicketId(id, function(ticket){
-    console.log('Sending note about ticket: '+ ticket.title);
+    log('Sending note about ticket: '+ ticket.title);
     var md = markdown.toHTML(note.body);
     //console.log(md);
     client.sendEmail({
@@ -47,8 +48,9 @@ function externalNote(id, note, callback) {
       altText: note.body
     }, function (err, data, res) {
       if(err){
-        console.log('Error enviando correo');
+        log('Error enviando correo');
         callback();
+        return;
       }
       assert.equal(err, null);
       callback(res);
