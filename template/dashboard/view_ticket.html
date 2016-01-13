@@ -46,14 +46,6 @@
       $('#note-'+id+' .x-editable').editable();
       setTimeout(function(){ $('#note-'+id+' .x-editable').editable('toggle'); }, 500);
     }
-    $(document).ready(function() {
-      $.fn.editable.defaults.mode = 'inline';    
-      $('.x-editable').on('hidden', function(e, reason) {
-      //if(reason === 'save' || reason === 'cancel') {
-              location.reload();
-      //  } 
-      });
-    });
     </script>
     <style type="text/css">
     .editable-input
@@ -177,9 +169,14 @@
     <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript" src="/template/dashboard/markdown.js"></script> 
     <script type="text/javascript">
-      
       (function(){
+        $.fn.editable.defaults.mode = 'inline';    
         $('.customer-email').editable();
+        $('.x-editable').on('hidden', function(e, reason) {
+        //if(reason === 'save' || reason === 'cancel') {
+                location.reload();
+        //  } 
+        });
         $('.marked').each(
           function(){
             this.innerHTML = markdown.toHTML(this.innerHTML)
