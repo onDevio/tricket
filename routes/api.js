@@ -151,6 +151,8 @@ router.post('/ticket/:id/save', function(req, res) {
 router.post('/ticket/:id/:index/save', function(req, res) {
   var id = req.params.id;
   var index = req.params.index;
+  var type = req.params.name;
+
   console.log('req.body: ' + JSON.stringify(req.body, null, 2));
   var value = req.body.value;
 
@@ -160,6 +162,11 @@ router.post('/ticket/:id/:index/save', function(req, res) {
   };
 
   ticketService.updateNoteFromTicket(id, newNote, function(result) {
+    if(type === 'external'){
+      mailService.externalNote(id, newNote, function(result) {
+      log('External note sent to client');
+    });
+    }
     res.status(200).end();
   });
 });

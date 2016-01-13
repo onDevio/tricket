@@ -58,9 +58,11 @@ module.exports = function(data, $element, callback) {
 
     if (note.type !== "internal") {
       noteItem.find('.note-internal').remove();
+      noteItem.find('.hidden').attr('id','external');
     }
     if (note.type !== "external") {
       noteItem.find('.note-external').remove();
+      noteItem.find('.hidden').attr('id','internal');
     }
     noteItem.find('.note-author').text(note.user);
     noteItem.find('.note-date').text(moment(date).fromNow());
