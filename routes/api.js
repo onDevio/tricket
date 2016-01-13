@@ -1,7 +1,6 @@
+'use strict';
 var express = require('express');
 var router = express.Router();
-
-var bodyParser = require('body-parser');
 
 var multer = require('multer');
 var upload = multer();
@@ -70,7 +69,13 @@ router.post('/ticket/:id/note', function(req, res) {
     'user' : req.user.displayName
   };
 
-  //TODO: if external, send mail to customer
+  //console.log('Tipo:' +req.body.type);
+  if(req.body.type === 'external'){
+    mailService.externalNote(id, note, function(result) {
+      log('External note sent to client');
+    });
+  }
+  
   ticketService.addNoteToTicket(id, note, function(result) {
     log('Inserted note to ticket');
   });
@@ -137,7 +142,7 @@ router.get('/ticket/:id/untrash', function(req, res) {
 
 router.post('/ticket/:id/save', function(req, res) {
   var id = req.params.id;
-  //console.log('req.body: ' + JSON.stringify(req.body, null, 2));
+  console.log('req.body: ' + JSON.stringify(req.body, null, 2));
   var prop = req.body.name;
   var value = req.body.value;
 
@@ -146,6 +151,29 @@ router.post('/ticket/:id/save', function(req, res) {
 
   ticket[prop] = value;
   ticketService.updateTicket(id, ticket, function(result) {
+    res.status(200).end();
+  });
+});
+
+router.post('/ticket/:id/:index/save', function(req, res) {
+  var id = req.params.id;
+  var index = req.params.index;
+  var type = req.body.name;
+
+  console.log('req.body: ' + JSON.stringify(req.body, null, 2));
+  var value = req.body.value;
+
+  var newNote = {
+    body: value,
+    index: index 
+  };
+
+  ticketService.updateNoteFromTicket(id, newNote, function(result) {
+    if(type === 'external'){
+      mailService.externalNote(id, newNote, function(result) {
+      log('External note sent to client');
+    });
+    }
     res.status(200).end();
   });
 });

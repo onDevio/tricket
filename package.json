@@ -1,18 +1,18 @@
 {
-  "name": "temply",
+  "name": "tricket",
   "version": "0.0.1",
   "description": "A template-first, linghtning fast CMS",
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "DEBUG=temply:* node bin/www 2> temply.log"
+    "start": "DEBUG=temply:* node bin/www 2> tricket.log"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mefernandez/temply.git"
+    "url": "https://github.com/ondevio/tricket.git"
   },
   "keywords": [
-    "cms",
+    "ticketing",
     "content",
     "management",
     "system"
@@ -20,9 +20,9 @@
   "author": "mariano.fernandez@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mefernandez/temply/issues"
+    "url": "https://github.com/ondevio/tricket/issues"
   },
-  "homepage": "https://github.com/mefernandez/temply",
+  "homepage": "https://github.com/ondevio/tricket",
   "dependencies": {
     "babelify": "^6.3.0",
     "body-parser": "~1.13.2",
