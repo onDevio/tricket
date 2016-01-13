@@ -147,4 +147,18 @@ describe('Ticket Service', function() {
       done();
     });
   });
+
+  it('should create a note from email', function(done) {
+    var email = require('./fixture/gmailForward');
+
+    var note = ticketService.createNote(email);
+    expect(note.body).to.equal('Esto es una prueba.\n');
+    expect(note.type).to.equal('mail');
+    expect(note.dateCreated).to.equal('2015-12-20T07:55:14.000Z');
+    expect(note.worklog).to.equal(0);
+    expect(note.user).to.equal('mail');
+    done();
+  });
+
+
 });

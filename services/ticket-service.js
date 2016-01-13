@@ -28,6 +28,7 @@ module.exports = function(aConnectionFactory, aUrl) {
       });
     },
     createTicket: createTicket,
+    createNote: createNote,
     findTicketIdInSubject: findTicketIdInSubject,
     insertTicket: function(ticket, callback) {
       this.execute(callback, function(db, done) {
@@ -92,6 +93,17 @@ function createTicket(msg) {
       worklog: 0,
       user: 'mail'
     }]
+  };
+}
+
+function createNote(msg) {
+  var date = msg.date || new Date().toISOString();
+  return {
+    body: msg.text,
+    type: 'mail',
+    dateCreated: date,
+    worklog: 0,
+    user: 'mail'
   };
 }
 
