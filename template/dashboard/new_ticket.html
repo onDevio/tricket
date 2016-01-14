@@ -83,7 +83,7 @@
                 <div id="preview" class="panel-body"></div>                
               </div>
             </div>
-            <input class="fileArray" type="hidden" name="files[]"/>
+            <input class="fileArray" type="hidden" name="files" value="[]"/>
             <div class="form-group col-lg-12">
               <span class="pull-right">
                 <button type="submit" class="btn btn-primary" name="close">Submit ticket and Close</button>
@@ -127,15 +127,22 @@
       var lel = function (id) { return document.getElementById(id); };
       new Editor(lel("body"), lel("preview"));
 
+      var files = [];
       //Configuración de dropzone
       Dropzone.options.files = {
         paramName: 'file', // The name that will be used to transfer the file
         maxFilesize: 100, // MB,
         success: function( file, response ){
-            console.log(response[0].path);
-            $('.fileArray')[0].value+=response[0].path;
+            //console.log(response[0].filename);
+            files.push(response[0].filename);
         }
       };
+
+      $( "form" ).submit(function( event ) {
+        //console.log( "Handler for .submit() called." );
+        $('.fileArray')[0].value = files;
+        return true;
+      });
             
     </script>
   </body>

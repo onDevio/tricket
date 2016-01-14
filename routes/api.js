@@ -3,10 +3,14 @@ var express = require('express');
 var router = express.Router();
 
 var multer = require('multer');
+var fs = require("fs");
+var fse = require('fs-extra')
+var finalStorage = "storage/";
+var uploadStorage = "uploads/";
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, uploadStorage)
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname + '-' + Date.now())
@@ -14,7 +18,6 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage })
-
 var log = require('debug')('tricket:api');
 
 var ticketService = require('../services/ticket-service.js')();
@@ -37,6 +40,7 @@ router.post('/ticket/new', function(req, res) {
     'worklog': req.body.worklog || 0,
     'user' : req.user.displayName
   };
+  var files = req.body.files.split(',');
   var ticket = {
     customer: {
       email: req.body.customer,
@@ -46,13 +50,28 @@ router.post('/ticket/new', function(req, res) {
     status: req.body.close !== undefined ? 'Closed' : 'Open',
     title: req.body.title || '<Empty subject>',
     dateCreated: new Date().toISOString(),
-    notes: [note]
+    notes: [note],
+    files: files
   };
   ticketService.insertTicket(ticket, function(result) {
+    //Move files into final folder   
+    createTicketFS(result); 
     log('Inserted ticket to mongo');
     res.redirect(302, '/app/tickets');
   });
 });
+
+function createTicketFS(ticket){
+  fse.mkdirs(ticket.ticket_id, function (err) {
+    if (err) return console.error(err);
+    for(var i=0;i<ticket.files.length;i++){
+      fse.move(uploadStorage+ticket.files[i], finalStorage+ticket.ticket_id+'/'+ticket.files[i], function (err) {
+        if (err) return console.error(err);
+        console.log("success!")
+      })
+    }
+  })
+}
 
 router.get('/ticket/:id/asign/:user', function(req, res) {
   var id = req.params.id;
