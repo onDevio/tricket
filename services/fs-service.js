@@ -27,6 +27,7 @@ module.exports = function() {
   return {
     addFileToExistingTicket: addFileToExistingTicket,
     createTicketFS: createTicketFS,
+    getFile: getFile,
     upload: upload
   };
 };
@@ -59,5 +60,20 @@ function createTicketFS(ticket){
       })
     }
   })
+}
+
+function getFile(id, name, res){
+   fs.readFile(finalStorage+id+'/'+name, "binary", function(err, file) {
+    if(err) {        
+      res.writeHead(500, {"Content-Type": "text/plain"});
+      res.write(err + "\n");
+      res.end();
+      return;
+    }
+
+    res.writeHead(200);
+    res.write(file, "binary");
+    res.end();
+  });
 }
 

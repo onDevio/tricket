@@ -23,23 +23,8 @@ router.post( '/file-upload/:id', fsService.upload.any(), function( req, res, nex
 });
 
 router.get('/file/:id/:name', function(req, res) {
-  var id = req.params.id;
-  var name = req.params.name;
-
-  fs.readFile(finalStorage+id+'/'+name, "binary", function(err, file) {
-    if(err) {        
-      res.writeHead(500, {"Content-Type": "text/plain"});
-      res.write(err + "\n");
-      res.end();
-      return;
-    }
-
-    res.writeHead(200);
-    res.write(file, "binary");
-    res.end();
-  });
+  fsService.getFile(req.params.id, req.params.name, res);
 });
-
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);
@@ -71,7 +56,6 @@ router.post('/ticket/new', function(req, res) {
     res.redirect(302, '/app/tickets');
   });
 });
-
 
 router.get('/ticket/:id/asign/:user', function(req, res) {
   var id = req.params.id;
