@@ -1,72 +1,24 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
-
-var multer = require('multer');
-var fs = require("fs");
-var fse = require('fs-extra')
-var finalStorage = "storage/";
-var uploadStorage = "uploads/";
-
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadStorage)
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname + '-' + Date.now())
-  }
-})
-
-var upload = multer({ storage: storage })
 var log = require('debug')('tricket:api');
 
 var ticketService = require('../services/ticket-service.js')();
 var mailService = require('../services/mail-service.js')();
 var counterService = require('../services/counter-service.js')();
+var fsService = require('../services/fs-service.js')();
 
-var schedule = require('node-schedule');
 
-
-//Clean uploaded non asigned files
-schedule.scheduleJob('*/5 * * * *', function(){
-  console.log('Roomba module active');
-  fs.readdir(uploadStorage, function(err, files) {
-    var endTime, 
-    now = new Date().getTime();
-    files.forEach(function(file, index) {
-      fs.stat(uploadStorage+file, function(err,stats){
-         if(!err){     
-            endTime = new Date(stats.ctime).getTime() + 3600000;
-            if (now > endTime) {     
-              fse.removeSync(uploadStorage+file);
-              console.log('Removed '+ uploadStorage+file);  
-            }
-         }
-      })  
-    });
-  });  
-});
-
-router.post( '/file-upload', upload.any(), function( req, res, next ) {
+router.post( '/file-upload', fsService.upload.any(), function( req, res, next ) {
   // Metadata about the uploaded file can now be found in req.file
   log('req.files: ' + JSON.stringify(req.files, null, 2));
   return res.status( 200 ).send( req.files );
 });
 
-router.post( '/file-upload/:id', upload.any(), function( req, res, next ) {
+router.post( '/file-upload/:id', fsService.upload.any(), function( req, res, next ) {
   // Metadata about the uploaded file can now be found in req.file
   log('req.files: ' + JSON.stringify(req.files, null, 2));
-  var dir = finalStorage+req.params.id;
-  if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir);
-  }
-  fse.move(req.files[0].path, finalStorage+req.params.id+'/'+req.files[0].filename, function (err) {
-    if (err) return console.error(err);
-    ticketService.addFileToTicket(req.params.id, req.files[0].filename, function(){
-      console.log("DB success!");
-    });
-    console.log("FS success!");
-  })
+  fsService.addFileToExistingTicket(req.params.id, req.files[0].filename);
   return res.status( 200 ).send( req.files );
 });
 
@@ -187,7 +139,7 @@ router.post('/ticket/:id/note', function(req, res) {
   res.redirect(302, '/app/ticket/'+id);
 });
 
-router.post('/emails', upload.array(), function(req, res, next) {
+router.post('/emails', fsService.upload.array(), function(req, res, next) {
   var msg = null;
   if (typeof req.body.mailinMsg === 'string') {
     msg = JSON.parse(req.body.mailinMsg);
