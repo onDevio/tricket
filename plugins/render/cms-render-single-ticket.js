@@ -47,6 +47,17 @@ module.exports = function(data, $element, callback) {
   $element.find('.customer-name').text(ticket.customer.name);
   $element.find('.customer-email').text(ticket.customer.email);
 
+  var files = ticket.files;
+  var fileTemplate = $element.find('.downloadFiles li').remove();
+  files.forEach(function(file, index){
+    var fileItem = fileTemplate.clone();
+    var filename = file.substr(0, file.lastIndexOf('.'));
+    fileItem.find('a').text(filename).attr('href','/api/file/'+ticket.ticket_id+'/'+file);
+    $element.find('.downloadFiles').append(fileItem);
+  });
+
+  $element.find('.dropzone').attr('action','/api/file-upload/'+ticket.ticket_id);
+
   var notes = ticket.notes;
   var work = 0;
   var noteTemplate = $element.find('.notes .note').remove();

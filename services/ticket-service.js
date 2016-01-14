@@ -55,6 +55,11 @@ module.exports = function(aConnectionFactory, aUrl) {
         addNoteToTicket(id, note, db, done);
       });
     },
+    addFileToTicket: function(id, file, callback) {
+      this.execute(callback, function(db, done) {
+        addFileToTicket(id, file, db, done);
+      });
+    },
     renameAllTickets: function(id, note, callback) {
       this.execute(callback, function(db, done) {
         renameAllTickets(id, note, db, done);
@@ -247,6 +252,19 @@ function addNoteToTicket(id, note, db, callback) {
   }, {
     $push: {
       notes: note
+    }
+  }, function(err, result) {
+    assert.equal(err, null);
+    callback(result);
+  });
+}
+
+function addFileToTicket(id, file, db, callback) {
+  db.collection('tickets').update({
+    ticket_id: id
+  }, {
+    $push: {
+      files: file
     }
   }, function(err, result) {
     assert.equal(err, null);
