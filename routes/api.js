@@ -66,23 +66,12 @@ router.post('/ticket/new', function(req, res) {
   };
   ticketService.insertTicket(ticket, function(result) {
     //Move files into final folder   
-    createTicketFS(result); 
+    fsService.createTicketFS(result); 
     log('Inserted ticket to mongo');
     res.redirect(302, '/app/tickets');
   });
 });
 
-function createTicketFS(ticket){
-  fse.mkdirs(ticket.ticket_id, function (err) {
-    if (err) return console.error(err);
-    for(var i=0;i<ticket.files.length;i++){
-      fse.move(uploadStorage+ticket.files[i], finalStorage+ticket.ticket_id+'/'+ticket.files[i], function (err) {
-        if (err) return console.error(err);
-        console.log("success!")
-      })
-    }
-  })
-}
 
 router.get('/ticket/:id/asign/:user', function(req, res) {
   var id = req.params.id;

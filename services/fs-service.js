@@ -26,6 +26,7 @@ scheduleService.cleanUploadFolder(uploadStorage);
 module.exports = function() {
   return {
     addFileToExistingTicket: addFileToExistingTicket,
+    createTicketFS: createTicketFS,
     upload: upload
   };
 };
@@ -41,6 +42,22 @@ function addFileToExistingTicket(id, file) {
       console.log("DB success!");
     });
     console.log("FS success!");
+  })
+}
+
+function createTicketFS(ticket){
+  fse.mkdirs(ticket.ticket_id, function (err) {
+    if (err) return console.error(err);
+    var dir = finalStorage+ticket.ticket_id;
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+  }
+    for(var i=0;i<ticket.files.length;i++){
+      fse.move(uploadStorage+ticket.files[i], dir+'/'+ticket.files[i], function (err) {
+        if (err) return console.error(err);
+        console.log("FS success!")
+      })
+    }
   })
 }
 
