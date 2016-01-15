@@ -1,5 +1,7 @@
 module.exports = {
 	domain: 'https://tricket.ondevio.com',
 	company: 'ondevio',
-	mongoUrl: 'mongodb://mongo:27017/tricket'
+	mongoUrl: 'mongodb://mongo:27017/tricket',
+	finalStorage: 'storage/',
+	uploadStorage: 'uploads/'
 };

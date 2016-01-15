@@ -1,15 +1,30 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
-
-var multer = require('multer');
-var upload = multer();
-
 var log = require('debug')('tricket:api');
 
 var ticketService = require('../services/ticket-service.js')();
 var mailService = require('../services/mail-service.js')();
 var counterService = require('../services/counter-service.js')();
+var fsService = require('../services/fs-service.js')();
+
+
+router.post( '/file-upload', fsService.upload.any(), function( req, res, next ) {
+  // Metadata about the uploaded file can now be found in req.file
+  log('req.files: ' + JSON.stringify(req.files, null, 2));
+  return res.status( 200 ).send( req.files );
+});
+
+router.post( '/file-upload/:id', fsService.upload.any(), function( req, res, next ) {
+  // Metadata about the uploaded file can now be found in req.file
+  log('req.files: ' + JSON.stringify(req.files, null, 2));
+  fsService.addFileToExistingTicket(req.params.id, req.files[0].filename);
+  return res.status( 200 ).send( req.files );
+});
+
+router.get('/file/:id/:name', function(req, res) {
+  fsService.getFile(req.params.id, req.params.name, res);
+});
 
 router.post('/ticket/new', function(req, res) {
   //log(req.body);
@@ -21,6 +36,7 @@ router.post('/ticket/new', function(req, res) {
     'worklog': req.body.worklog || 0,
     'user' : req.user.displayName
   };
+  var files = req.body.files.split(',');
   var ticket = {
     customer: {
       email: req.body.customer,
@@ -30,9 +46,12 @@ router.post('/ticket/new', function(req, res) {
     status: req.body.close !== undefined ? 'Closed' : 'Open',
     title: req.body.title || '<Empty subject>',
     dateCreated: new Date().toISOString(),
-    notes: [note]
+    notes: [note],
+    files: files
   };
   ticketService.insertTicket(ticket, function(result) {
+    //Move files into final folder   
+    fsService.createTicketFS(result); 
     log('Inserted ticket to mongo');
     res.redirect(302, '/app/tickets');
   });
@@ -93,7 +112,7 @@ router.post('/ticket/:id/note', function(req, res) {
   res.redirect(302, '/app/ticket/'+id);
 });
 
-router.post('/emails', upload.array(), function(req, res, next) {
+router.post('/emails', fsService.upload.array(), function(req, res, next) {
   var msg = null;
   if (typeof req.body.mailinMsg === 'string') {
     msg = JSON.parse(req.body.mailinMsg);
@@ -160,7 +179,7 @@ router.post('/ticket/:id/:index/save', function(req, res) {
   var index = req.params.index;
   var type = req.body.name;
 
-  console.log('req.body: ' + JSON.stringify(req.body, null, 2));
+  log('req.body: ' + JSON.stringify(req.body, null, 2));
   var value = req.body.value;
 
   var newNote = {

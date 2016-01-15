@@ -58,7 +58,7 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main">
           <div class="row">
-            <h2 class="sub-header">Customer List</h2>
+            <h2 class="sub-header">ID List</h2>
           </div>
           <form class="form-inline">
             <input type="text" class="form-control" id="search" placeholder="Type to search">
@@ -68,7 +68,7 @@
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Next Id</th>
+                  <th>Current Id</th>
                   <th>Change</th>
                 </tr>
               </thead>
@@ -93,25 +93,6 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-      $(document).ready(function($) {
-          $(".clickable-row").click(function() {
-              console.log('Click');
-              window.document.location = $(this).data("href");
-          });
-          var $rows = $('.cms-data-customers tr');
-          $('#search').keyup(function() {
-              var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-                  reg = RegExp(val, 'i'),
-                  text;
-              //console.log('Tripas');
-              $rows.show().filter(function() {
-                  text = $(this).text().replace(/\s+/g, ' ');
-                  return !reg.test(text);
-              }).hide();
-          });
-      });
-    </script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
