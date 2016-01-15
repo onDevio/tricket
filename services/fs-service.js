@@ -2,20 +2,21 @@
 
 var log = require('debug')('tricket:services');
 var multer = require('multer');
-var fs = require("fs");
+var fs = require('fs');
 var fse = require('fs-extra');
-var ticketService = require('../services/ticket-service.js')();
-var scheduleService = require('../services/schedule-service.js')();
 
-var finalStorage = "storage/";
-var uploadStorage = "uploads/";
+var scheduleService = require('../services/schedule-service.js')();
+var ticketService = require('../services/ticket-service.js')();
+
+var finalStorage = 'storage/';
+var uploadStorage = 'uploads/';
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadStorage)
+    cb(null, uploadStorage);
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname + '-' + Date.now())
+    cb(null, file.originalname + '-' + Date.now());
   }
 });
 
@@ -40,10 +41,10 @@ function addFileToExistingTicket(id, file) {
   fse.move(uploadStorage+file, finalStorage+id+'/'+file, function (err) {
     if (err) return console.error(err);
     ticketService.addFileToTicket(id, file, function(){
-      console.log("DB success!");
+      console.log('DB success!');
     });
-    console.log("FS success!");
-  })
+    console.log('FS success!');
+  });
 }
 
 function createTicketFS(ticket){
@@ -56,24 +57,25 @@ function createTicketFS(ticket){
     for(var i=0;i<ticket.files.length;i++){
       fse.move(uploadStorage+ticket.files[i], dir+'/'+ticket.files[i], function (err) {
         if (err) return console.error(err);
-        console.log("FS success!")
-      })
+        console.log('FS success!');
+      });
     }
-  })
+  });
 }
 
 function getFile(id, name, res){
-   fs.readFile(finalStorage+id+'/'+name, "binary", function(err, file) {
+   fs.readFile(finalStorage+id+'/'+name, 'binary', function(err, file) {
     if(err) {        
-      res.writeHead(500, {"Content-Type": "text/plain"});
-      res.write(err + "\n");
+      res.writeHead(500, {'Content-Type': 'text/plain'});
+      res.write(err + '\n');
       res.end();
       return;
     }
-
     res.writeHead(200);
-    res.write(file, "binary");
+    res.write(file, 'binary');
     res.end();
   });
 }
+
+
 
