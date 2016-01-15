@@ -2,13 +2,14 @@
 
 var log = require('debug')('tricket:services');
 var multer = require('multer');
-var fs = require("fs");
+var fs = require('fs');
 var fse = require('fs-extra');
-var ticketService = require('../services/ticket-service.js')();
+
 var scheduleService = require('../services/schedule-service.js')();
 var config = require('../config/config')();
 var finalStorage = config.finalStorage;
 var uploadStorage = config.uploadStorage;
+var ticketService = require('../services/ticket-service.js')();
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -70,9 +71,8 @@ function getFile(id, name, res){
       res.end();
       return;
     }
-
     res.writeHead(200);
-    res.write(file, "binary");
+    res.write(file, 'binary');
     res.end();
   });
 }

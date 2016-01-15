@@ -47,14 +47,16 @@ module.exports = function(data, $element, callback) {
   $element.find('.customer-name').text(ticket.customer.name);
   $element.find('.customer-email').text(ticket.customer.email);
 
-  var files = ticket.files;
   var fileTemplate = $element.find('.downloadFiles li').remove();
-  files.forEach(function(file, index){
-    var fileItem = fileTemplate.clone();
-    var filename = file.substr(0, file.lastIndexOf('.'));
-    fileItem.find('a').text(filename).attr('href','/api/file/'+ticket.ticket_id+'/'+file);
-    $element.find('.downloadFiles').append(fileItem);
-  });
+  var files = ticket.files;
+  if (files) {
+    files.forEach(function(file, index){
+      var fileItem = fileTemplate.clone();
+      var filename = file.substr(0, file.lastIndexOf('.'));
+      fileItem.find('a').text(filename).attr('href','/api/file/'+ticket.ticket_id+'/'+file);
+      $element.find('.downloadFiles').append(fileItem);
+    });
+  }
 
   $element.find('.dropzone').attr('action','/api/file-upload/'+ticket.ticket_id);
 
@@ -82,7 +84,7 @@ module.exports = function(data, $element, callback) {
     noteItem.find('.edit').attr('onclick', "edit("+index+")");
     noteItem.find('.note-editable').attr('id', 'note-'+index);
 
-    noteItem.find('.note-body').attr('data-url', '/api/ticket/' + ticket.ticket_id + '/'+index+'/save');    
+    noteItem.find('.note-body').attr('data-url', '/api/ticket/' + ticket.ticket_id + '/'+index+'/save');
     noteItem.find('.note-body').attr('data-pk', ticket.ticket_id);
     //log(note.type);
     noteItem.find('.note-body').text(note.body);

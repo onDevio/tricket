@@ -53,7 +53,7 @@
         width: 88%;
       }
       ol{
-        padding: 20px; 
+        padding: 20px;
         list-style-type:decimal;
       }
       ol li {
@@ -98,33 +98,34 @@
                 </span>
               </div>
             </div>
-          </div>
-          <div class="notes col-lg-12">            
-            <h3>From: <span class="customer-email x-editable" id="customer.email" data-type="text" data-pk=":id" data-url="/api/ticket/:id/save" data-title="Enter client"></span>
-              <span class="pull-right label label-info">Worklog: <span class="worklog"></span> Hours</span>
-            </h3>            
             <div class="panel panel-default note">
-              <div class="panel-heading">               
-                <h4>Files Attached</h4>             
+              <div class="panel-heading">
+                <h4>Files Attached</h4>
               </div>
               <div class="note-editable" id="note-0">
                 <ol class="downloadFiles">
                   <li><a href="/api/file" target="_blank">Download File</a></li>
                 </ol>
-              </div>     
+              </div>
             </div>
+
+          </div>
+          <div class="notes col-lg-12">
+            <h3>From: <span class="customer-email x-editable" id="customer.email" data-type="text" data-pk=":id" data-url="/api/ticket/:id/save" data-title="Enter client"></span>
+              <span class="pull-right label label-info">Worklog: <span class="worklog"></span> Hours</span>
+            </h3>
             <div class="panel panel-default note">
               <div class="panel-heading">
                 <button class="btn btn-primary edit" onclick="edit(note)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
                 <span class="label label-warning note-external">External</span>
                 <span class="label label-default note-internal">Internal</span>
                 <span class="note-author">Author</span> commented <span class="note-date">a minute ago</span>
-                <span class="pull-right label label-info">Spent: <span class="note-worklog">2</span> Hours</span>                
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">2</span> Hours</span>
               </div>
               <div class="note-editable" id="note-0">
                 <div class="panel-body note-body marked">Hi there! This is a note.</div>
                 <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk=":note" data-url="/api/ticket/:id/:note/save" data-title="Modify Note">Hi there! This is a note.</div>
-              </div>     
+              </div>
             </div>
           </div>
           <form method="post">
@@ -144,16 +145,9 @@
               <textarea name="body" id="body" placeholder="Ticket description" oninput="this.editor.update()" class="form-control" rows="10"></textarea>
               <div class="panel panel-default note">
                 <div class="panel-heading">
-                  <span class="label label-warning note-external">Ticket Preview</span>                  
+                  <span class="label label-warning note-external">Ticket Preview</span>
                 </div>
-                <div id="preview" class="panel-body"></div>                
-              </div>
-            </div>
-            <div class="form-group col-lg-12">
-             <div action="/api/file-upload/ticket" class="dropzone" id="files">
-                <div class="fallback">
-                  <input name="file" type="file" multiple />
-                </div>
+                <div id="preview" class="panel-body"></div>
               </div>
             </div>
             <div class="form-group col-lg-12">
@@ -171,6 +165,13 @@
                 </span>
               </span>
             </div>
+            <div class="form-group col-lg-12">
+             <div action="/api/file-upload/ticket" class="dropzone" id="files">
+                <div class="fallback">
+                  <input name="file" type="file" multiple />
+                </div>
+              </div>
+            </div>
           </form>
           </div>
         </div>
@@ -184,7 +185,7 @@
     <script src="/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
     <script>
     function edit(id){
-      //console.log('Edit');      
+      //console.log('Edit');
       $('#note-'+id+' .hidden' ).removeClass('hidden');
       $('#note-'+id+' .marked' ).addClass('hidden');
       $('#note-'+id+' .x-editable').editable();
@@ -195,10 +196,10 @@
     <script src="/template/assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script type="text/javascript" src="/template/dashboard/markdown.js"></script> 
+    <script type="text/javascript" src="/template/dashboard/markdown.js"></script>
     <script type="text/javascript">
       (function(){
-        $.fn.editable.defaults.mode = 'inline';    
+        $.fn.editable.defaults.mode = 'inline';
         $('.customer-email').editable();
         $('.x-editable').on('hidden', function(e, reason) {
           location.reload();
@@ -208,7 +209,7 @@
             this.innerHTML = markdown.toHTML(this.innerHTML)
           }
         );
-      })();      
+      })();
     </script>
     <script src="/vendor/dropzone/dist/min/dropzone.min.js"></script>
     <script>
@@ -238,7 +239,7 @@
         //console.log( "Handler for .submit() called." );
         $('.fileArray')[0].value = files;
         return true;
-      });            
+      });
     </script>
   </body>
 </html>

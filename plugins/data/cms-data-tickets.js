@@ -18,7 +18,7 @@ module.exports = function(data, $element, callback) {
 var user = data[0].user;
  findAll(function(tickets) {
    var data = {
-   "user": user,   
+   "user": user,
    "contents": tickets,
    "page": {
      "current": 1,
@@ -29,8 +29,7 @@ var user = data[0].user;
    callback(data);
  });
 
-
-}
+};
 
 // @see http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#find-all-documents
 function findAll(callback) {

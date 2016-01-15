@@ -2,7 +2,9 @@
 
 var log = require('debug')('tricket:services');
 var assert = require('assert');
-
+var fs = require('fs');
+var config = require('../config/config')();
+var finalStorage = config.finalStorage;
 
 module.exports = function(aConnectionFactory, aUrl) {
 
@@ -283,6 +285,7 @@ function renameAllTickets(oldId, newId, db, callback) {
       var counterSeq = match[2];
       var ticket_id = counterName + '-' + counterSeq;
       db.collection('tickets').update({_id: ticket._id}, {$set: {ticket_id: ticket_id}});
+      renameFolders(oldId, newId);
     }
   }, function(err, result) {
     assert.equal(err, null);
@@ -308,9 +311,26 @@ function updateNoteFromTicket(id, changeSet, db, callback) {
   db.collection('tickets').update({
     ticket_id: id
   }, {
-    $set: set 
+    $set: set
   }, function(err, result) {
     assert.equal(err, null);
     callback(result);
+  });
+}
+
+function renameFolders(oldId, newId){
+  fs.readdir(finalStorage, function(err, files) {
+    files.forEach(function(file, index) {
+        if(file.indexOf(oldId) > -1){
+          var newFile = file.replace(oldId, newId);
+          fs.rename(finalStorage+file, finalStorage+newFile, function (err) {
+            if (err) throw err;
+            fs.stat(finalStorage+newFile, function (err, stats) {
+              if (err) throw err;
+              console.log('stats: ' + JSON.stringify(stats));
+            });
+          });
+        }
+    });
   });
 }

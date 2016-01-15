@@ -14,22 +14,24 @@ module.exports = function() {
 function cleanUploadFolder(uploadStorage) {
   //Clean uploaded non asigned files
   schedule.scheduleJob('*/1 * * * *', function(){
-    console.log('Roomba module active');
+    log('Roomba module active');
     fs.readdir(uploadStorage, function(err, files) {
-      var endTime, 
+      var endTime,
       now = new Date().getTime();
+      if (!files) {
+        return;
+      }
       files.forEach(function(file, index) {
         fs.stat(uploadStorage+file, function(err,stats){
-           if(!err){     
+           if(!err){
               endTime = new Date(stats.ctime).getTime() + 3600000;
-              if (now > endTime) {     
+              if (now > endTime) {
                 fse.removeSync(uploadStorage+file);
-                console.log('Removed '+ uploadStorage+file);  
+                log('Removed '+ uploadStorage+file);
               }
            }
-        })  
+        });
       });
-    });  
+    });
   });
 }
-
