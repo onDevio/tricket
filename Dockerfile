@@ -10,4 +10,5 @@ RUN bower install --allow-root
 ADD . /web
 EXPOSE 3000
 ENV DEBUG=*
+VOLUME ["/web/storage", "/web/uploads"]
 CMD ["node", "bin/www"]

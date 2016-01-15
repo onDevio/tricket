@@ -21,7 +21,6 @@ tricket:
   build: .
   links:
     - mongo
-    - backup
   environment:
    - NODE_ENV=pro
   volumes:
@@ -33,6 +32,8 @@ backup:
   build: ./backup
   volumes:
     - ~/.aws:/root/.aws
+  volumes_from:
+    - tricket
   links:
     - mongo
 migrate-up:
