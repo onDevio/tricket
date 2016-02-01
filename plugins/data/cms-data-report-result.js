@@ -13,9 +13,12 @@ var MongoClient = require('mongodb').MongoClient,
  */
 module.exports = function(data, $element, callback) {
   if(!data[0].customer){
-    callback(data);
-    return;
+    if(!data[0].search){
+      callback(data);
+      return;
+    }
   }
+
   var query = {
     customer : data[0].customer,
   };
