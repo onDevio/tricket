@@ -79,7 +79,7 @@ router.get('/ticket/:id/reject', function(req, res) {
 
 router.post('/ticket/:id/note', function(req, res) {
   var id = req.params.id;
-  var date = new Date();
+  var date = req.body.date ? new Date(req.body.date) : new Date();
   var note = {
     'body': req.body.body,
     'type': req.body.type,
