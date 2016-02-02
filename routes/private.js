@@ -6,7 +6,7 @@ router.get('/tickets', function(req, res) {
 });
 
 router.get('/reports', function(req, res) {
-  res.render('dashboard/reports.html', {user: req.user, customer: req.query.customer, search: req.query.search, start: req.query.start, end: req.query.end });
+  res.render('dashboard/reports.html', {user: req.user, customer: req.query.customer, show: req.query.show, search: req.query.search, start: req.query.start, end: req.query.end });
 });
 
 router.get('/customers', function(req, res) {

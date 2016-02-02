@@ -34,6 +34,10 @@ module.exports = function(data, $element, callback) {
   if(params.end){
     query.end = new Date(params.end).toISOString();
   }
+
+  if(params.show){
+    query.show = params.show;
+  }
   
   findByCustomerRange(query, function(tickets) {
    var data = {
