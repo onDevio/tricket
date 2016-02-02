@@ -130,15 +130,19 @@
           </div>
           <form method="post">
             <div class="form-group col-lg-4">
-              <label class="sr-only" for="type">Note Type</label>
+              <label for="type">Note Type</label>
               <select class="form-control" name="type">
                 <option value="internal" selected>Internal note</option>
                 <option value="external">External note</option>
               </select>
             </div>
             <div class="form-group col-lg-4">
-              <label class="sr-only" for="workload">Work Log</label>
+              <label for="workload">Work Log</label>
               <input type="number" class="form-control" id="workload" name="worklog" placeholder="Work load in Hours">
+            </div>
+            <div class="form-group col-lg-4">
+              <label for="date">Date</label>
+              <input type="date" class="form-control" id="date" name="date" placeholder="Date if not today">
             </div>
             <div class="form-group col-lg-12">
               <label class="sr-only" for="body">Note details</label>
