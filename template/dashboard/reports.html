@@ -72,11 +72,18 @@
                   <option value="">Choose a customer</option>
                 </select>
               </div>
-              <div class="form-group col-lg-10">
+              <div class="form-group col-lg-12">
                 <div class="input-group input-daterange">
                   <input type="text" class="form-control" name="start" value="" placeholder="From">
                   <span class="input-group-addon">to</span>
                   <input type="text" class="form-control" name="end" value="" placeholder="To">
+                </div>
+              </div>
+              <div class="form-group col-lg-10">
+                <div class="checkbox pull-right">
+                  <label>
+                    <input type="checkbox" name="show"> Show empty worklog
+                  </label>
                 </div>
               </div>
               <div class="form-group col-lg-2">
@@ -122,6 +129,10 @@
                 todayHighlight: true
             });
         });
+        $(".clickable-row").click(function() {
+              console.log('Click');
+              window.open($(this).data("href"), "_blank");
+          });
       });
     </script>
     <!-- Bootstrap core JavaScript

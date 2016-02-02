@@ -32,10 +32,15 @@ module.exports = function(data, $element, callback) {
         work += parseInt(notes[j].worklog);
       }
     }
-    $element.find('tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+tickets[i].ticket_id+'"><td>'+tickets[i].ticket_id+' </td><td>'+tickets[i].title+' </td><td>'+tickets[i].status+' </td><td align="right">'+work+' </td></tr>');
-    $element.removeClass('hidden');
-    totalWork += work;
+    if(work > 0){
+      $element.find('tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+tickets[i].ticket_id+'"><td>'+tickets[i].ticket_id+' </td><td>'+tickets[i].title+' </td><td>'+tickets[i].status+' </td><td align="right">'+work+' </td></tr>');
+      totalWork += work;
+    }
+    if(work == 0 && query.show){
+      $element.find('tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+tickets[i].ticket_id+'"><td>'+tickets[i].ticket_id+' </td><td>'+tickets[i].title+' </td><td>'+tickets[i].status+' </td><td align="right">'+work+' </td></tr>');
+    }
   }
+  $element.removeClass('hidden');
   
   //TODO: Clientes
   $element.find('.customer').text(tickets[0].customer.name+' '+tickets[0].customer.email);
