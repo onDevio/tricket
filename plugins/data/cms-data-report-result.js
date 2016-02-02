@@ -38,6 +38,7 @@ module.exports = function(data, $element, callback) {
   findByCustomerRange(query, function(tickets) {
    var data = {
      'contents': tickets,
+     'query': query,
      'page': {
        'current': 1,
        'size': tickets.length,
@@ -61,17 +62,14 @@ function findByCustomerRange(query, callback) {
     var collection = db.collection('tickets');
     var search = {
                  'customer.email': {'$regex': query.customer},
-                 'dateCreated' : {
-                                 $gt: query.start,
-                                 $lt:  query.end
-                                },
+                 'notes' : {$elemMatch : {'dateCreated' : { $gt: query.start, $lt:  query.end}}},
                  'status': {$ne:"Trashed"}
                };
 
     // Find some documents
     collection.find(search).toArray(function(err, docs) {
       db.close();
-      log(docs);
+      //log(docs);
       callback(docs);
     });
 
