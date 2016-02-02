@@ -52,7 +52,7 @@ module.exports = function(data, $element, callback) {
   if (files) {
     files.forEach(function(file, index){
       var fileItem = fileTemplate.clone();
-      var filename = file.substr(0, file.lastIndexOf('.'));
+      var filename = file.substr(0, file.lastIndexOf('-'));
       fileItem.find('a').text(filename).attr('href','/api/file/'+ticket.ticket_id+'/'+file);
       $element.find('.downloadFiles').append(fileItem);
     });
