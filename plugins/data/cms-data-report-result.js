@@ -12,23 +12,27 @@ var MongoClient = require('mongodb').MongoClient,
  * @see http://mongoosejs.com/docs/index.html
  */
 module.exports = function(data, $element, callback) {
-  if(!data[0].customer){
-    callback(data);
-    return;
-  }
+  var params = data[0];
   var query = {
-    customer : data[0].customer,
+    customer : '',
   };
+  if(!params.search){
+    if(!params.customer){
+      callback(data);
+      return;
+    }
+  }
+  query.customer = params.search.length>0 ? params.search : params.customer;
 
   query.start = new Date('2015').toISOString();
-  if(data[0].start){
-    query.start = new Date(data[0].start).toISOString();
+  if(params.start){
+    query.start = new Date(params.start).toISOString();
   }
   
   query.end = new Date().toISOString();
   //Dudas
-  if(data[0].end){
-    query.end = new Date(data[0].end).toISOString();
+  if(params.end){
+    query.end = new Date(params.end).toISOString();
   }
   
   findByCustomerRange(query, function(tickets) {
@@ -56,7 +60,7 @@ function findByCustomerRange(query, callback) {
     // Get the documents collection
     var collection = db.collection('tickets');
     var search = {
-                 'customer.email': query.customer,
+                 'customer.email': {'$regex': query.customer},
                  'dateCreated' : {
                                  $gt: query.start,
                                  $lt:  query.end

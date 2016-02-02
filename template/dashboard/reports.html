@@ -61,24 +61,30 @@
           <div class="row">
             <h2 class="sub-header">Generate Report</h2>
           </div>
-          <form class="form-inline">
-            <div class="form-group">
-              <label for="customer">Customer: </label>
-              <select class="form-control cms-data-customers-list cms-render-customers-list" name="customer">
-                <option value="">Choose a customer</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <div class="input-group input-daterange">
-                <input type="text" class="form-control" name="start" value="">
-                <span class="input-group-addon">to</span>
-                <input type="text" class="form-control" name="end" value="">
+          <form class="col-lg-8">              
+              <div class="form-group col-lg-6">
+                <label>Search by customer</label>
+                <input type="text" class="form-control" name="search" value="" placeholder="Search">                
+              </div>          
+              <div class="form-group col-lg-6">
+                <label for="customer">Customer: </label>
+                <select class="form-control cms-data-customers-list cms-render-customers-list" name="customer">
+                  <option value="">Choose a customer</option>
+                </select>
               </div>
-            </div>
-            <button type="submit" class="btn btn-success">Generate</button>
+              <div class="form-group col-lg-10">
+                <div class="input-group input-daterange">
+                  <input type="text" class="form-control" name="start" value="" placeholder="From">
+                  <span class="input-group-addon">to</span>
+                  <input type="text" class="form-control" name="end" value="" placeholder="To">
+                </div>
+              </div>
+              <div class="form-group col-lg-2">
+                <button type="submit" class="btn btn-success pull-right">Generate</button> 
+              </div>
           </form>
           <hr>
-          <div class="table-responsive cms-data-report-result cms-render-report-result hidden">
+          <div class="table-responsive cms-data-report-result cms-render-report-result hidden col-lg-12">
             <table class="closed-tickets ticket-search table table-striped">
               <thead>
                 <tr>
