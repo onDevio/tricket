@@ -79,6 +79,7 @@ module.exports = function(data, $element, callback) {
     }
     noteItem.find('.note-author').text(note.user);
     noteItem.find('.note-date').text(moment(date).fromNow());
+    noteItem.find('.note-real').text(moment(date).format('DD/MM//YYYY'));
     noteItem.find('.note-worklog').text(note.worklog.toString());
 
     noteItem.find('.edit').attr('onclick', "edit("+index+")");
