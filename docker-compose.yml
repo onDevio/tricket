@@ -1,14 +1,3 @@
-nginx:
-  image: nginx
-  ports:
-    - "80:80"
-    - "443:443"
-  links:
-    - tricket
-  volumes:
-    - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    - ~/ondevio.com.key:/etc/nginx/ondevio.com.key:ro
-    - ~/ondevio.com.chain.cert:/etc/nginx/ondevio.com.chain.cert:ro
 mailin:
   build: ./mailin
   ports:
@@ -19,6 +8,8 @@ mailin:
   - WEBHOOK=http://tricket:3000/api/emails
 tricket:
   build: .
+  ports:
+   - "81:81"
   links:
     - mongo
   environment:
