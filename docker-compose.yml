@@ -1,7 +1,7 @@
 mailin:
   build: ./mailin
   ports:
-   - "25"
+   - "25:25"
   links:
    - tricket
   environment:
@@ -10,12 +10,12 @@ mailin:
 tricket:
   build: .
   ports:
-   - "81"
+   - "80"
   links:
     - mongo
   environment:
    - NODE_ENV=pro
-   - SERVICE_81_NAME=tricket
+   - SERVICE_80_NAME=tricket
   volumes:
     - ~/ses.js:/web/config/ses.js:ro
     - ~/auth.js:/web/config/auth.js:ro
