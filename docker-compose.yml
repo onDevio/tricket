@@ -10,12 +10,12 @@ mailin:
 tricket:
   build: .
   ports:
-   - "80"
+   - "3000"
   links:
     - mongo
   environment:
    - NODE_ENV=pro
-   - SERVICE_80_NAME=tricket
+   - SERVICE_3000_NAME=tricket
   volumes:
     - ~/ses.js:/web/config/ses.js:ro
     - ~/auth.js:/web/config/auth.js:ro
