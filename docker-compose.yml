@@ -1,24 +1,28 @@
 mailin:
   build: ./mailin
   ports:
-   - "25:25"
+   - "25"
   links:
    - tricket
   environment:
   - WEBHOOK=http://tricket:3000/api/emails
+  - SERVICE_25_NAME=mailin
 tricket:
   build: .
   ports:
-   - "81:81"
+   - "81"
   links:
     - mongo
   environment:
    - NODE_ENV=pro
+   - SERVICE_81_NAME=tricket
   volumes:
     - ~/ses.js:/web/config/ses.js:ro
     - ~/auth.js:/web/config/auth.js:ro
 mongo:
   image: mongo
+  environment:
+  - SERVICE_IGNORE=true
 backup:
   build: ./backup
   volumes:
@@ -27,8 +31,14 @@ backup:
     - tricket
   links:
     - mongo
+  environment:
+  - SERVICE_IGNORE=true
 migrate-up:
   build: .
   links:
     - mongo
+  environment:
+  - SERVICE_IGNORE=true
   command: node ./node_modules/mongodb-migrate -runmm -cfg docker-config.json
+
+
