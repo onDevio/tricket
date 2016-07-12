@@ -5,8 +5,8 @@ mailin:
   links:
    - tricket
   environment:
-  - WEBHOOK=http://tricket.ondevio.com/api/emails
-  - SERVICE_25_NAME=mailin
+  - WEBHOOK=http://172.17.0.6:3000/api/emails
+  - SERVICE_IGNORE=true
 tricket:
   build: .
   ports:
