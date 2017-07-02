@@ -1,10 +1,15 @@
 const cheerio = require('cheerio');
-var fs = require('fs');
-var indexHtml = fs.readFileSync('recover/Tickets.html');
-const $ = cheerio.load(indexHtml)
-var indexTickets = [];
+const request = require('superagent');
+const fs = require('fs');
+const tricketUrl = 'http://localhost:32770';
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+const mongoUrl = 'mongodb://172.17.0.4:27017/tricket';
+
 function loadIndexTickets() {
-    indexTickets = $('#open').find('tr').map(function (index, element) {
+    var indexHtml = fs.readFileSync('./recover/Tickets.html');
+    var $ = cheerio.load(indexHtml);
+    return $('#open').find('tr').map(function (index, element) {
         var $tds = $(element).find('td');
         var ticket_id = $tds.eq(0).text().trim();
         var title = $tds.eq(1).text().trim();
@@ -37,10 +42,80 @@ function loadIndexTickets() {
     }).toArray();
 }
 
+function existsTicketId() {
+    request.get(tricketUrl + '')
+}
+
 /*
 $('#open').find('tr').each(function(index, element) {
     console.log($(element).find('td').html());
 });
 */
-loadIndexTickets();
-console.log(JSON.stringify(indexTickets, null ,2));
+
+function recover() {
+    var indexTickets = loadIndexTickets();
+
+    for (ticket of indexTickets) {
+        var ticket_id = ticket.ticket_id;
+        addNotes(ticket);
+        updateTicket(ticket);
+    }
+
+    console.log(JSON.stringify(indexTickets, null, 2));
+}
+
+function addNotes(ticket) {
+    var ticket_id = ticket.ticket_id;
+    var ticketFilePath = './recover/trickets/' + ticket_id + '.htm';
+    console.log('ticketFilePath', ticketFilePath);
+    var existsTicket = fs.existsSync(ticketFilePath);
+    if (existsTicket) {
+        var ticketFile = fs.readFileSync(ticketFilePath);
+        var $ = cheerio.load(ticketFile);
+        var notes = $('.note').map(function (index, element) {
+            var $elem = $(element);
+            var worklog = parseInt($elem.find('.note-worklog').first().text()) || 0;
+            var body = $elem.find('.note-body.marked').first().text();
+            var dateCreated = $elem.find('.note-real').first().text().replace('//', '/');
+            try {
+                if (dateCreated != '') {
+                    dateCreated = new Date(dateCreated).toISOString();
+                } else {
+                    dateCreated = new Date().toISOString();
+                }
+            } catch (err) {
+                dateCreated = null;
+            }
+            console.log(ticket_id, dateCreated);
+            var user = $elem.find('.note-author').first().text();
+            var type = $elem.find('.note-external').first().text() === 'External' ? 'External' : 'Internal';
+            var note = {
+                'body': body,
+                'type': type,
+                'dateCreated': dateCreated,
+                'worklog': worklog,
+                'user': user
+            };
+            return note;
+        }).toArray();
+
+        ticket.notes = notes;
+    }
+}
+
+function updateTicket(ticket) {
+    MongoClient.connect(mongoUrl, function (err, db) {
+        // Get the collection
+        var col = db.collection('tickets');
+        var ticket_id = ticket.ticket_id;
+        col.findOneAndReplace({ ticket_id: ticket_id }
+            , ticket
+            , { upsert: true }
+            , function (err, r) {
+                assert.equal(null, err);
+                db.close();
+            });
+    });
+}
+
+recover();

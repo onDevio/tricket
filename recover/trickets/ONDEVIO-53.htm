@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Ticket</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/template/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/vendor/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/template/dashboard/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/template/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Load c3.css -->
+    <link href="/vendor/c3/c3.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="/vendor/d3/d3.min.js" charset="utf-8"></script>
+    <script src="/vendor/c3/c3.min.js"></script>
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/underscore/underscore-min.js"></script>
+
+    <link href="/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <style type="text/css">
+      .editableform .form-control {
+        width: 100%;
+      }
+      .editable-container.editable-inline{
+        width: 100%;
+      }
+      .editable-input{
+        width: 100%;
+      }
+      .control-group.form-group{
+        width: 88%;
+      }
+      ol{
+        padding: 20px;
+        list-style-type:decimal;
+      }
+      ol li {
+        float:left;
+        margin: 0 10px;
+        padding: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top cms-render-user">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Tricket</a>
+        </div>
+        <span class="user pull-right"><span>Alexis Maeso Serrano  </span><img class="img-thumbnail" src="https://lh3.googleusercontent.com/-eoyJtjS5uIc/AAAAAAAAAAI/AAAAAAAAAF8/5rb4gmDmBwA/photo.jpg?sz=50"></span>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/app/tickets">Tickets</a></li>
+            <li><a href="/app/reports">Reports</a></li>
+            <li><a href="/app/customers">Customers</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 main cms-data-single-ticket cms-render-single-ticket">
+          <h2 class="sub-header col-lg-8"><span class="status"><span class="label label-danger">Closed</span></span> [<span class="id">ONDEVIO-53</span>] - <span class="title">Crear sistema de comunicaci&#xF3;n de log v&#xED;a Papertrails</span></h2>
+          <div class="col-lg-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">Asigned to: <span class="asignee">Not asigned</span></div>
+              <div class="panel-body options">
+                <span>Available Actions:
+                  <a style="display:inline;" id="asign" href="/api/ticket/ONDEVIO-53/asign/Alexis Maeso Serrano" class="btn btn-default pull-right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Asign Ticket
+                  </a>
+                  <a style="display:none;" id="reject" href="/api/ticket/CUS-1/reject" class="btn btn-default pull-right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Ticket
+                  </a>
+                </span>
+              </div>
+            </div>
+            <div class="panel panel-default note">
+              <div class="panel-heading">
+                <h4>Files Attached</h4>
+              </div>
+              <div class="note-editable">
+                <ol class="downloadFiles">
+                  
+                <li><a href="/api/file/ONDEVIO-53/" target="_blank" download=""></a></li></ol>
+              </div>
+            </div>
+
+          </div>
+          <div class="notes col-lg-12">
+            <h3>From: <span class="customer-email x-editable" id="customer.email" data-type="text" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/save" data-title="Enter client">amaeso@ondevio.com</span>
+              <span class="pull-right label label-info">Worklog: <span class="worklog">18</span> Hours</span>
+            </h3>
+            
+          <div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(0)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                <span class="label label-warning note-external">External</span>
+                
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">2 months ago</span> on <span class="note-real">30/03//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">0</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-0">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/0/save" data-pk="ONDEVIO-53">Se requiere la creaci&#xF3;n de un entorno de log que se comunique con Papertrails los errores que se produzcan de modo que se comuniquen directamente al soporte. 
+
+Se debe:
+
+1. Crear fichero de Log en las campertas _&quot;SICA COMPARTIDO&quot;_ que sean alcanzables por todos los usuarios de la aplicaci&#xF3;n y desde el server. 
+2. A&#xF1;adir configuraci&#xF3;n al fichero &quot;sica.ini&quot; con la ruta donde se encuentra el fichero. (Depende del entorno puede que no sea la misma ruta para todos los usuarios, como en Murcia y Cartagena).
+3. Configurar la aplicaci&#xF3;n de _&quot;Papertrails&quot;_ en el servidor con acceso al fichero de log para que comunique la informaci&#xF3;n. Datos de configuraci&#xF3;n_.
+ - Papertrails config info@ondevio.com: logs5.papertrailapp.com:30361
+
+4. Los mensajes deben empezar por _&quot;ERROR:&quot;_. De esta forma se notificar&#xE1; autom&#xE1;ticamente por SLACK.
+</div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/0/save" data-title="Modify Note" data-name="external">Se requiere la creaci&#xF3;n de un entorno de log que se comunique con Papertrails los errores que se produzcan de modo que se comuniquen directamente al soporte. 
+
+Se debe:
+
+1. Crear fichero de Log en las campertas _&quot;SICA COMPARTIDO&quot;_ que sean alcanzables por todos los usuarios de la aplicaci&#xF3;n y desde el server. 
+2. A&#xF1;adir configuraci&#xF3;n al fichero &quot;sica.ini&quot; con la ruta donde se encuentra el fichero. (Depende del entorno puede que no sea la misma ruta para todos los usuarios, como en Murcia y Cartagena).
+3. Configurar la aplicaci&#xF3;n de _&quot;Papertrails&quot;_ en el servidor con acceso al fichero de log para que comunique la informaci&#xF3;n. Datos de configuraci&#xF3;n_.
+ - Papertrails config info@ondevio.com: logs5.papertrailapp.com:30361
+
+4. Los mensajes deben empezar por _&quot;ERROR:&quot;_. De esta forma se notificar&#xE1; autom&#xE1;ticamente por SLACK.
+</div>
+              </div>
+            </div><div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(1)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">2 months ago</span> on <span class="note-real">30/03//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">1</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-1">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/1/save" data-pk="ONDEVIO-53">Se crea la incidencia y se analiza las tareas. </div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/1/save" data-title="Modify Note" data-name="internal">Se crea la incidencia y se analiza las tareas. </div>
+              </div>
+            </div><div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(2)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">2 months ago</span> on <span class="note-real">10/04//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">0</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-2">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/2/save" data-pk="ONDEVIO-53">### An&#xE1;lisis
+
+#### 1. Crear un fichero para guardar los logs en una ruta accesible. (Por ejemplo SICA COMPARTIDO)
+#### 2. Crear en el fichero &quot;sica.ini&quot; una nueva entrada en el apartado _&quot;[CONFIGURACION]&quot;_ llamado _&quot;Ruta\_fichero\_logs&quot;_
+#### 3. Modificar *&quot;n\_cst\_aplic\_appmanager&quot;* para que se guarde siempre los datos en el log cuando se disponga de valor en el par&#xE1;metro que indica la ruta del fichero de log en el fichero de configuraci&#xF3;n &quot;sica.ini&quot;
+ - Se deber&#xE1; crear una nueva instancia de tipo _&quot;n\_cst\_debug&quot;_ para no entorpecer con el que se emplea actualmente, pues se emplea para guardar todas las consultas SQL, de modo que si utilizamos el mismo objeto para el log se enviar&#xED;a todos los datos de las consultas SQL y no es lo que buscamos. 
+ - Crear una funcion de objeto como _&quot;of\_Setdebug&quot;_ para crear el objeto en caso de emplearse. 
+#### 4. Cada vez que necesitemos pasar por Log un mensaje se deber&#xE1; enviar el mensaje a la funci&#xF3;n **&quot;gnv\_app.of\_logmessage (string as\_message)&quot;**</div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/2/save" data-title="Modify Note" data-name="internal">### An&#xE1;lisis
+
+#### 1. Crear un fichero para guardar los logs en una ruta accesible. (Por ejemplo SICA COMPARTIDO)
+#### 2. Crear en el fichero &quot;sica.ini&quot; una nueva entrada en el apartado _&quot;[CONFIGURACION]&quot;_ llamado _&quot;Ruta\_fichero\_logs&quot;_
+#### 3. Modificar *&quot;n\_cst\_aplic\_appmanager&quot;* para que se guarde siempre los datos en el log cuando se disponga de valor en el par&#xE1;metro que indica la ruta del fichero de log en el fichero de configuraci&#xF3;n &quot;sica.ini&quot;
+ - Se deber&#xE1; crear una nueva instancia de tipo _&quot;n\_cst\_debug&quot;_ para no entorpecer con el que se emplea actualmente, pues se emplea para guardar todas las consultas SQL, de modo que si utilizamos el mismo objeto para el log se enviar&#xED;a todos los datos de las consultas SQL y no es lo que buscamos. 
+ - Crear una funcion de objeto como _&quot;of\_Setdebug&quot;_ para crear el objeto en caso de emplearse. 
+#### 4. Cada vez que necesitemos pasar por Log un mensaje se deber&#xE1; enviar el mensaje a la funci&#xF3;n **&quot;gnv\_app.of\_logmessage (string as\_message)&quot;**</div>
+              </div>
+            </div><div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(3)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">2 months ago</span> on <span class="note-real">12/04//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">0</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-3">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/3/save" data-pk="ONDEVIO-53">### Configuraci&#xF3;n NXlog
+
+#### 1. [Descargar NXLOG](http://nxlog.co/products/nxlog-community-edition/download)
+#### 2. Configurar el fichero &quot;NXlog.conf&quot; ubicado bajo la ruta &quot;C:\Program files\nxlog\conf&quot; (o su homologo en SOs de 64bits).
+
+ - Copiar la configuraci&#xF3;n b&#xE1;sica: en [Windows] (https://papertrailapp.com/systems/nxlog?bind_port=30361&amp;hostname=logs5.papertrailapp.com), [en otros sistemas](https://papertrailapp.com/systems/setup)
+ - Revisar la ruta en la definici&#xF3;n de la variable _&quot;ROOT&quot;_: 
+```` define ROOT C:\Program Files\nxlog ````
+ - Revisar la ruta en la definici&#xF3;n de la variable _&quot;LOGFILE&quot;_:
+```` define LOGFILE E:\sica\log_sica.txt ````
+ - En el apartado _&quot;&lt;Input watchfile&gt;&quot;_ Modifica la definici&#xF3;n del fichero para que apunte a la ruta definida en la variable _&quot;LOGFILE&quot;_
+````   File &apos;%LOGFILE%&apos; ````
+ - Configurar los datos de Papertrail para la comunicaci&#xF3;n de los datos del log en el apartado _&quot;&lt;Output syslogout&gt;&quot;_:
+
+ - - -
+```` &lt;Output syslogout&gt; ````
+
+```` Module om_udp ````
+
+```` Host logs5.papertrailapp.com ````
+
+```` Port 30361 ````
+
+```` &lt;/Output&gt; ````
+- - -
+
+````
+ - Eliminar los apartados relacionados con los logs de windows, pues no interesan:
+  - &lt;Input eventlog&gt; (Monitor Windows event logs)
+  - &lt;Processor eventlog_transformer&gt;
+  - &lt;Route 1&gt;
+
+ - Modificar el apartado &lt;Route 2&gt; para que pase a ser &lt;Route 1&gt;
+
+ - A&#xF1;adir extensi&#xF3;n para el [control del rotado de logs](http://nxlog.co/node/295#processing_log_rotation) y que no se acumule m&#xE1;s datos en los equipos de lo estrictamente necesario. 
+
+- - -
+
+```` &lt;Extension fileop&gt; ````
+
+ ```` Module xm_fileop ````
+
+```` &lt;Schedule&gt; ````
+
+ ```` Every 12 hour ````
+
+ ```` Exec if (file_size(&apos;%LOGFILE%&apos;) &gt;= 50M) file_cycle(&apos;%LOGFILE%&apos;, 4); ````
+
+ ```` ## Comprueba cada 12 horas si el fichero tiene m&#xE1;s de 50 Mega creando en caso afirmativo un nuevo fichero con el nombre &quot;%LOGFILE%.1&quot;. Si hubiera un fichero &apos;%LOGFILE%.1&apos; este pasar&#xED;a a llamarse &apos;%LOGFILE%.2&apos; y as&#xED; recursivamente. Con esta configuraci&#xF3;n s&#xF3;lo deja cuatro ficheros, el quinto lo borrar&#xED;a. ````
+
+```` &lt;/Schedule&gt; ````
+
+```` &lt;/Extension&gt; ````
+- - -
+
+#### 3. Comprobar que no habr&#xE1; problemas de premisos de escritura y que se guarda cualquier cambio con el log en el visualizador de eventos de Papertrail.</div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/3/save" data-title="Modify Note" data-name="internal">### Configuraci&#xF3;n NXlog
+
+#### 1. [Descargar NXLOG](http://nxlog.co/products/nxlog-community-edition/download)
+#### 2. Configurar el fichero &quot;NXlog.conf&quot; ubicado bajo la ruta &quot;C:\Program files\nxlog\conf&quot; (o su homologo en SOs de 64bits).
+
+ - Copiar la configuraci&#xF3;n b&#xE1;sica: en [Windows] (https://papertrailapp.com/systems/nxlog?bind_port=30361&amp;hostname=logs5.papertrailapp.com), [en otros sistemas](https://papertrailapp.com/systems/setup)
+ - Revisar la ruta en la definici&#xF3;n de la variable _&quot;ROOT&quot;_: 
+```` define ROOT C:\Program Files\nxlog ````
+ - Revisar la ruta en la definici&#xF3;n de la variable _&quot;LOGFILE&quot;_:
+```` define LOGFILE E:\sica\log_sica.txt ````
+ - En el apartado _&quot;&lt;Input watchfile&gt;&quot;_ Modifica la definici&#xF3;n del fichero para que apunte a la ruta definida en la variable _&quot;LOGFILE&quot;_
+````   File &apos;%LOGFILE%&apos; ````
+ - Configurar los datos de Papertrail para la comunicaci&#xF3;n de los datos del log en el apartado _&quot;&lt;Output syslogout&gt;&quot;_:
+
+ - - -
+```` &lt;Output syslogout&gt; ````
+
+```` Module om_udp ````
+
+```` Host logs5.papertrailapp.com ````
+
+```` Port 30361 ````
+
+```` &lt;/Output&gt; ````
+- - -
+
+````
+ - Eliminar los apartados relacionados con los logs de windows, pues no interesan:
+  - &lt;Input eventlog&gt; (Monitor Windows event logs)
+  - &lt;Processor eventlog_transformer&gt;
+  - &lt;Route 1&gt;
+
+ - Modificar el apartado &lt;Route 2&gt; para que pase a ser &lt;Route 1&gt;
+
+ - A&#xF1;adir extensi&#xF3;n para el [control del rotado de logs](http://nxlog.co/node/295#processing_log_rotation) y que no se acumule m&#xE1;s datos en los equipos de lo estrictamente necesario. 
+
+- - -
+
+```` &lt;Extension fileop&gt; ````
+
+ ```` Module xm_fileop ````
+
+```` &lt;Schedule&gt; ````
+
+ ```` Every 12 hour ````
+
+ ```` Exec if (file_size(&apos;%LOGFILE%&apos;) &gt;= 50M) file_cycle(&apos;%LOGFILE%&apos;, 4); ````
+
+ ```` ## Comprueba cada 12 horas si el fichero tiene m&#xE1;s de 50 Mega creando en caso afirmativo un nuevo fichero con el nombre &quot;%LOGFILE%.1&quot;. Si hubiera un fichero &apos;%LOGFILE%.1&apos; este pasar&#xED;a a llamarse &apos;%LOGFILE%.2&apos; y as&#xED; recursivamente. Con esta configuraci&#xF3;n s&#xF3;lo deja cuatro ficheros, el quinto lo borrar&#xED;a. ````
+
+```` &lt;/Schedule&gt; ````
+
+```` &lt;/Extension&gt; ````
+- - -
+
+#### 3. Comprobar que no habr&#xE1; problemas de premisos de escritura y que se guarda cualquier cambio con el log en el visualizador de eventos de Papertrail.</div>
+              </div>
+            </div><div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(4)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">2 months ago</span> on <span class="note-real">10/04//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">3</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-4">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/4/save" data-pk="ONDEVIO-53">An&#xE1;lisis y estudio cambios log Papertrails. </div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/4/save" data-title="Modify Note" data-name="internal">An&#xE1;lisis y estudio cambios log Papertrails. </div>
+              </div>
+            </div><div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(5)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">2 months ago</span> on <span class="note-real">11/04//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">6</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-5">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/5/save" data-pk="ONDEVIO-53">An&#xE1;lisis, instalaci&#xF3;n de NXLOG, pruebas y cambios en SICAP para hacer uso del log.</div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/5/save" data-title="Modify Note" data-name="internal">An&#xE1;lisis, instalaci&#xF3;n de NXLOG, pruebas y cambios en SICAP para hacer uso del log.</div>
+              </div>
+            </div><div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(6)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">2 months ago</span> on <span class="note-real">12/04//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">5</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-6">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/6/save" data-pk="ONDEVIO-53">Cambio configuraci&#xF3;n de NXLOG, pruebas y cambios en SICAP, Servicios SEPA, SICA y c&#xE1;lculo de gastos. </div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/6/save" data-title="Modify Note" data-name="internal">Cambio configuraci&#xF3;n de NXLOG, pruebas y cambios en SICAP, Servicios SEPA, SICA y c&#xE1;lculo de gastos. </div>
+              </div>
+            </div><div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(7)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">2 months ago</span> on <span class="note-real">18/04//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">2</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-7">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/7/save" data-pk="ONDEVIO-53">Cambio configuraci&#xF3;n de NXLOG, pruebas y cambios en SICAP, Servicios SEPA, SICA y c&#xE1;lculo de gastos. </div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/7/save" data-title="Modify Note" data-name="internal">Cambio configuraci&#xF3;n de NXLOG, pruebas y cambios en SICAP, Servicios SEPA, SICA y c&#xE1;lculo de gastos. </div>
+              </div>
+            </div><div class="panel panel-default note">
+              <div class="panel-heading">
+                <button class="btn btn-primary edit" onclick="edit(8)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                
+                <span class="label label-default note-internal">Internal</span>
+                <span class="note-author">Alexis Maeso Serrano</span> commented <span class="note-date">a month ago</span> on <span class="note-real">19/04//2017</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog">1</span> Hours</span>
+              </div>
+              <div class="note-editable" id="note-8">
+                <div class="panel-body note-body marked" data-url="/api/ticket/ONDEVIO-53/8/save" data-pk="ONDEVIO-53">&#xDA;ltimos cambios, compilaci&#xF3;n y pruebas.  </div>
+                <div class="panel-body note-body x-editable hidden" data-type="textarea" data-pk="ONDEVIO-53" data-url="/api/ticket/ONDEVIO-53/8/save" data-title="Modify Note" data-name="internal">&#xDA;ltimos cambios, compilaci&#xF3;n y pruebas.  </div>
+              </div>
+            </div></div>
+          <form method="post" action="/api/ticket/ONDEVIO-53/note">
+            <div class="form-group col-lg-4">
+              <label for="type">Note Type</label>
+              <select class="form-control" name="type">
+                <option value="internal" selected>Internal note</option>
+                <option value="external">External note</option>
+              </select>
+            </div>
+            <div class="form-group col-lg-4">
+              <label for="workload">Work Log</label>
+              <input type="number" class="form-control" id="workload" name="worklog" placeholder="Work load in Hours">
+            </div>
+            <div class="form-group col-lg-4">
+              <label for="date">Date</label>
+              <input type="date" class="form-control" id="date" name="date" placeholder="Date if not today">
+            </div>
+            <div class="form-group col-lg-12">
+              <label class="sr-only" for="body">Note details</label>
+              <textarea name="body" id="body" placeholder="Ticket description" oninput="this.editor.update()" class="form-control" rows="10"></textarea>
+              <div class="panel panel-default note">
+                <div class="panel-heading">
+                  <span class="label label-warning note-external">Ticket Preview</span>
+                </div>
+                <div id="preview" class="panel-body"></div>
+              </div>
+            </div>
+            <div class="form-group col-lg-12">
+              <span class="pull-right buttons">
+                <span class="open" style="display: none;">
+                  <button type="submit" class="btn btn-primary" name="close">Add note and Close</button>
+                  <button type="submit" class="btn btn-success" name="note">Add note</button>
+                </span>
+                <span class="closed" style="display:inline;">
+                  <button type="submit" class="btn btn-primary" name="open">Reopen and add note</button>
+                  <button type="submit" class="btn btn-success" name="note">Add note</button>
+                </span>
+                <span class="trashed" style="display: none;">
+                   <button type="submit" class="btn btn-primary" name="untrash">Untrash</button>
+                </span>
+              </span>
+            </div>
+            <div class="form-group col-lg-12">
+             <div action="/api/file-upload/ONDEVIO-53" class="dropzone" id="files">
+                <div class="fallback">
+                  <input name="file" type="file" multiple>
+                </div>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script>
+    function edit(id){
+      //console.log('Edit');
+      $('#note-'+id+' .hidden' ).removeClass('hidden');
+      $('#note-'+id+' .marked' ).addClass('hidden');
+      $('#note-'+id+' .x-editable').editable();
+      setTimeout(function(){ $('#note-'+id+' .x-editable').editable('toggle'); }, 500);
+    }
+    </script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/template/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/template/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="/template/dashboard/markdown.js"></script>
+    <script type="text/javascript">
+      (function(){
+        $.fn.editable.defaults.mode = 'inline';
+        $('.customer-email').editable();
+        $('.x-editable').on('hidden', function(e, reason) {
+          location.reload();
+        });
+        $('.marked').each(
+          function(){
+            this.innerHTML = markdown.toHTML(this.innerHTML)
+          }
+        );
+      })();
+    </script>
+    <script src="/vendor/dropzone/dist/min/dropzone.min.js"></script>
+    <script>
+      //Ticket preview
+      function Editor(input, preview) {
+        this.update = function () {
+          preview.innerHTML = markdown.toHTML(input.value);
+        };
+        input.editor = this;
+        this.update();
+      }
+      var lel = function (id) { return document.getElementById(id); };
+      new Editor(lel("body"), lel("preview"));
+
+      var files = [];
+      //Configuración de dropzone
+      Dropzone.options.files = {
+        paramName: 'file', // The name that will be used to transfer the file
+        maxFilesize: 100, // MB,
+        success: function( file, response ){
+            //console.log(response[0].filename);
+            files.push(response[0].filename);
+        }
+      };
+
+      $( "form" ).submit(function( event ) {
+        //console.log( "Handler for .submit() called." );
+        $('.fileArray')[0].value = files;
+        return true;
+      });
+    </script>
+  </body>
+</html>
+                

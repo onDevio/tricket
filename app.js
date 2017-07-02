@@ -39,8 +39,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(require('connect-livereload')());
 app.use(cookieParser());
 app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 app.use('/template', express.static(path.join(__dirname, 'template')));
 app.use('/vendor', express.static(path.join(__dirname, 'bower_components')));
 
