@@ -29,7 +29,9 @@ module.exports = function(data, $element, callback) {
       $element.find('#mine tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
     }
 
-  	$element.find('#'+ticket.status.toLowerCase()+' tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
+  	$element
+      .find('#'+ticket.status.toLowerCase()+' tbody')
+      .append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
   });
 
   callback(data);
