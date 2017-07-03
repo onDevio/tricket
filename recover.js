@@ -4,12 +4,12 @@ const fs = require('fs');
 const tricketUrl = 'http://localhost:32770';
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-const mongoUrl = 'mongodb://172.17.0.4:27017/tricket';
+const mongoUrl = 'mongodb://mongo:27017/tricket';
 
 function loadIndexTickets() {
     var indexHtml = fs.readFileSync('./recover/Tickets.html');
     var $ = cheerio.load(indexHtml);
-    return $('#open').find('tr').map(function (index, element) {
+    return $('.cms-render-tickets').find('tr').map(function (index, element) {
         var $tds = $(element).find('td');
         var ticket_id = $tds.eq(0).text().trim();
         var title = $tds.eq(1).text().trim();
@@ -61,13 +61,13 @@ function recover() {
         updateTicket(ticket);
     }
 
-    console.log(JSON.stringify(indexTickets, null, 2));
+    console.log('Loaded tickets: ' + indexTickets.length);
 }
 
 function addNotes(ticket) {
     var ticket_id = ticket.ticket_id;
     var ticketFilePath = './recover/trickets/' + ticket_id + '.htm';
-    console.log('ticketFilePath', ticketFilePath);
+    //console.log('ticketFilePath', ticketFilePath);
     var existsTicket = fs.existsSync(ticketFilePath);
     if (existsTicket) {
         var ticketFile = fs.readFileSync(ticketFilePath);
@@ -86,7 +86,7 @@ function addNotes(ticket) {
             } catch (err) {
                 dateCreated = null;
             }
-            console.log(ticket_id, dateCreated);
+            //console.log(ticket_id, dateCreated);
             var user = $elem.find('.note-author').first().text();
             var type = $elem.find('.note-external').first().text() === 'External' ? 'External' : 'Internal';
             var note = {
@@ -118,4 +118,5 @@ function updateTicket(ticket) {
     });
 }
 
+console.log('Starting ticket recovery');
 recover();
