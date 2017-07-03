@@ -9,7 +9,8 @@ const mongoUrl = 'mongodb://mongo:27017/tricket';
 function loadIndexTickets() {
     var indexHtml = fs.readFileSync('./recover/Tickets.html');
     var $ = cheerio.load(indexHtml);
-    return $('.cms-render-tickets').find('tr').map(function (index, element) {
+    //return $('.cms-render-tickets').find('tr').map(function (index, element) {
+    return $('#open').find('tr').map(function (index, element) {
         var $tds = $(element).find('td');
         var ticket_id = $tds.eq(0).text().trim();
         var title = $tds.eq(1).text().trim();
