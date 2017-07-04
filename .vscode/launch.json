@@ -9,13 +9,15 @@
             "request": "launch",
             "name": "Recover",
             "program": "${workspaceRoot}/recover.js",
-            "timeout": 20000
+            "env": {
+                "MONGO_URL": "mongodb://tricket_mongo_1.docker:27017/tricket"
+            }
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Iniciar programa",
-            "program": "${workspaceRoot}/app.js"
+            "program": "${workspaceRoot}/bin/www"
         },
         {
             "name": "Run mocha",

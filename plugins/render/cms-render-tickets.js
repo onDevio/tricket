@@ -23,16 +23,15 @@ module.exports = function(data, $element, callback) {
       //log(note);
       work += parseInt(note.worklog);
     });
-    var status = !ticket.status ? 'Trashed' : 'Open';
-    var trash = status === 'Trashed' ? '<a href="/api/ticket/'+ticket.ticket_id+'/untrash" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Untrash</a></td>' : '<a href="/api/ticket/'+ticket.ticket_id+'/trash" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a></td>';
+    var trash = ticket.status === 'Trashed' ? '<a href="/api/ticket/'+ticket.ticket_id+'/untrash" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Untrash</a></td>' : '<a href="/api/ticket/'+ticket.ticket_id+'/trash" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Trash</a></td>';
 
     if(ticket.asignee === currentUser.displayName){
-      $element.find('#mine tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
+      $element.find('#mine tbody').append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
     }
 
   	$element
-      .find('#'+status.toLowerCase()+' tbody')
-      .append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
+      .find('#'+ticket.status.toLowerCase()+' tbody')
+      .append('<tr class="clickable-row" data-href="/app/ticket/'+ticket.ticket_id+'"><td>'+ticket.ticket_id+' </td><td>'+ticket.title+' </td><td>'+moment(date).fromNow()+' </td><td>'+ticket.status+' </td><td>'+asignee+' </td><td>'+work+' </td><td>'+ticket.customer.email+' </td><td>'+trash+'</td></tr>');
   });
 
   callback(data);
