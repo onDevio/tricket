@@ -124,7 +124,7 @@ module.exports = {
     },
 
     updateTicket: function (ticket) {
-        console.log(mongoUrl);
+        //console.log(mongoUrl);
         MongoClient.connect(mongoUrl, function (err, db) {
             // Get the collection
             var col = db.collection('tickets');
