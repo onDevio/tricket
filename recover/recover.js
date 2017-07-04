@@ -23,6 +23,7 @@ module.exports = {
             var when = $tds.eq(2).text().trim();
             var status = $tds.eq(3).text().trim();
             var asignee = $tds.eq(4).text().trim();
+            var worklog = parseInt($tds.eq(5).text().trim());
             var email = $tds.eq(6).text().trim();
             var dateCreated = that.parseRelativeDateToISOString(that.fromDate, when);
             //console.log(status, when, dateCreated);
@@ -45,6 +46,7 @@ module.exports = {
                 status: status,
                 title: title,
                 dateCreated: dateCreated,
+                worklog: worklog,
                 notes: [],
                 files: []
             };
