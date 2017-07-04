@@ -122,11 +122,12 @@ module.exports = {
     },
 
     updateTicket: function (ticket) {
+        console.log(mongoUrl);
         MongoClient.connect(mongoUrl, function (err, db) {
             // Get the collection
             var col = db.collection('tickets');
             var ticket_id = ticket.ticket_id;
-            //console.log(ticket.dateCreated);
+            //console.log(JSON.stringify(ticket, null, 2));
             col.findOneAndReplace({ ticket_id: ticket_id }
                 , ticket
                 , { upsert: true }
