@@ -4,7 +4,7 @@ const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 //const mongoUrl = 'mongodb://mongo:27017/tricket';
-const mongoUrl = 'mongodb://172.17.0.7:27017/tricket';
+const mongoUrl = 'mongodb://tricket_mongo_1.docker:27017/tricket';
 const moment = require('moment');
 
 module.exports = {
@@ -15,8 +15,8 @@ module.exports = {
         var indexHtml = fs.readFileSync('./recover/Tickets.html');
         var $ = cheerio.load(indexHtml);
         var that = this;
-        return $('.cms-render-tickets').find('tr').map(function (index, element) {
-            //return $('#open').find('tr').map(function (index, element) {
+        //return $('.cms-render-tickets').find('tr').map(function (index, element) {
+        return $('#open,#closed').find('tr').map(function (index, element) {
             var $tds = $(element).find('td');
             var ticket_id = $tds.eq(0).text().trim();
             var title = $tds.eq(1).text().trim();
@@ -25,7 +25,7 @@ module.exports = {
             var asignee = $tds.eq(4).text().trim();
             var email = $tds.eq(6).text().trim();
             var dateCreated = that.parseRelativeDateToISOString(that.fromDate, when);
-            console.log(status, when, dateCreated);
+            //console.log(status, when, dateCreated);
             
             /*
             console.log($(element).html());
