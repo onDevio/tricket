@@ -3,8 +3,8 @@ const request = require('superagent');
 const fs = require('fs');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-//const mongoUrl = 'mongodb://mongo:27017/tricket';
-const mongoUrl = 'mongodb://tricket_mongo_1.docker:27017/tricket';
+const mongoUrl = process.env.MONGO_URL || 'mongodb://mongo:27017/tricket';
+//const mongoUrl = process.env.MONGO_URL || 'mongodb://tricket_mongo_1.docker:27017/tricket';
 const moment = require('moment');
 
 module.exports = {
