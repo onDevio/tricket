@@ -65,6 +65,7 @@
     "gulp-live-server": "0.0.28",
     "gulp-shell": "^0.4.3",
     "http-perf": "0.0.5",
+    "mocha": "^3.4.2",
     "mongodb": "^2.2.29",
     "mongodb-migrate": "^1.2.3",
     "superagent": "^1.8.5",
