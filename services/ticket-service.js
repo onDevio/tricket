@@ -305,9 +305,17 @@ function updateTicket(id, changeSet, db, callback) {
 }
 
 function updateNoteFromTicket(id, changeSet, db, callback) {
-  var index = 'notes.'+changeSet.index + '.body';
+  var type = changeSet.type;
+  var index = null;
+  var value = changeSet.body;
+  if (type && type === 'worklog') {
+    index = 'notes.'+changeSet.index + '.worklog';
+    value = parseInt(changeSet.body);
+  } else {
+    index = 'notes.'+changeSet.index + '.body';
+  }
   var set = {};
-  set[index] = changeSet.body;
+  set[index] = value;
   db.collection('tickets').update({
     ticket_id: id
   }, {

@@ -85,8 +85,8 @@ module.exports = function(data, $element, callback) {
     noteItem.find('.edit').attr('onclick', "edit("+index+")");
     noteItem.find('.note-editable').attr('id', 'note-'+index);
 
-    noteItem.find('.note-body').attr('data-url', '/api/ticket/' + ticket.ticket_id + '/'+index+'/save');
-    noteItem.find('.note-body').attr('data-pk', ticket.ticket_id);
+    noteItem.find('.note [data-url]').attr('data-url', '/api/ticket/' + ticket.ticket_id + '/'+index+'/save');
+    noteItem.find('.note [data-pk]').attr('data-pk', ticket.ticket_id);
     //log(note.type);
     noteItem.find('.note-body').text(note.body);
     $element.find('.notes').append(noteItem);

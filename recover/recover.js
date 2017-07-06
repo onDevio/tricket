@@ -120,6 +120,15 @@ module.exports = {
             }).toArray();
 
             ticket.notes = notes;
+        } else {
+                var note = {
+                    'body': ticket.title,
+                    'type': 'Internal',
+                    'dateCreated': ticket.dateCreated,
+                    'worklog': ticket.worklog,
+                    'user': ticket.asignee
+                };
+                ticket.notes.push(note);
         }
     },
 

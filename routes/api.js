@@ -183,8 +183,9 @@ router.post('/ticket/:id/:index/save', function(req, res) {
   var value = req.body.value;
 
   var newNote = {
-    body: value,
-    index: index 
+    index: index ,
+    type: type,
+    body: value
   };
 
   ticketService.updateNoteFromTicket(id, newNote, function(result) {

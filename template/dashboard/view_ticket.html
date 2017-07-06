@@ -120,7 +120,7 @@
                 <span class="label label-warning note-external">External</span>
                 <span class="label label-default note-internal">Internal</span>
                 <span class="note-author">Author</span> commented <span class="note-date">a minute ago</span> on <span class="note-real">a minute ago</span>
-                <span class="pull-right label label-info">Spent: <span class="note-worklog">2</span> Hours</span>
+                <span class="pull-right label label-info">Spent: <span class="note-worklog x-editable" data-type="text" data-pk=":note" data-name="worklog" data-url="/api/ticket/:id/:note/save">2</span> Hours</span>
               </div>
               <div class="note-editable" id="note-0">
                 <div class="panel-body note-body marked">Hi there! This is a note.</div>
@@ -205,6 +205,7 @@
       (function(){
         $.fn.editable.defaults.mode = 'inline';
         $('.customer-email').editable();
+        $('.note-worklog').editable();
         $('.x-editable').on('hidden', function(e, reason) {
           location.reload();
         });
